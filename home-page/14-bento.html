@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem home · 14 — Bento</title>
+<meta name="description" content="screem home variation 14 — bento: one composed grid of calm tiles, the modern-gallery look in screem tokens." />
+<style>
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1;
+  --raised: #fffefa;
+  --sunken: #f1eee1;
+  --ink: #000000;
+  --ink-body: #211e15;
+  --ink-soft: #4c473a;
+  --muted: #6f6a5a;
+  --faint: #a19a86;
+  --line-subtle: #ece8d9;
+  --line-weak: #e1dcc9;
+  --line-mid: #cec7af;
+  --purple: #7d39eb;
+  --purple-deep: #5a1fbc;
+  --purple-soft: #f0e9fd;
+  --purple-tint: #c9a6f7;
+  --lime: #bfff1f;
+  --lime-deep: #44610a;
+  --lime-soft: #f1fbd2;
+  --lime-tint: #dcf584;
+  --orange: #ed621d;
+  --orange-deep: #b8480e;
+  --orange-soft: #fcead9;
+  --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --soft-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --lift-shadow: 0 2px 4px #1c140014, 0 8px 24px #1c140014;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink-body);
+  font-size: 15.5px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.mono { font-family: var(--font-mono); }
+
+.live-dot { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 100%; background: var(--lime); flex: none; }
+.live-dot::before { content: ""; position: absolute; inset: -1px; border-radius: 100%; border: 1px solid var(--lime-deep); opacity: .55; }
+.live-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 100%; border: 1.5px solid var(--lime); opacity: 0; animation: halo 2.6s var(--ease-out-cubic) infinite; }
+@keyframes halo { 0% { transform: scale(.7); opacity: .8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .06s; } .rise.d2 { animation-delay: .12s; } .rise.d3 { animation-delay: .18s; }
+.rise.d4 { animation-delay: .24s; } .rise.d5 { animation-delay: .3s; }
+
+/* ── frame ─────────────────────────────────────────────── */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 36px 72px; }
+@media (max-width: 720px) { .wrap { padding: 0 18px 56px; } }
+
+.top { display: flex; align-items: center; gap: 12px; height: 62px; border-bottom: 1px solid var(--line-subtle); margin-bottom: 24px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.top .sep { color: var(--line-mid); }
+.top .org { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.top .right { margin-left: auto; display: inline-flex; align-items: center; gap: 11px; font-size: 14px; color: var(--muted); }
+.avatar { width: 27px; height: 27px; border-radius: 100%; flex: none; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.k { background: var(--ink); color: var(--lime); }
+@media (max-width: 720px) { .top .date { display: none; } }
+
+/* ── the bento ─────────────────────────────────────────── */
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(176px, auto); gap: 16px; }
+.tile { background: var(--raised); border: none; border-radius: 22px; box-shadow: var(--soft-shadow); padding: 20px 22px; display: flex; flex-direction: column; min-width: 0; }
+.tile:hover { box-shadow: var(--lift-shadow); }
+.t-lab { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); }
+.t-num { font-family: var(--font-display); font-weight: 320; font-size: 42px; letter-spacing: -.01em; color: var(--ink); line-height: 1.05; margin-top: 8px; }
+.t-num small { font-size: 18px; color: var(--muted); font-family: var(--font-sub); }
+.t-sub { font-size: 13px; color: var(--muted); margin-top: auto; }
+
+/* placement — composed, not random */
+.t-verdict { grid-column: 1 / 7; grid-row: 1 / 3; }
+.t-act1    { grid-column: 7 / 10; grid-row: 1; }
+.t-act2    { grid-column: 10 / 13; grid-row: 1; }
+.t-act3    { grid-column: 7 / 10; grid-row: 2; }
+.t-audit   { grid-column: 10 / 13; grid-row: 2; }
+.t-trend   { grid-column: 1 / 7; grid-row: 3; }
+.t-people  { grid-column: 7 / 10; grid-row: 3; }
+.t-certs   { grid-column: 10 / 13; grid-row: 3; }
+.t-ask     { grid-column: 1 / 9; grid-row: 4; }
+.t-coming  { grid-column: 9 / 13; grid-row: 4; }
+
+@media (max-width: 1020px) {
+  .bento { grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(168px, auto); }
+  .t-verdict { grid-column: 1 / 7; grid-row: auto; min-height: 300px; }
+  .t-act1, .t-act2, .t-act3, .t-audit, .t-people, .t-certs { grid-column: span 3; grid-row: auto; }
+  .t-trend, .t-ask, .t-coming { grid-column: 1 / 7; grid-row: auto; }
+}
+@media (max-width: 600px) {
+  .bento { grid-template-columns: 1fr; }
+  .t-verdict, .t-act1, .t-act2, .t-act3, .t-audit, .t-people, .t-certs, .t-trend, .t-ask, .t-coming { grid-column: 1 / 2; }
+}
+
+/* verdict tile — the page's one black element */
+.t-verdict { background: var(--ink); color: #fffefa; padding: 26px 28px; }
+.t-verdict:hover { box-shadow: var(--lift-shadow); }
+.t-verdict .t-lab { color: #fffefa8a; font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; }
+.t-verdict h1 { font-family: var(--font-display); font-weight: 320; font-size: clamp(56px, 6.4vw, 84px); line-height: .96; letter-spacing: -.015em; color: var(--lime); margin-top: 14px; }
+.t-verdict .v-sub { color: #fffefabf; font-size: 15px; line-height: 1.55; margin-top: 12px; max-width: 400px; }
+.t-verdict .v-foot { margin-top: auto; padding-top: 18px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.t-verdict .v-chip { display: inline-flex; align-items: center; gap: 9px; border: 1px solid #fffefa2e; border-radius: 100px; padding: 7px 15px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--lime); white-space: nowrap; }
+.t-verdict .ring { position: relative; width: 62px; height: 62px; flex: none; margin-left: auto; }
+.t-verdict .ring svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+.t-verdict .ring b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 320; font-size: 14.5px; color: var(--lime); }
+
+/* action tiles */
+.t-act .a-head { display: flex; align-items: center; gap: 11px; }
+.a-disc { width: 32px; height: 32px; border-radius: 100px; background: var(--orange-soft); color: var(--orange-deep); font-family: var(--font-display); font-weight: 320; font-size: 17px; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.t-act .a-head b { font-size: 15px; font-weight: 600; color: var(--ink); }
+.t-act p { font-size: 14px; line-height: 1.5; color: var(--ink-soft); margin-top: 9px; }
+.t-act p small { color: var(--faint); font-size: 12.5px; }
+.a-pill { margin-top: auto; align-self: flex-start; border: none; border-radius: 100px; height: 34px; padding: 0 16px; font-size: 13.5px; font-weight: 600; background: var(--lime); color: var(--ink); cursor: pointer; white-space: nowrap; }
+.a-pill:hover { background: var(--lime-tint); }
+.a-pill span { font-weight: 400; color: var(--lime-deep); }
+
+/* trend tile */
+.t-trend .tr-row { display: flex; align-items: flex-end; gap: 18px; margin-top: 6px; flex: 1; min-height: 0; }
+.t-trend .t-num { margin-top: 4px; }
+.t-trend svg { display: block; width: 100%; height: 74px; min-width: 0; }
+.t-trend .tr-chart { flex: 1; min-width: 0; align-self: flex-end; }
+
+/* certificates bar */
+.c-bar { display: block; height: 8px; border-radius: 5px; background: var(--line-subtle); overflow: hidden; margin: 12px 0 8px; }
+.c-bar i { display: block; height: 100%; width: 86.7%; border-radius: 5px; background: var(--orange-tint); }
+
+/* audit sparkline */
+.t-audit svg { display: block; width: 100%; height: 30px; margin: 10px 0 8px; }
+
+/* ask tile */
+.t-ask .ask-head { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.t-ask .s-ava { width: 28px; height: 28px; border-radius: 9px; background: var(--ink); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.t-ask .s-ava svg { width: 13px; height: 14px; color: var(--lime); }
+.t-ask .ask-head small { color: var(--muted); font-weight: 400; font-size: 13px; }
+.ask-input { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line-weak); background: var(--paper); border-radius: 100px; padding: 11px 8px 11px 18px; margin-top: 14px; cursor: text; }
+.ask-input:hover { border-color: var(--line-mid); }
+.ask-input .ph { flex: 1; font-size: 14.5px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ask-input .send { width: 32px; height: 32px; border-radius: 100px; background: var(--ink); border: none; color: var(--lime); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+.ask-input .send:hover { background: var(--purple); }
+.ask-input .send svg { width: 14px; height: 14px; }
+.ask-sugs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 12px; }
+.sug { border: 1px solid var(--line-weak); background: var(--paper); border-radius: 100px; padding: 6px 14px; font-size: 13px; font-weight: 500; color: var(--ink-soft); cursor: pointer; }
+.sug:hover { border-color: var(--purple-tint); color: var(--purple-deep); }
+
+/* coming-up tile */
+.t-coming .cm-row { display: flex; align-items: baseline; gap: 11px; padding: 8px 0; border-top: 1px solid var(--line-subtle); font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); }
+.t-coming .cm-row:first-of-type { border-top: none; margin-top: 8px; }
+.t-coming .when { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); white-space: nowrap; min-width: 46px; }
+
+/* footer meta */
+.foot { margin-top: 26px; font-size: 13px; color: var(--faint); display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* variations chip */
+.var-chip { position: fixed; right: 18px; bottom: 18px; z-index: 999; background: var(--ink); color: var(--lime); font-family: var(--font-mono); font-size: 12px; letter-spacing: .02em; padding: 9px 15px; border-radius: 100px; box-shadow: 0 5px 16px #1c140033; }
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+    <symbol id="i-send" viewBox="0 0 20 20"><path d="m3 10 14-6.5L13.4 17l-3-5.4L3 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.4 11.6 17 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="index.html"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</a>
+    <span class="sep">·</span>
+    <span class="org">Fernbank Care Group</span>
+    <span class="right"><span class="date">Friday 10 July 2026</span><span class="avatar k">PS</span></span>
+  </header>
+
+  <div class="bento">
+
+    <!-- 2×2 verdict — the one black tile -->
+    <section class="tile t-verdict rise" aria-label="Today's verdict">
+      <span class="t-lab"><span class="live-dot"></span>Today · checked 6:00 am</span>
+      <h1>quiet.</h1>
+      <p class="v-sub">Your sponsor licence is in good shape, Priya. Three small things need you — everything else is looked after.</p>
+      <div class="v-foot">
+        <span class="v-chip">3 things · 15 min</span>
+        <span class="ring" title="85% of your workforce is fully compliant">
+          <svg viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#fffefa26" stroke-width="3.2"/>
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--lime)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="82.8 97.4"/>
+          </svg>
+          <b>85%</b>
+        </span>
+      </div>
+    </section>
+
+    <!-- three 1×1 actions -->
+    <section class="tile t-act t-act1 rise d1" aria-label="Action 1">
+      <span class="a-head"><span class="a-disc">1</span><b>Maria Okafor</b></span>
+      <p>Sign off her drafted Certificate of Sponsorship (CoS) renewal <small>· expires 12 Aug</small></p>
+      <button class="a-pill">Review and sign <span>· 6 min</span></button>
+    </section>
+
+    <section class="tile t-act t-act2 rise d1" aria-label="Action 2">
+      <span class="a-head"><span class="a-disc">2</span><b>Jakub Tan</b></span>
+      <p>Run his repeat right-to-work check <small>· due 15 Jul</small></p>
+      <button class="a-pill">Start check <span>· 3 min</span></button>
+    </section>
+
+    <section class="tile t-act t-act3 rise d2" aria-label="Action 3">
+      <span class="a-head"><span class="a-disc">3</span><b>Sam Devi</b></span>
+      <p>June pay came in low — £1,712 against £1,845 contracted</p>
+      <button class="a-pill">Take a look <span>· 4 min</span></button>
+    </section>
+
+    <!-- audit -->
+    <section class="tile t-audit rise d2">
+      <span class="t-lab">Audit-ready</span>
+      <span class="t-num">96<small> / 100</small></span>
+      <svg viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M2 24 L25 21 L48 15 L71 17 L94 9 L118 5" fill="none" stroke="var(--purple-tint)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="118" cy="5" r="3" fill="var(--lime)" stroke="var(--lime-deep)" stroke-width="1"/>
+      </svg>
+      <span class="t-sub">If an inspector called today, you'd be ready.</span>
+    </section>
+
+    <!-- 2×1 trend -->
+    <section class="tile t-trend rise d3" aria-label="Compliance trend">
+      <span class="t-lab">Fully compliant workforce</span>
+      <div class="tr-row">
+        <div>
+          <span class="t-num">85<small>%</small></span>
+          <span class="t-sub" style="display:block;margin-top:4px">up from 71% last August</span>
+        </div>
+        <div class="tr-chart">
+          <svg viewBox="0 0 300 74" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="tr-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#7d39eb" stop-opacity=".18"/>
+                <stop offset="1" stop-color="#7d39eb" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 62 L30.9 58.6 L57.8 65.4 L84.7 51.8 L111.6 45 L138.5 48.4 L165.5 38.2 L192.4 34.8 L219.3 28 L246.2 31.4 L273.1 21.2 L296 14.4 L296 72 L4 72 Z" fill="url(#tr-fill)"/>
+            <path d="M4 62 L30.9 58.6 L57.8 65.4 L84.7 51.8 L111.6 45 L138.5 48.4 L165.5 38.2 L192.4 34.8 L219.3 28 L246.2 31.4 L273.1 21.2 L296 14.4" fill="none" stroke="var(--purple)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="296" cy="14.4" r="4" fill="var(--lime)" stroke="var(--lime-deep)" stroke-width="1.2"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- people -->
+    <section class="tile t-people rise d3">
+      <span class="t-lab">People</span>
+      <span class="t-num">61</span>
+      <span class="t-sub">24 sponsored · Oakview 26 · Riverside 21 · Hazel 14</span>
+    </section>
+
+    <!-- certificates -->
+    <section class="tile t-certs rise d3">
+      <span class="t-lab">Certificates of Sponsorship (CoS)</span>
+      <span class="t-num">4<small> of 30 left</small></span>
+      <span class="c-bar" title="26 of 30 certificates used"><i></i></span>
+      <span class="t-sub">Enough until September — screem will remind you.</span>
+    </section>
+
+    <!-- 2×1 ask screem -->
+    <section class="tile t-ask rise d4" aria-label="Ask screem">
+      <span class="ask-head">
+        <span class="s-ava"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg></span>
+        Ask screem <small>plain-English answers from your own records</small>
+      </span>
+      <div class="ask-input" role="button" tabindex="0">
+        <span class="ph">Ask anything about your workforce…</span>
+        <button class="send" aria-label="Send question"><svg viewBox="0 0 20 20"><use href="#i-send"/></svg></button>
+      </div>
+      <div class="ask-sugs">
+        <button class="sug">Who needs a check this month?</button>
+        <button class="sug">How many certificates are left?</button>
+      </div>
+    </section>
+
+    <!-- coming up -->
+    <section class="tile t-coming rise d4" aria-label="Coming up">
+      <span class="t-lab">Coming up</span>
+      <div class="cm-row"><span class="when">28 JUL</span><span>Nadia Aziz's renewal window opens — screem drafts it</span></div>
+      <div class="cm-row"><span class="when">1 AUG</span><span>July payslips arrive for checking</span></div>
+      <div class="cm-row"><span class="when">1 OCT</span><span>Autumn attendance records due</span></div>
+    </section>
+
+  </div>
+
+  <div class="foot rise d5">
+    <span>Licence EMP 4482913 · rating A · expires 14 Mar 2028</span>
+    <span>·</span><span>412 automatic checks · 403 passing</span>
+    <span>·</span><span>163 documents current</span>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+</body>
+</html>

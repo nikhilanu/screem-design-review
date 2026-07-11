@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 03 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 03 · "Facts rail"
+   Editable facts left, live results right — facts in, results out.
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+.wrap { max-width:1180px; margin:0 auto; }
+
+/* page header */
+.phead { display:flex; align-items:center; gap:16px; margin:6px 0 22px; }
+.phead .ava { width:56px; height:56px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); font-size:19px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.phead h1 { font-family:var(--font-sub); font-weight:360; font-size:29px; letter-spacing:-.01em; color:var(--ink); line-height:1.1; }
+.phead .role { color:var(--muted); font-size:14px; margin-top:2px; }
+.io-hint { margin-left:auto; display:inline-flex; align-items:center; gap:10px; font-size:13px; color:var(--muted); background:var(--sunken); border-radius:100px; padding:7px 15px; }
+.io-hint b { color:var(--ink); font-weight:600; }
+.io-hint svg { width:15px; height:15px; color:var(--purple-deep); }
+@media (max-width:640px) { .io-hint { display:none; } }
+
+.split { display:grid; grid-template-columns:62% 38%; gap:26px; align-items:start; }
+@media (max-width:900px) { .split { grid-template-columns:1fr; } }
+
+/* left: editable facts */
+.col-lab { display:flex; align-items:center; gap:9px; font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:12px; }
+.col-lab .icon { width:14px; height:14px; }
+.ecard { background:var(--raised); border:1px solid var(--line-weak); border-radius:16px; box-shadow:var(--card-shadow); overflow:hidden; margin-bottom:16px; }
+.ec-head { display:flex; align-items:center; gap:11px; padding:15px 20px; border-bottom:1px solid var(--line-subtle); }
+.ec-head .icon { color:var(--purple-deep); width:16px; height:16px; }
+.ec-head b { font-size:15.5px; font-weight:600; color:var(--ink); }
+.owner { display:inline-flex; align-items:center; gap:7px; border-radius:100px; padding:3px 10px; font-size:12px; font-weight:600; white-space:nowrap; margin-left:10px; }
+.owner .av { width:16px; height:16px; border-radius:100%; font-size:8px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
+.owner.maria { background:var(--purple-soft); color:var(--purple-deep); } .owner.maria .av { background:var(--purple-deep); color:#fff; }
+.owner.you { background:var(--sunken); color:var(--ink-soft); } .owner.you .av { background:var(--ink); color:var(--lime); }
+.ec-actions { margin-left:auto; display:flex; gap:8px; }
+.edit-btn { display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line-weak); background:var(--paper); border-radius:9px; padding:7px 13px; font-size:13px; font-weight:500; color:var(--ink-soft); cursor:pointer; }
+.edit-btn:hover { border-color:var(--purple-tint); color:var(--purple-deep); }
+.edit-btn .icon { width:13px; height:13px; }
+.save-btn, .cancel-btn { display:none; border-radius:9px; padding:7px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+.save-btn { border:none; background:var(--lime); color:var(--ink); }
+.save-btn:hover { background:var(--lime-tint); }
+.cancel-btn { border:1px solid var(--line-weak); background:var(--paper); color:var(--muted); }
+.cancel-btn:hover { border-color:var(--line-mid); color:var(--ink); }
+.ecard.editing .edit-btn { display:none; }
+.ecard.editing .save-btn, .ecard.editing .cancel-btn { display:inline-flex; align-items:center; }
+
+.efgrid { display:grid; grid-template-columns:1fr 1fr; }
+.ef { padding:13px 20px; border-top:1px solid var(--line-subtle); display:flex; flex-direction:column; gap:4px; }
+.efgrid .ef:nth-child(-n+2) { border-top:none; }
+.ef.full { grid-column:1 / -1; }
+.ef .k { color:var(--muted); font-size:12.5px; }
+.ef .v { color:var(--ink); font-weight:500; font-size:14.5px; }
+.ef .v.mono { font-family:var(--font-mono); font-size:13px; font-weight:400; }
+.ef .v.hot { color:var(--orange-deep); }
+.ef .ei { display:none; width:100%; border:1px solid var(--line-weak); background:var(--paper); border-radius:10px; padding:8px 12px; font-family:var(--font-sans); font-size:15px; color:var(--ink-body); outline:none; }
+.ef .ei:focus { border-color:var(--purple-tint); box-shadow:0 0 0 3px var(--purple-soft); }
+.ecard.editing .ef .v { display:none; }
+.ecard.editing .ef .ei { display:block; }
+@media (max-width:520px) { .efgrid { grid-template-columns:1fr; } .efgrid .ef:nth-child(2) { border-top:1px solid var(--line-subtle); } }
+
+/* toast */
+.toast { position:fixed; left:50%; bottom:26px; transform:translate(-50%, 20px); background:var(--lime-soft); border:1px solid var(--lime-tint); color:var(--lime-deep); border-radius:100px; padding:11px 20px; font-size:14px; font-weight:600; display:flex; align-items:center; gap:9px; box-shadow:0 8px 28px #1c140022; opacity:0; pointer-events:none; transition:opacity .3s var(--ease-emphasized), transform .3s var(--ease-emphasized); z-index:250; }
+.toast.show { opacity:1; transform:translate(-50%, 0); }
+.toast .icon { width:16px; height:16px; }
+
+/* right: output rail */
+.rail { position:sticky; top:20px; }
+@media (max-width:900px) { .rail { position:static; } }
+.out-card { background:var(--raised); border:1px solid var(--line-weak); border-radius:18px; box-shadow:0 1px 2px #1c140010, 0 6px 20px #1c14000f; overflow:hidden; margin-bottom:16px; }
+.score-head { background:var(--ink); padding:22px 22px 20px; display:flex; align-items:center; gap:18px; }
+.score-head .ring { position:relative; width:88px; height:88px; flex:none; }
+.score-head .ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.score-head .ring b { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:320; font-size:26px; color:var(--lime); line-height:1; }
+.score-head .ring b span { font-family:var(--font-mono); font-size:9px; letter-spacing:.05em; color:#fffefa8c; margin-top:3px; }
+.score-head .st { color:#fffefa; }
+.score-head .st b { display:block; font-family:var(--font-sub); font-weight:360; font-size:20px; color:#fffefa; }
+.score-head .st small { display:block; color:#fffefab3; font-size:13px; margin-top:3px; }
+.score-head .st .need { color:var(--orange-tint); font-weight:600; }
+
+.out-sec { padding:16px 20px; }
+.out-sec + .out-sec { border-top:1px solid var(--line-subtle); }
+.out-h { font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.out-h .icon { width:13px; height:13px; }
+.fail { display:flex; align-items:flex-start; gap:11px; padding:12px 0; border-top:1px solid var(--line-subtle); }
+.fail:first-of-type { border-top:none; padding-top:0; }
+.fail .fm { width:24px; height:24px; border-radius:8px; background:var(--orange-soft); color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; flex:none; margin-top:1px; }
+.fail .fm svg { width:14px; height:14px; }
+.fail .fg { flex:1; min-width:0; }
+.fail .fg .code { font-family:var(--font-mono); font-size:11.5px; color:var(--faint); }
+.fail .fg b { display:block; font-size:14px; color:var(--ink); font-weight:600; margin-top:1px; line-height:1.35; }
+.fail .fg .fix { margin-top:9px; border:none; border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; cursor:pointer; background:var(--lime); color:var(--ink); }
+.fail .fg .fix:hover { background:var(--lime-tint); }
+.fail .fg .fix.grey { background:var(--sunken); } .fail .fg .fix.grey:hover { background:var(--line-subtle); }
+
+.drow { display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid var(--line-subtle); font-size:14px; }
+.drow:first-of-type { border-top:none; padding-top:0; }
+.drow .dk { flex:1; min-width:0; color:var(--ink-soft); }
+.drow .dv { font-weight:600; color:var(--orange-deep); white-space:nowrap; }
+.drow .dv.calm { color:var(--ink); }
+.drow .cnt { font-family:var(--font-mono); font-size:12px; color:var(--faint); background:var(--sunken); border-radius:6px; padding:1px 7px; }
+
+.docmini { display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--line-subtle); font-size:13.5px; }
+.docmini:first-of-type { border-top:none; padding-top:0; }
+.docmini .grow { flex:1; min-width:0; color:var(--ink); font-weight:500; }
+.st2 { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; white-space:nowrap; }
+.st2 i { width:7px; height:7px; border-radius:100%; flex:none; }
+.st2.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); } .st2.good { color:var(--lime-deep); }
+.st2.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); } .st2.warn { color:var(--orange-deep); }
+
+.sweep { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:12.5px; padding:14px 20px; border-top:1px solid var(--line-subtle); background:var(--sunken); }
+.sweep .live-dot { position:relative; display:inline-block; width:8px; height:8px; border-radius:100%; background:var(--lime); flex:none; }
+.sweep .live-dot::before { content:""; position:absolute; inset:-1px; border-radius:100%; border:1px solid var(--lime-deep); opacity:.55; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3.2" y="4.4" width="13.6" height="12.4" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.2 8.4h13.6M7 2.8v3M13 2.8v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-pay" viewBox="0 0 20 20"><rect x="2.6" y="5.2" width="14.8" height="9.6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-cert" viewBox="0 0 20 20"><circle cx="10" cy="7.8" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m7.6 11.4-1.2 6 3.6-1.9 3.6 1.9-1.2-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 20 20"><path d="M13.4 3.8l2.8 2.8-8.5 8.5-3.4.6.6-3.4 8.5-8.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 20 20"><path d="M3 6h7M3 14h7M14 10h3M10 6l3 4-3 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="phead">
+    <span class="ava">MO</span>
+    <div>
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route · since 12 Aug 2023</div>
+    </div>
+    <span class="io-hint"><svg><use href="#i-flow"/></svg>Edit a fact&nbsp;<b>left</b>&nbsp;→ the checks re-run&nbsp;<b>right</b></span>
+  </div>
+
+  <div class="split">
+    <!-- LEFT: editable facts -->
+    <div class="facts">
+      <div class="col-lab"><svg class="icon"><use href="#i-edit"/></svg>The facts · what the rule engine reads</div>
+
+      <div class="ecard" data-section>
+        <div class="ec-head">
+          <svg class="icon"><use href="#i-person"/></svg><b>Personal</b>
+          <span class="owner maria"><span class="av">MO</span>Maria provides</span>
+          <span class="ec-actions">
+            <button class="edit-btn"><svg class="icon"><use href="#i-edit"/></svg>Edit</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="save-btn">Save</button>
+          </span>
+        </div>
+        <div class="efgrid">
+          <div class="ef"><span class="k">Date of birth</span><span class="v">14 May 1991</span><input class="ei" value="14 May 1991" /></div>
+          <div class="ef"><span class="k">Nationality</span><span class="v">Nigerian</span><input class="ei" value="Nigerian" /></div>
+          <div class="ef"><span class="k">Email</span><span class="v mono">maria.okafor@fernbank.co.uk</span><input class="ei" value="maria.okafor@fernbank.co.uk" /></div>
+          <div class="ef"><span class="k">Phone</span><span class="v mono">07700 900412</span><input class="ei" value="07700 900412" /></div>
+          <div class="ef full"><span class="k">Home address</span><span class="v">22 Elm Grove, Leeds LS8 2AT</span><input class="ei" value="22 Elm Grove, Leeds LS8 2AT" /></div>
+          <div class="ef"><span class="k">Passport (exp 03 Feb 2029)</span><span class="v mono">6602214187</span><input class="ei" value="6602214187" /></div>
+          <div class="ef"><span class="k">National Insurance</span><span class="v mono">QQ 12 34 56 C</span><input class="ei" value="QQ 12 34 56 C" /></div>
+        </div>
+      </div>
+
+      <div class="ecard" data-section>
+        <div class="ec-head">
+          <svg class="icon"><use href="#i-case"/></svg><b>Employment</b>
+          <span class="owner you"><span class="av">FB</span>You provide</span>
+          <span class="ec-actions">
+            <button class="edit-btn"><svg class="icon"><use href="#i-edit"/></svg>Edit</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="save-btn">Save</button>
+          </span>
+        </div>
+        <div class="efgrid">
+          <div class="ef"><span class="k">Start date</span><span class="v">12 Aug 2023</span><input class="ei" value="12 Aug 2023" /></div>
+          <div class="ef"><span class="k">Job title</span><span class="v">Senior Care Assistant</span><input class="ei" value="Senior Care Assistant" /></div>
+          <div class="ef"><span class="k">SOC occupation code</span><span class="v mono">6136</span><input class="ei" value="6136" /></div>
+          <div class="ef"><span class="k">Team · site</span><span class="v">Care team · Oakview House</span><input class="ei" value="Care team · Oakview House" /></div>
+          <div class="ef"><span class="k">Contract</span><span class="v">Permanent · 37.5 hrs/wk</span><input class="ei" value="Permanent · 37.5 hrs/wk" /></div>
+          <div class="ef"><span class="k">Salary (going rate £25,500)</span><span class="v">£26,700</span><input class="ei" value="£26,700" /></div>
+        </div>
+      </div>
+
+      <div class="ecard" data-section>
+        <div class="ec-head">
+          <svg class="icon"><use href="#i-shield"/></svg><b>Visa &amp; right to work</b>
+          <span class="owner maria"><span class="av">MO</span>Maria provides</span>
+          <span class="ec-actions">
+            <button class="edit-btn"><svg class="icon"><use href="#i-edit"/></svg>Edit</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="save-btn">Save</button>
+          </span>
+        </div>
+        <div class="efgrid">
+          <div class="ef"><span class="k">Visa route</span><span class="v">Skilled Worker</span><input class="ei" value="Skilled Worker" /></div>
+          <div class="ef"><span class="k">Visa expires</span><span class="v hot">12 Aug 2026</span><input class="ei" value="12 Aug 2026" /></div>
+          <div class="ef"><span class="k">Right-to-work check</span><span class="v">eVisa share code · 14 Feb 2026</span><input class="ei" value="eVisa share code · 14 Feb 2026" /></div>
+          <div class="ef"><span class="k">Repeat check due</span><span class="v">12 Aug 2026</span><input class="ei" value="12 Aug 2026" /></div>
+        </div>
+      </div>
+
+      <div class="ecard" data-section>
+        <div class="ec-head">
+          <svg class="icon"><use href="#i-cert"/></svg><b>Sponsorship</b>
+          <span class="owner you"><span class="av">FB</span>You provide</span>
+          <span class="ec-actions">
+            <button class="edit-btn"><svg class="icon"><use href="#i-edit"/></svg>Edit</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="save-btn">Save</button>
+          </span>
+        </div>
+        <div class="efgrid">
+          <div class="ef"><span class="k">Certificate of Sponsorship (CoS)</span><span class="v mono">C2G7X44210091</span><input class="ei" value="C2G7X44210091" /></div>
+          <div class="ef"><span class="k">Assigned</span><span class="v">12 Aug 2023</span><input class="ei" value="12 Aug 2023" /></div>
+          <div class="ef"><span class="k">Expires</span><span class="v hot">12 Aug 2026</span><input class="ei" value="12 Aug 2026" /></div>
+          <div class="ef"><span class="k">Renewal pack</span><span class="v">Drafted by screem</span><input class="ei" value="Drafted by screem" /></div>
+        </div>
+      </div>
+
+      <div class="ecard" data-section>
+        <div class="ec-head">
+          <svg class="icon"><use href="#i-pay"/></svg><b>Records</b>
+          <span class="owner you"><span class="av">FB</span>You provide</span>
+          <span class="ec-actions">
+            <button class="edit-btn"><svg class="icon"><use href="#i-edit"/></svg>Edit</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="save-btn">Save</button>
+          </span>
+        </div>
+        <div class="efgrid">
+          <div class="ef"><span class="k">June payslip (gross)</span><span class="v">£2,225 — matches contract</span><input class="ei" value="£2,225 — matches contract" /></div>
+          <div class="ef"><span class="k">June attendance</span><span class="v">Clear · no unexplained absence</span><input class="ei" value="Clear · no unexplained absence" /></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: output rail -->
+    <div class="rail">
+      <div class="col-lab"><svg class="icon"><use href="#i-arrow"/></svg>The result · what the checks make of it</div>
+      <div class="out-card">
+        <div class="score-head">
+          <span class="ring">
+            <svg viewBox="0 0 88 88" aria-label="88 percent"><circle cx="44" cy="44" r="37" fill="none" stroke="#ffffff26" stroke-width="7"/><circle cx="44" cy="44" r="37" fill="none" stroke="var(--lime)" stroke-width="7" stroke-dasharray="204.6 232.5" stroke-linecap="round"/></svg>
+            <b>88%<span>28 / 32</span></b>
+          </span>
+          <span class="st">
+            <b>Needs action</b>
+            <small><span class="need">2 checks failing</span> · 28 passing · 2 scheduled</small>
+          </span>
+        </div>
+
+        <div class="out-sec">
+          <div class="out-h"><svg class="icon"><use href="#i-x"/></svg>Failing now</div>
+          <div class="fail">
+            <span class="fm"><svg><use href="#i-x"/></svg></span>
+            <span class="fg"><span class="code">SW-04</span><b>Certificate of Sponsorship expires within 60 days</b><button class="fix" data-act="cos">Review &amp; sign renewal · 6 min</button></span>
+          </div>
+          <div class="fail">
+            <span class="fm"><svg><use href="#i-x"/></svg></span>
+            <span class="fg"><span class="code">SW-11</span><b>Salary change not yet reported</b><button class="fix grey" data-act="salary">Review report · 3 min</button></span>
+          </div>
+        </div>
+
+        <div class="out-sec">
+          <div class="out-h"><svg class="icon"><use href="#i-cal"/></svg>Next dates</div>
+          <div class="drow"><span class="dk">Visa expires</span><span class="dv">12 Aug 2026</span></div>
+          <div class="drow"><span class="dk">Certificate of Sponsorship expires</span><span class="dv">12 Aug 2026</span></div>
+          <div class="drow"><span class="dk">Repeat right-to-work check</span><span class="dv calm">12 Aug 2026</span></div>
+        </div>
+
+        <div class="out-sec">
+          <div class="out-h"><svg class="icon"><use href="#i-doc"/></svg>Documents</div>
+          <div class="docmini"><span class="grow">Passport</span><span class="st2 good"><i></i>Verified</span></div>
+          <div class="docmini"><span class="grow">eVisa share code</span><span class="st2 good"><i></i>Verified</span></div>
+          <div class="docmini"><span class="grow">Certificate of Sponsorship</span><span class="st2 warn"><i></i>Renewal drafted</span></div>
+          <div class="docmini"><span class="grow">Employment contract</span><span class="st2 good"><i></i>Verified</span></div>
+          <div class="docmini"><span class="grow">June payslip</span><span class="st2 good"><i></i>Verified</span></div>
+        </div>
+
+        <div class="sweep"><span class="live-dot"></span>Last sweep this morning at 6:00 · 32 checks run</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg>Saved — checks will re-run tonight</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+var toast = document.getElementById('toast');
+var toastT;
+function flashToast() {
+  toast.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+}
+document.querySelectorAll('[data-section]').forEach(function (card) {
+  var editBtn = card.querySelector('.edit-btn');
+  var saveBtn = card.querySelector('.save-btn');
+  var cancelBtn = card.querySelector('.cancel-btn');
+  var fields = card.querySelectorAll('.ef');
+  editBtn.addEventListener('click', function () {
+    fields.forEach(function (f) {
+      var v = f.querySelector('.v'), i = f.querySelector('.ei');
+      if (v && i) i.value = v.textContent;
+    });
+    card.classList.add('editing');
+    var first = card.querySelector('.ei');
+    if (first) first.focus();
+  });
+  cancelBtn.addEventListener('click', function () { card.classList.remove('editing'); });
+  saveBtn.addEventListener('click', function () {
+    fields.forEach(function (f) {
+      var v = f.querySelector('.v'), i = f.querySelector('.ei');
+      if (v && i) v.textContent = i.value;
+    });
+    card.classList.remove('editing');
+    flashToast();
+  });
+});
+// fix buttons
+document.querySelectorAll('.fix').forEach(function (b) {
+  b.addEventListener('click', function () {
+    b.textContent = b.dataset.act === 'cos' ? 'Signed ✓' : 'Reviewed ✓';
+    b.disabled = true; b.style.opacity = '.55'; b.style.cursor = 'default';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 07 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 07 · "Timeline first"
+   A person is a history, not a form. Her story is the spine.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 32px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 6px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:1120px; margin:0 auto; }
+
+/* ── header card ───────────────────────────────────────── */
+.head { background:var(--raised); border-radius:22px; box-shadow:var(--card-shadow); padding:22px 26px; display:flex; align-items:center; gap:20px; margin-bottom:26px; flex-wrap:wrap; }
+.head .ring { position:relative; width:66px; height:66px; flex:none; }
+.head .ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.head .ring .ava { position:absolute; inset:7px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; }
+.head .who { min-width:0; flex:1; }
+.head .who h1 { font-family:var(--font-sub); font-weight:360; font-size:25px; letter-spacing:-.01em; color:var(--ink); }
+.head .who .role { color:var(--muted); font-size:14px; margin-top:2px; }
+.head .who .tally { display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft); margin-top:8px; }
+.head .who .tally b { color:var(--ink); }
+.head .who .tally .badge { background:var(--lime-soft); color:var(--lime-deep); border-radius:6px; padding:1px 8px; font-weight:600; font-size:12px; }
+.head .who .tally .badge.o { background:var(--orange-soft); color:var(--orange-deep); }
+.head .acts { display:flex; gap:10px; flex-wrap:wrap; }
+.hbtn { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 17px; border-radius:100px; font-size:14px; font-weight:600; cursor:pointer; border:1px solid var(--line-weak); background:var(--raised); color:var(--ink); }
+.hbtn:hover { border-color:var(--line-mid); }
+.hbtn .icon { width:15px; height:15px; }
+.hbtn.lime { background:var(--lime); border-color:var(--lime); color:var(--ink); }
+.hbtn.lime:hover { background:var(--lime-tint); border-color:var(--lime-tint); }
+.hbtn.done { background:var(--sunken); border-color:var(--line-weak); color:var(--faint); pointer-events:none; }
+.hbtn.done .icon { color:var(--lime-deep); }
+@media (max-width:640px) { .head { flex-direction:column; align-items:flex-start; } }
+
+/* ── layout ────────────────────────────────────────────── */
+.grid { display:grid; grid-template-columns:1fr 312px; gap:34px; align-items:start; }
+@media (max-width:920px) { .grid { grid-template-columns:1fr; } }
+
+.tl-h { font-family:var(--font-sub); font-weight:360; font-size:20px; color:var(--ink); margin-bottom:4px; }
+.tl-sub { color:var(--muted); font-size:13.5px; margin-bottom:22px; }
+
+/* ── timeline ──────────────────────────────────────────── */
+.timeline { position:relative; padding-left:44px; }
+.timeline::before { content:""; position:absolute; left:15px; top:6px; bottom:10px; width:2px; background:linear-gradient(var(--line-weak), var(--line-subtle)); border-radius:2px; }
+.ev { position:relative; margin-bottom:20px; }
+.ev .node { position:absolute; left:-36px; top:16px; width:18px; height:18px; border-radius:100%; background:var(--raised); border:2px solid var(--line-mid); display:flex; align-items:center; justify-content:center; z-index:1; }
+.ev .node svg { width:10px; height:10px; color:var(--muted); }
+.ev.hot .node { border-color:var(--orange); background:var(--orange-soft); }
+.ev.hot .node svg { color:var(--orange-deep); }
+.ev.good .node { border-color:var(--lime-deep); background:var(--lime-soft); }
+.ev.good .node svg { color:var(--lime-deep); }
+.ev.milestone .node { border-color:var(--ink); background:var(--ink); width:20px; height:20px; left:-37px; }
+.ev.milestone .node svg { color:var(--lime); }
+.ev .when { font-family:var(--font-mono); font-size:11.5px; color:var(--faint); letter-spacing:.02em; margin-bottom:6px; display:block; }
+.ev .card { background:var(--raised); border-radius:14px; box-shadow:var(--card-shadow); padding:15px 17px; }
+.ev.hot .card { box-shadow:0 0 0 1px var(--orange-tint), var(--card-shadow); }
+.ev.milestone .card { background:var(--sunken); box-shadow:none; }
+.ev .card .rowh { display:flex; align-items:center; gap:10px; }
+.ev .card b { font-weight:600; color:var(--ink); font-size:15px; }
+.ev .card .rule { font-family:var(--font-mono); font-size:10.5px; color:var(--faint); background:var(--sunken); border-radius:5px; padding:1px 7px; margin-left:auto; flex:none; }
+.ev .card p { color:var(--muted); font-size:13.5px; margin-top:5px; }
+.ev .card p b { color:var(--ink-soft); }
+.ev .card .foot { display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
+.ev .chip { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; border-radius:100px; padding:3px 10px; }
+.ev .chip.lime { background:var(--lime-soft); color:var(--lime-deep); }
+.ev .chip.gray { background:var(--sunken); color:var(--muted); }
+.ev .chip svg { width:12px; height:12px; }
+.ev .signbtn { display:inline-flex; align-items:center; gap:7px; background:var(--lime); color:var(--ink); border:none; border-radius:9px; padding:8px 15px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+.ev .signbtn:hover { background:var(--lime-tint); }
+.ev .signbtn.done { background:var(--sunken); color:var(--faint); pointer-events:none; }
+.ev .signbtn.done svg { color:var(--lime-deep); }
+
+/* ── rail ──────────────────────────────────────────────── */
+.rail { position:sticky; top:20px; display:flex; flex-direction:column; gap:16px; }
+.panel { background:var(--raised); border-radius:16px; box-shadow:var(--card-shadow); overflow:hidden; }
+.panel .ph { display:flex; align-items:center; gap:9px; padding:14px 17px; font-weight:600; font-size:14px; color:var(--ink); }
+.panel .ph svg { width:15px; height:15px; color:var(--purple-deep); }
+.panel .ph.line { border-bottom:1px solid var(--line-subtle); }
+
+/* accordion */
+.acc-item { border-top:1px solid var(--line-subtle); }
+.acc-item:first-child { border-top:none; }
+.acc-head { display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:transparent; border:none; cursor:pointer; padding:12px 17px; font-size:13.5px; font-weight:600; color:var(--ink); font-family:inherit; }
+.acc-head:hover { background:var(--paper); }
+.acc-head .own { margin-left:auto; font-weight:400; font-size:11px; color:var(--faint); }
+.acc-head .chev { width:14px; height:14px; color:var(--faint); transition:transform .25s var(--ease-emphasized); flex:none; }
+.acc-item.open .chev { transform:rotate(90deg); }
+.acc-body { display:none; padding:2px 17px 14px; }
+.acc-item.open .acc-body { display:block; }
+.arow { display:flex; justify-content:space-between; gap:12px; padding:5px 0; font-size:13px; border-top:1px dashed var(--line-subtle); }
+.arow:first-child { border-top:none; }
+.arow .k { color:var(--muted); }
+.arow .v { color:var(--ink); font-weight:500; text-align:right; }
+.arow .v.mono { font-family:var(--font-mono); font-size:12px; font-weight:400; }
+.arow .v.warn { color:var(--orange-deep); }
+
+/* documents mini list */
+.doc { display:flex; align-items:center; gap:10px; padding:10px 17px; border-top:1px solid var(--line-subtle); font-size:13px; }
+.doc:first-of-type { border-top:none; }
+.doc .di { width:26px; height:26px; border-radius:8px; background:var(--sunken); color:var(--muted); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.doc .di svg { width:14px; height:14px; }
+.doc .grow { flex:1; min-width:0; font-weight:500; color:var(--ink); }
+.doc .st { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:500; white-space:nowrap; }
+.doc .st i { width:7px; height:7px; border-radius:100%; flex:none; }
+.doc .st.good { color:var(--lime-deep); } .doc .st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+.doc .st.warn { color:var(--orange-deep); } .doc .st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); }
+
+/* next dates */
+.nd { display:flex; align-items:center; gap:11px; padding:11px 17px; border-top:1px solid var(--line-subtle); }
+.nd:first-of-type { border-top:none; }
+.nd .cal { width:38px; flex:none; text-align:center; background:var(--sunken); border-radius:9px; padding:5px 0; }
+.nd .cal .d { font-family:var(--font-display); font-weight:320; font-size:18px; color:var(--ink); line-height:1; }
+.nd .cal .m { font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.nd.hot .cal { background:var(--orange-soft); } .nd.hot .cal .d, .nd.hot .cal .m { color:var(--orange-deep); }
+.nd .body { flex:1; min-width:0; }
+.nd .body b { font-size:13px; font-weight:600; color:var(--ink); }
+.nd .body small { display:block; font-size:11.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 20 20"><path d="m7.5 4.5 5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pay" viewBox="0 0 20 20"><rect x="2.6" y="5.2" width="14.8" height="9.6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3.2" y="4.4" width="13.6" height="12.4" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.2 8.4h13.6M7 2.8v3M13 2.8v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 20 20"><path d="M6.5 6h9M6.5 10h9M6.5 14h6M3.4 6h.01M3.4 10h.01M3.4 14h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 20 20"><path d="M5 3v14M5 4h9l-1.6 3L14 10H5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="head">
+    <span class="ring">
+      <svg viewBox="0 0 66 66" role="img" aria-label="88 percent">
+        <circle cx="33" cy="33" r="28" fill="none" stroke="var(--line-subtle)" stroke-width="5"/>
+        <circle cx="33" cy="33" r="28" fill="none" stroke="var(--lime-deep)" stroke-width="5" stroke-dasharray="154 176" stroke-linecap="round"/>
+      </svg>
+      <span class="ava">MO</span>
+    </span>
+    <div class="who">
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route · since 12 Aug 2023</div>
+      <div class="tally"><span class="badge">88%</span><b>28 of 32 checks passing</b> · <span class="badge o">2 need you</span></div>
+    </div>
+    <div class="acts">
+      <button class="hbtn lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal</button>
+      <button class="hbtn" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review salary report</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- ── timeline ─────────────────────────────────────── -->
+    <div>
+      <div class="tl-h">Maria's story</div>
+      <div class="tl-sub">Everything that has happened on her record — newest first. Each event is a fact changing, and screem re-checking.</div>
+
+      <div class="timeline">
+        <div class="ev hot">
+          <span class="node"><svg><use href="#i-shield"/></svg></span>
+          <span class="when">TODAY · 6:00 AM</span>
+          <div class="card">
+            <div class="rowh"><b>Renewal pack drafted</b><span class="rule">SW-04</span></div>
+            <p>Her Certificate of Sponsorship expires <b>12 Aug 2026</b> — 33 days away. screem drafted the renewal and checked it against the going rate. It just wants your signature.</p>
+            <div class="foot">
+              <button class="signbtn" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign · ~6 min</button>
+              <span class="chip gray"><svg><use href="#i-clock"/></svg>due 14 Jul</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ev hot">
+          <span class="node"><svg><use href="#i-pay"/></svg></span>
+          <span class="when">8 JUL · 2:12 PM</span>
+          <div class="card">
+            <div class="rowh"><b>Salary change detected</b><span class="rule">SW-11</span></div>
+            <p>The payroll feed showed a <b>+£1,900</b> rise in June. A pay change must be reported to the Home Office within 10 working days — the report is drafted and ready to read.</p>
+            <div class="foot">
+              <button class="signbtn" data-act="salary" style="background:var(--sunken);color:var(--ink)"><svg class="icon"><use href="#i-arrow"/></svg>Review report · ~3 min</button>
+              <span class="chip gray"><svg><use href="#i-clock"/></svg>due 14 Jul</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ev good">
+          <span class="node"><svg><use href="#i-check"/></svg></span>
+          <span class="when">3 JUL</span>
+          <div class="card">
+            <div class="rowh"><b>June attendance imported — clear</b><span class="rule">ATT-02</span></div>
+            <p>No unexplained absence. Her weekly hours matched her 37.5-hour contract all month.</p>
+          </div>
+        </div>
+
+        <div class="ev good">
+          <span class="node"><svg><use href="#i-check"/></svg></span>
+          <span class="when">2 JUL</span>
+          <div class="card">
+            <div class="rowh"><b>June payslip verified</b><span class="rule">PAY-02</span></div>
+            <p><b>£2,225</b> gross — reconciled against the certificate salary. No discrepancy.</p>
+          </div>
+        </div>
+
+        <div class="ev good">
+          <span class="node"><svg><use href="#i-shield"/></svg></span>
+          <span class="when">14 FEB 2026</span>
+          <div class="card">
+            <div class="rowh"><b>Right to work verified</b><span class="rule">RTW-01</span></div>
+            <p>Her eVisa share code was checked and confirmed. A full audit trail was captured for the file.</p>
+            <div class="foot"><span class="chip lime"><svg><use href="#i-check"/></svg>evidence stored</span></div>
+          </div>
+        </div>
+
+        <div class="ev milestone">
+          <span class="node"><svg><use href="#i-flag"/></svg></span>
+          <span class="when">12 AUG 2023</span>
+          <div class="card">
+            <div class="rowh"><b>Hired &amp; certificate assigned</b></div>
+            <p>Maria joined Oakview House as a Senior Care Assistant. Certificate of Sponsorship <span class="mono" style="font-size:12px">C2G7X44210091</span> was assigned the same day. Where her story begins.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── rail ─────────────────────────────────────────── -->
+    <aside class="rail">
+      <div class="panel">
+        <div class="ph line"><svg><use href="#i-list"/></svg>Her facts</div>
+        <div class="acc" id="acc">
+          <div class="acc-item open">
+            <button class="acc-head"><svg class="chev"><use href="#i-chev"/></svg>Personal<span class="own">Maria</span></button>
+            <div class="acc-body">
+              <div class="arow"><span class="k">Date of birth</span><span class="v">14 May 1991</span></div>
+              <div class="arow"><span class="k">Nationality</span><span class="v">Nigerian</span></div>
+              <div class="arow"><span class="k">Passport</span><span class="v mono">exp 03 Feb 29</span></div>
+              <div class="arow"><span class="k">NI number</span><span class="v mono">QQ 12 34 56 C</span></div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><svg class="chev"><use href="#i-chev"/></svg>Employment<span class="own">Fernbank</span></button>
+            <div class="acc-body">
+              <div class="arow"><span class="k">Role · SOC</span><span class="v">Sr Care Asst · 6136</span></div>
+              <div class="arow"><span class="k">Contract</span><span class="v">Perm · 37.5 h/wk</span></div>
+              <div class="arow"><span class="k">Salary</span><span class="v">£26,700</span></div>
+              <div class="arow"><span class="k">June change</span><span class="v warn">+£1,900</span></div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><svg class="chev"><use href="#i-chev"/></svg>Visa &amp; RTW<span class="own">Home Office</span></button>
+            <div class="acc-body">
+              <div class="arow"><span class="k">Route</span><span class="v">Skilled Worker</span></div>
+              <div class="arow"><span class="k">Visa expiry</span><span class="v warn">12 Aug 2026</span></div>
+              <div class="arow"><span class="k">RTW checked</span><span class="v">14 Feb 2026</span></div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><svg class="chev"><use href="#i-chev"/></svg>Sponsorship<span class="own">Fernbank</span></button>
+            <div class="acc-body">
+              <div class="arow"><span class="k">Certificate</span><span class="v mono">C2G7X44210091</span></div>
+              <div class="arow"><span class="k">Assigned</span><span class="v">12 Aug 2023</span></div>
+              <div class="arow"><span class="k">Expires</span><span class="v warn">12 Aug 2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="ph line"><svg><use href="#i-doc"/></svg>Documents</div>
+        <div class="doc"><span class="di"><svg><use href="#i-doc"/></svg></span><span class="grow">Passport</span><span class="st good"><i></i>Verified</span></div>
+        <div class="doc"><span class="di"><svg><use href="#i-shield"/></svg></span><span class="grow">eVisa share code</span><span class="st good"><i></i>Verified</span></div>
+        <div class="doc"><span class="di"><svg><use href="#i-shield"/></svg></span><span class="grow">Certificate of Sponsorship</span><span class="st warn"><i></i>Renewal</span></div>
+        <div class="doc"><span class="di"><svg><use href="#i-case"/></svg></span><span class="grow">Employment contract</span><span class="st good"><i></i>Verified</span></div>
+        <div class="doc"><span class="di"><svg><use href="#i-pay"/></svg></span><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="ph line"><svg><use href="#i-cal"/></svg>What's coming</div>
+        <div class="nd hot"><span class="cal"><span class="d">14</span><span class="m">Jul</span></span><span class="body"><b>Two items due</b><small>Renewal + salary report</small></span></div>
+        <div class="nd"><span class="cal"><span class="d">12</span><span class="m">Aug</span></span><span class="body"><b>Visa &amp; certificate expire</b><small>Repeat RTW check falls due</small></span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+document.getElementById('acc').addEventListener('click', function (e) {
+  var head = e.target.closest('.acc-head');
+  if (!head) return;
+  head.parentElement.classList.toggle('open');
+});
+function wire(sel, txt) {
+  document.querySelectorAll('[data-act="' + sel + '"]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      b.classList.add('done');
+      if (b.classList.contains('hbtn')) b.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + txt;
+      else { b.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + txt; b.style.background = 'var(--sunken)'; b.style.color = 'var(--faint)'; }
+    });
+  });
+}
+wire('cos', 'Signed');
+wire('salary', 'Reviewed');
+</script>
+</body>
+</html>

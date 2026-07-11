@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 14 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 14 · "Analyst"
+   Her record read as charts, each with a plain-English caption.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+/* ── chrome ────────────────────────────────────────────── */
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:1000px; margin:0 auto; }
+
+/* ── header ────────────────────────────────────────────── */
+.p-head { display:flex; align-items:center; gap:16px; margin:8px 0 8px; flex-wrap:wrap; }
+.p-ring { position:relative; width:66px; height:66px; flex:none; }
+.p-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.p-ring .ava { position:absolute; inset:7px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; }
+.p-who { min-width:0; flex:1; }
+.p-who h1 { font-family:var(--font-sub); font-weight:360; font-size:27px; letter-spacing:-.01em; color:var(--ink); }
+.p-who .role { color:var(--muted); font-size:14px; margin-top:2px; }
+.p-score { text-align:right; flex:none; }
+.p-score .n { font-family:var(--font-display); font-weight:320; font-size:34px; color:var(--ink); line-height:1; }
+.p-score .n small { font-size:15px; color:var(--muted); font-family:var(--font-sub); }
+.p-score .s { font-size:12.5px; color:var(--muted); }
+.p-status { display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:var(--lime); border-radius:100px; padding:8px 14px; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; font-family:var(--font-mono); white-space:nowrap; flex:none; }
+
+.p-pills { display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 28px; }
+.pill { display:inline-flex; align-items:center; gap:9px; height:42px; padding:0 18px; border-radius:100px; border:none; font-size:14px; font-weight:600; cursor:pointer; font-family:var(--font-sans); }
+.pill .icon { width:15px; height:15px; }
+.pill.lime { background:var(--lime); color:var(--ink); }
+.pill.lime:hover { background:var(--lime-tint); }
+.pill.ghost { background:var(--sunken); color:var(--ink); }
+.pill.ghost:hover { background:var(--line-subtle); }
+.pill.done { background:var(--sunken); color:var(--faint); pointer-events:none; }
+.pill.done .icon { color:var(--lime-deep); }
+@media (max-width:560px) { .p-head { flex-direction:column; align-items:flex-start; } .p-score { text-align:left; } }
+
+/* ── chart cards ───────────────────────────────────────── */
+.chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+@media (max-width:820px) { .chart-grid { grid-template-columns:1fr; } }
+.chart-card { background:var(--raised); border:none; border-radius:22px; padding:22px 24px 20px; box-shadow:var(--card-shadow); }
+.chart-card .ch-h { display:flex; align-items:baseline; gap:10px; margin-bottom:2px; flex-wrap:wrap; }
+.chart-card .ch-h h2 { font-size:16px; font-weight:600; color:var(--ink); }
+.chart-card .ch-h .sub { font-size:12.5px; color:var(--faint); }
+.chart-svg { width:100%; height:auto; display:block; margin-top:12px; }
+.axis-lab { font-family:var(--font-sans); font-size:10.5px; fill:var(--faint); }
+.axis-val { font-family:var(--font-mono); font-size:10px; fill:var(--faint); }
+.ch-key { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:12.5px; color:var(--muted); }
+.ch-key span { display:inline-flex; align-items:center; gap:7px; }
+.ch-key i { width:16px; height:0; border-top-width:2px; border-top-style:solid; flex:none; }
+.ch-key i.dot { width:9px; height:9px; border-radius:100%; border-top:none; }
+.ch-key i.dash { border-top-style:dashed; }
+.caption { display:flex; gap:9px; align-items:flex-start; margin-top:14px; padding-top:13px; border-top:1px solid var(--line-subtle); font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+.caption .ci { width:18px; height:18px; flex:none; color:var(--purple-deep); margin-top:1px; }
+.caption b { color:var(--ink); font-weight:600; }
+
+/* horizontal pack bars */
+.pack { display:flex; align-items:center; gap:12px; padding:9px 0; font-size:13.5px; }
+.pack .nm { width:132px; flex:none; color:var(--ink); font-weight:500; }
+.pack .track { flex:1; height:12px; border-radius:6px; background:var(--line-subtle); overflow:hidden; position:relative; }
+.pack .track > i { display:block; height:100%; border-radius:6px; background:var(--lime); }
+.pack.warn .track > i { background:var(--orange-tint); }
+.pack .cnt { width:52px; flex:none; text-align:right; font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+.pack.warn .cnt { color:var(--orange-deep); font-weight:500; }
+
+/* flag annotation */
+.flag-txt { font-family:var(--font-sans); font-size:10.5px; font-weight:600; fill:var(--orange-deep); }
+
+/* ── facts + documents ─────────────────────────────────── */
+.low-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:18px; margin-top:2px; }
+@media (max-width:820px) { .low-grid { grid-template-columns:1fr; } }
+.panel { background:var(--raised); border:none; border-radius:22px; padding:20px 24px; box-shadow:var(--card-shadow); }
+.panel h2 { font-size:16px; font-weight:600; color:var(--ink); margin-bottom:4px; display:flex; align-items:center; gap:9px; }
+.panel h2 .icon { width:16px; height:16px; color:var(--purple-deep); }
+.panel h2 .own { margin-left:auto; font-size:11.5px; font-weight:500; color:var(--faint); }
+.f-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px 22px; }
+.f-row { padding:9px 0; border-top:1px solid var(--line-subtle); }
+.f-grid .f-row:nth-child(1), .f-grid .f-row:nth-child(2) { border-top:none; }
+.f-row .k { font-size:12px; color:var(--muted); }
+.f-row .v { font-size:14px; font-weight:500; color:var(--ink); margin-top:1px; }
+.f-row .v.mono { font-family:var(--font-mono); font-size:12.5px; font-weight:400; }
+.f-row .v.warn { color:var(--orange-deep); }
+@media (max-width:480px) { .f-grid { grid-template-columns:1fr; } .f-grid .f-row:nth-child(2) { border-top:1px solid var(--line-subtle); } }
+.doc-row { display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid var(--line-subtle); font-size:14px; }
+.doc-row:first-of-type { border-top:none; }
+.doc-row .ic { width:30px; height:30px; border-radius:9px; background:var(--paper); border:1px solid var(--line-weak); display:inline-flex; align-items:center; justify-content:center; flex:none; color:var(--muted); }
+.doc-row .ic .icon { width:15px; height:15px; }
+.doc-row .grow { flex:1; min-width:0; font-weight:500; color:var(--ink); }
+.st { display:inline-flex; align-items:center; gap:7px; font-weight:500; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; }
+.st i { width:8px; height:8px; border-radius:100%; flex:none; }
+.st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+.st.good { color:var(--lime-deep); }
+.st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); }
+.st.warn { color:var(--orange-deep); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 20 20"><path d="M10 2.6A5.4 5.4 0 0 0 6.4 12c.8.8 1.1 1.4 1.2 2.4h4.8c.1-1 .4-1.6 1.2-2.4A5.4 5.4 0 0 0 10 2.6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 16.6h4M8.6 14.4h2.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="p-head">
+    <span class="p-ring">
+      <svg viewBox="0 0 66 66" role="img" aria-label="88 percent of checks passing">
+        <circle cx="33" cy="33" r="27" fill="none" stroke="var(--line-subtle)" stroke-width="6"/>
+        <circle cx="33" cy="33" r="27" fill="none" stroke="var(--lime-deep)" stroke-width="6" stroke-dasharray="149.3 169.6" stroke-linecap="round"/>
+      </svg>
+      <span class="ava">MO</span>
+    </span>
+    <div class="p-who">
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route · since 12 Aug 2023</div>
+    </div>
+    <span class="p-status">Needs action · 2</span>
+    <div class="p-score"><div class="n">88<small>%</small></div><div class="s">28 of 32 checks</div></div>
+  </div>
+
+  <div class="p-pills">
+    <button class="pill lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal · ~6 min</button>
+    <button class="pill ghost" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review salary report · ~3 min</button>
+  </div>
+
+  <!-- ROW 1 -->
+  <div class="chart-grid">
+    <!-- Salary line -->
+    <div class="chart-card">
+      <div class="ch-h"><h2>Salary over time</h2><span class="sub">2023 → June 2026</span></div>
+      <svg class="chart-svg" viewBox="0 0 520 210" role="img" aria-label="Salary rising each year, always above the going rate; June 2026 rise of 1900 pounds flagged for reporting">
+        <!-- gridlines -->
+        <line x1="60" y1="30" x2="480" y2="30" stroke="var(--line-subtle)" stroke-width="1"/>
+        <line x1="60" y1="102" x2="480" y2="102" stroke="var(--line-subtle)" stroke-width="1"/>
+        <line x1="60" y1="175" x2="480" y2="175" stroke="var(--line-weak)" stroke-width="1"/>
+        <text class="axis-val" x="54" y="34" text-anchor="end">£27k</text>
+        <text class="axis-val" x="54" y="106" text-anchor="end">£25k</text>
+        <text class="axis-val" x="54" y="179" text-anchor="end">£23.5k</text>
+        <!-- going rate dashed -->
+        <line x1="60" y1="92" x2="480" y2="92" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="axis-val" x="480" y="88" text-anchor="end" style="fill:var(--muted)">going rate £25,500</text>
+        <!-- salary line -->
+        <path d="M60,150 L200,121 L340,88 L480,42" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="150" r="4" fill="var(--purple)"/>
+        <circle cx="200" cy="121" r="4" fill="var(--purple)"/>
+        <circle cx="340" cy="88" r="4" fill="var(--purple)"/>
+        <!-- June rise step highlighted -->
+        <path d="M340,88 L480,42" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="480" cy="42" r="5.5" fill="var(--orange)"/>
+        <!-- orange flag -->
+        <line x1="480" y1="42" x2="480" y2="20" stroke="var(--orange-deep)" stroke-width="1.2"/>
+        <rect x="372" y="10" width="108" height="20" rx="6" fill="var(--orange-soft)"/>
+        <text class="flag-txt" x="426" y="24" text-anchor="middle">▲ +£1,900 · report due</text>
+        <!-- x labels -->
+        <text class="axis-lab" x="60"  y="196" text-anchor="middle">2023</text>
+        <text class="axis-lab" x="200" y="196" text-anchor="middle">2024</text>
+        <text class="axis-lab" x="340" y="196" text-anchor="middle">2025</text>
+        <text class="axis-lab" x="480" y="196" text-anchor="middle">Jun 2026</text>
+      </svg>
+      <div class="ch-key">
+        <span><i style="border-color:var(--purple)"></i>Her salary</span>
+        <span><i class="dash" style="border-color:var(--muted)"></i>Going rate</span>
+        <span><i class="dot" style="background:var(--orange)"></i>June rise</span>
+      </div>
+      <div class="caption"><svg class="ci"><use href="#i-bulb"/></svg><span>Her pay has always been <b>above the going rate</b> — June's rise just needs reporting to the Home Office.</span></div>
+    </div>
+
+    <!-- Score trend -->
+    <div class="chart-card">
+      <div class="ch-h"><h2>Compliance score</h2><span class="sub">last 12 months</span></div>
+      <svg class="chart-svg" viewBox="0 0 520 210" role="img" aria-label="Score held at 100 percent then dipped to 88 percent over recent months">
+        <line x1="50" y1="30"  x2="490" y2="30"  stroke="var(--line-subtle)" stroke-width="1"/>
+        <line x1="50" y1="88"  x2="490" y2="88"  stroke="var(--line-subtle)" stroke-width="1"/>
+        <line x1="50" y1="175" x2="490" y2="175" stroke="var(--line-weak)" stroke-width="1"/>
+        <text class="axis-val" x="44" y="34"  text-anchor="end">100%</text>
+        <text class="axis-val" x="44" y="92"  text-anchor="end">94%</text>
+        <text class="axis-val" x="44" y="179" text-anchor="end">85%</text>
+        <path d="M50,30 L90,30 L130,30 L170,30 L210,59 L250,59 L290,30 L330,30 L370,30 L410,88 L450,117 L490,146" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="490" cy="146" r="6" fill="var(--lime)" stroke="var(--lime-deep)" stroke-width="1.5"/>
+        <text class="axis-lab" x="50"  y="196" text-anchor="middle">Aug</text>
+        <text class="axis-lab" x="210" y="196" text-anchor="middle">Dec</text>
+        <text class="axis-lab" x="370" y="196" text-anchor="middle">Apr</text>
+        <text class="axis-lab" x="490" y="196" text-anchor="end">Today</text>
+      </svg>
+      <div class="ch-key">
+        <span><i style="border-color:var(--purple)"></i>Score</span>
+        <span><i class="dot" style="background:var(--lime);box-shadow:inset 0 0 0 1.5px var(--lime-deep)"></i>Today · 88%</span>
+      </div>
+      <div class="caption"><svg class="ci"><use href="#i-bulb"/></svg><span>The score slipped from 100% only because <b>two papers came due</b> — clear them and it climbs straight back.</span></div>
+    </div>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="chart-grid">
+    <!-- Attendance bars -->
+    <div class="chart-card">
+      <div class="ch-h"><h2>Weekly hours worked</h2><span class="sub">last 8 weeks</span></div>
+      <svg class="chart-svg" viewBox="0 0 520 200" role="img" aria-label="Weekly hours hovering right around the 37.5 contracted line">
+        <!-- contracted line -->
+        <line x1="55" y1="69" x2="500" y2="69" stroke="var(--ink)" stroke-width="1.3" stroke-dasharray="5 4"/>
+        <text class="axis-val" x="500" y="64" text-anchor="end" style="fill:var(--ink-soft)">37.5 contracted</text>
+        <!-- bars: slot width 54.4, bar 30 centred -->
+        <g fill="var(--lime)">
+          <rect x="62"  y="69" width="34" height="91"  rx="6"/>
+          <rect x="116" y="56" width="34" height="104" rx="6"/>
+          <rect x="170" y="82" width="34" height="78"  rx="6"/>
+          <rect x="224" y="69" width="34" height="91"  rx="6"/>
+          <rect x="278" y="95" width="34" height="65"  rx="6"/>
+          <rect x="332" y="56" width="34" height="104" rx="6"/>
+          <rect x="386" y="69" width="34" height="91"  rx="6"/>
+          <rect x="440" y="82" width="34" height="78"  rx="6"/>
+        </g>
+        <line x1="55" y1="160" x2="500" y2="160" stroke="var(--line-weak)" stroke-width="1"/>
+        <g class="axis-lab" text-anchor="middle" fill="var(--faint)">
+          <text x="79"  y="176">W1</text><text x="133" y="176">W2</text><text x="187" y="176">W3</text><text x="241" y="176">W4</text>
+          <text x="295" y="176">W5</text><text x="349" y="176">W6</text><text x="403" y="176">W7</text><text x="457" y="176">W8</text>
+        </g>
+      </svg>
+      <div class="ch-key">
+        <span><i class="dot" style="background:var(--lime)"></i>Hours worked</span>
+        <span><i class="dash" style="border-color:var(--ink)"></i>37.5 contracted</span>
+      </div>
+      <div class="caption"><svg class="ci"><use href="#i-bulb"/></svg><span>She works her contracted hours <b>almost exactly</b> — June attendance is clear, no unexplained absence.</span></div>
+    </div>
+
+    <!-- Checks by pack -->
+    <div class="chart-card">
+      <div class="ch-h"><h2>Checks by pack</h2><span class="sub">28 of 32 passing</span></div>
+      <div style="margin-top:10px">
+        <div class="pack"><span class="nm">Right to work</span><span class="track"><i style="width:100%"></i></span><span class="cnt">6/6</span></div>
+        <div class="pack"><span class="nm">Visa &amp; passport</span><span class="track"><i style="width:83%"></i></span><span class="cnt">5/6</span></div>
+        <div class="pack warn"><span class="nm">Sponsorship</span><span class="track"><i style="width:75%"></i></span><span class="cnt">6/8</span></div>
+        <div class="pack"><span class="nm">Pay</span><span class="track"><i style="width:100%"></i></span><span class="cnt">6/6</span></div>
+        <div class="pack"><span class="nm">Attendance</span><span class="track"><i style="width:100%"></i></span><span class="cnt">5/5</span></div>
+      </div>
+      <div class="ch-key">
+        <span><i class="dot" style="background:var(--lime)"></i>Passing</span>
+        <span><i class="dot" style="background:var(--orange-tint)"></i>Needs you</span>
+      </div>
+      <div class="caption"><svg class="ci"><use href="#i-bulb"/></svg><span>Every pack is clean except <b>Sponsorship</b>, where two checks (SW-04, SW-11) are waiting on you.</span></div>
+    </div>
+  </div>
+
+  <!-- LOW: facts + docs -->
+  <div class="low-grid">
+    <div class="panel">
+      <h2><svg class="icon"><use href="#i-case"/></svg>The facts these charts read<span class="own">Maria + employer</span></h2>
+      <div class="f-grid">
+        <div class="f-row"><div class="k">Date of birth</div><div class="v">14 May 1991</div></div>
+        <div class="f-row"><div class="k">Nationality</div><div class="v">Nigerian</div></div>
+        <div class="f-row"><div class="k">Start date</div><div class="v">12 Aug 2023 · 3 years</div></div>
+        <div class="f-row"><div class="k">Role · SOC code</div><div class="v">Senior Care Assistant · 6136</div></div>
+        <div class="f-row"><div class="k">Contract</div><div class="v">Permanent, 37.5 hrs/wk</div></div>
+        <div class="f-row"><div class="k">Salary</div><div class="v warn">£26,700 · +£1,900 unreported</div></div>
+        <div class="f-row"><div class="k">Visa expires</div><div class="v warn">12 Aug 2026 · 33 days</div></div>
+        <div class="f-row"><div class="k">Certificate of Sponsorship</div><div class="v mono">C2G7X44210091</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2><svg class="icon"><use href="#i-doc"/></svg>Documents</h2>
+      <div class="doc-row"><span class="ic"><svg class="icon"><use href="#i-doc"/></svg></span><span class="grow">Passport</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><span class="grow">eVisa share code</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><span class="grow">Certificate of Sponsorship</span><span class="st warn"><i></i>Renewal drafted</span></div>
+      <div class="doc-row"><span class="ic"><svg class="icon"><use href="#i-case"/></svg></span><span class="grow">Employment contract</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="ic"><svg class="icon"><use href="#i-doc"/></svg></span><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+    </div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+function markDone(sel, label) {
+  var b = document.querySelector(sel);
+  if (!b) return;
+  b.addEventListener('click', function () {
+    this.classList.add('done');
+    this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + label;
+  });
+}
+markDone('[data-act="cos"]', 'Renewal signed');
+markDone('[data-act="salary"]', 'Report reviewed');
+</script>
+</body>
+</html>

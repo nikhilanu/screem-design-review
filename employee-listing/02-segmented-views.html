@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem people · 02 — Segmented views</title>
+<meta name="description" content="screem employer portal — one unified table, saved-view pills do the summarising instead of stat cards." />
+<style>
+/* SCREEM people listing · variation 02 "segmented views" — tokens verbatim from dashboard v1.1 */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1;
+  --ink: #000000; --ink-body: #211e15; --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86;
+  --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --soft-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --soft-shadow-up: 0 2px 4px #1c140014, 0 8px 24px #1c140014;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--paper); color: var(--ink-body); font-size: 15.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.icon { width: 17px; height: 17px; flex: none; }
+.mono { font-family: var(--font-mono); }
+
+.avatar { border-radius: 100%; flex: none; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.l { background: var(--lime-soft); color: var(--lime-deep); }
+.avatar.k { background: var(--ink); color: var(--lime); }
+
+.st { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: 14.5px; color: var(--ink-soft); white-space: nowrap; }
+.st i { width: 9px; height: 9px; border-radius: 100%; flex: none; }
+.st.good i { background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.st.warn i { background: var(--orange-tint); box-shadow: inset 0 0 0 1px var(--orange-deep); }
+.st.hot i { background: var(--orange); }
+.st.hot { color: var(--orange-deep); font-weight: 600; }
+.st.prog i { background: var(--purple-tint); box-shadow: inset 0 0 0 1px var(--purple-deep); }
+.st.idle i { background: var(--line-mid); }
+
+.live-dot { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 100%; background: var(--lime); flex: none; }
+.live-dot::before { content: ""; position: absolute; inset: -1px; border-radius: 100%; border: 1px solid var(--lime-deep); opacity: .55; }
+.live-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 100%; border: 1.5px solid var(--lime); opacity: 0; animation: halo 2.6s var(--ease-out-cubic) infinite; }
+@keyframes halo { 0% { transform: scale(.7); opacity: .8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
+
+/* ── chrome ── */
+.bar { display: flex; align-items: center; gap: 13px; height: 62px; padding: 0 40px; border-bottom: 1px solid var(--line-subtle); position: sticky; top: 0; background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px); z-index: 60; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.bar .org { font-size: 14.5px; color: var(--muted); white-space: nowrap; }
+.bar .org b { color: var(--ink); font-weight: 600; }
+.bar .right { margin-left: auto; display: inline-flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+.bar .avatar { width: 27px; height: 27px; font-size: 11px; }
+@media (max-width: 800px) { .bar { padding: 0 18px; } .bar .when { display: none; } }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px 100px; }
+@media (max-width: 800px) { .wrap { padding: 0 18px 90px; } }
+
+.var-chip { position: fixed; right: 18px; bottom: 18px; z-index: 200; display: inline-flex; align-items: center; gap: 7px; background: var(--ink); color: var(--lime); border-radius: 100px; padding: 9px 15px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; box-shadow: 0 8px 24px #1c140038; }
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+/* ── page head ── */
+.head { display: flex; align-items: flex-end; gap: 18px; margin: 34px 0 16px; flex-wrap: wrap; }
+.head h1 { font-family: var(--font-sub); font-weight: 360; font-size: 36px; letter-spacing: -.015em; color: var(--ink); line-height: 1.1; }
+.head-sub { color: var(--muted); font-size: 15.5px; max-width: 640px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 17px; border-radius: 100px; font-size: 14.5px; font-weight: 500; cursor: pointer; border: 1px solid var(--line-weak); background: var(--raised); color: var(--ink); margin-left: auto; }
+.btn:hover { border-color: var(--line-mid); }
+.btn.ink { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 600; }
+.btn.ink:hover { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+/* ── the one loud black element: slim checked-status strip ── */
+.strip { display: flex; align-items: center; gap: 11px; background: var(--ink); color: #fff; border-radius: 100px; padding: 12px 22px; font-size: 14.5px; margin-bottom: 22px; }
+.strip b { color: var(--lime); font-weight: 600; }
+.strip .live-dot { margin-right: 2px; }
+@media (max-width: 620px) { .strip { border-radius: 16px; font-size: 13.5px; padding: 11px 16px; } }
+
+/* ── segmented view pills ── */
+.views { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.view-pill { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px; border-radius: 100px; border: 1px solid var(--line-weak); background: var(--raised); color: var(--ink-soft); font-size: 14.5px; font-weight: 500; cursor: pointer; }
+.view-pill:hover { border-color: var(--line-mid); }
+.view-pill .n { font-weight: 400; color: var(--faint); font-size: 13.5px; }
+.view-pill.active { background: var(--purple-soft); border-color: var(--purple-tint); color: var(--purple-deep); font-weight: 600; }
+.view-pill.active .n { color: var(--purple-deep); opacity: .8; }
+.view-pill.attn.active { background: var(--orange-soft); border-color: var(--orange-tint); color: var(--orange-deep); }
+.view-pill.attn.active .n { color: var(--orange-deep); }
+
+.tools { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.search-box { display: flex; align-items: center; gap: 10px; background: var(--raised); border-radius: 100px; height: 44px; padding: 0 18px; box-shadow: var(--card-shadow); flex: 1; max-width: 340px; }
+.search-box .icon { width: 15px; height: 15px; color: var(--faint); }
+.search-box input { border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size: 14.5px; color: var(--ink-body); width: 100%; }
+.search-box input::placeholder { color: var(--faint); }
+.tools .note { color: var(--faint); font-size: 13px; margin-left: auto; }
+
+/* ── table ── */
+.panel-card { border: none; border-radius: 22px; background: var(--raised); overflow: hidden; box-shadow: var(--soft-shadow); margin-bottom: 20px; }
+.table-scroll { overflow-x: auto; }
+.record-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.record-table th { text-align: left; padding: 13px 22px; font-weight: 600; font-size: 13.5px; color: var(--muted); border-bottom: 1px solid var(--line-subtle); white-space: nowrap; }
+.record-table td { padding: 13px 22px; border-bottom: 1px solid var(--line-subtle); color: var(--ink-body); white-space: nowrap; }
+.record-table tr:last-child td { border-bottom: none; }
+.record-table tbody tr:hover td { background: var(--paper); }
+.record-table tr.rowlink { cursor: pointer; }
+.person { display: inline-flex; align-items: center; gap: 11px; font-weight: 500; }
+.person small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; line-height: 1.35; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 7px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.badge.purple { background: var(--purple-soft); color: var(--purple-deep); }
+.badge.lime { background: var(--lime-soft); color: var(--lime-deep); }
+.cknum { font-family: var(--font-display); font-weight: 320; font-size: 19px; color: var(--ink); }
+.datecell small { display: block; color: var(--faint); font-size: 11.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .03em; margin-top: 1px; }
+.panel-foot { border-top: 1px solid var(--line-subtle); padding: 13px 24px; display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--muted); }
+.panel-foot b { color: var(--ink); }
+.empty-note { display: none; padding: 30px; font-size: 14.5px; color: var(--muted); text-align: center; }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .06s; } .rise.d2 { animation-delay: .12s; } .rise.d3 { animation-delay: .18s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m13.2 13.2 3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="bar">
+  <span class="brand"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</span>
+  <span class="org">·&nbsp; <b>Fernbank Care Group</b></span>
+  <span class="right"><span class="when">Friday 10 July 2026</span><span class="avatar k" style="width:27px;height:27px;font-size:11px">PS</span></span>
+</div>
+
+<div class="wrap">
+  <div class="head rise">
+    <div>
+      <h1>People</h1>
+      <div class="head-sub">Everyone who works for you, and everyone about to join — one list, six ways to slice it.</div>
+    </div>
+    <button class="btn ink"><svg class="icon"><use href="#i-plus"/></svg>Add a person</button>
+  </div>
+
+  <div class="strip rise d1"><span class="live-dot"></span>Everyone was checked at 6:00 — <b>3 people need you.</b></div>
+
+  <div class="views rise d2" id="views">
+    <button class="view-pill active" data-view="all">All <span class="n">67</span></button>
+    <button class="view-pill" data-view="employees">Employees <span class="n">61</span></button>
+    <button class="view-pill" data-view="candidates">Candidates <span class="n">6</span></button>
+    <button class="view-pill" data-view="sponsored">Sponsored <span class="n">24</span></button>
+    <button class="view-pill attn" data-view="action">Needs action <span class="n">3</span></button>
+    <button class="view-pill attn" data-view="expiring">Visas expiring soon <span class="n">3</span></button>
+  </div>
+
+  <div class="tools rise d2">
+    <label class="search-box">
+      <svg class="icon"><use href="#i-search"/></svg>
+      <input id="q" type="text" placeholder="Find anyone by name, role or site…" aria-label="Search people" />
+    </label>
+  </div>
+
+  <div class="panel-card rise d3">
+    <div class="table-scroll">
+    <table class="record-table">
+      <thead><tr><th>Person</th><th>Type</th><th>Site</th><th>Route</th><th>Key date</th><th>Checks</th><th>Status</th></tr></thead>
+      <tbody id="tbody">
+        <tr class="rowlink" data-type="employee" data-sponsored="1" data-action="1" data-expiring="1"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">MO</span><span>Maria Okafor<small>Senior Care Assistant</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Oakview House</td><td>Skilled Worker</td><td class="datecell mono">12 Aug 2026<small>visa expiry</small></td><td><span class="cknum">88%</span></td><td><span class="st hot"><i></i>Needs action</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1" data-action="1" data-expiring="1"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">JT</span><span>Jakub Tan<small>Registered Nurse</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Riverside Court</td><td>Skilled Worker</td><td class="datecell mono">05 Sep 2026<small>visa expiry</small></td><td><span class="cknum">91%</span></td><td><span class="st hot"><i></i>Needs action</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-action="1"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">SD</span><span>Sam Devi<small>Activities Coordinator</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Hazel Lodge</td><td>Settled status</td><td class="datecell mono">—</td><td><span class="cknum">94%</span></td><td><span class="st hot"><i></i>Needs action</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">KP</span><span>Kavya Patel<small>Student Carer, part-time</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Riverside Court</td><td>Student visa</td><td class="datecell mono">30 Sep 2027<small>visa expiry</small></td><td><span class="cknum">94%</span></td><td><span class="st warn"><i></i>Watching</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1" data-expiring="1"><td><span class="person"><span class="avatar l" style="width:32px;height:32px;font-size:12px">NA</span><span>Nadia Aziz<small>Care Assistant</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Oakview House</td><td>Skilled Worker</td><td class="datecell mono">28 Sep 2026<small>visa expiry</small></td><td><span class="cknum">97%</span></td><td><span class="st prog"><i></i>Being handled</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar l" style="width:32px;height:32px;font-size:12px">AH</span><span>Amara Haddad<small>Care Assistant</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Oakview House</td><td>Skilled Worker</td><td class="datecell mono">22 Jan 2027<small>visa expiry</small></td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">LS</span><span>Lena Sokolova<small>Senior Carer</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Riverside Court</td><td>Health &amp; Care</td><td class="datecell mono">30 Nov 2027<small>visa expiry</small></td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">RB</span><span>Rosa Barbosa<small>Team Leader</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Hazel Lodge</td><td>Skilled Worker</td><td class="datecell mono">17 Mar 2028<small>visa expiry</small></td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee"><td><span class="person"><span class="avatar l" style="width:32px;height:32px;font-size:12px">TO</span><span>Tunde Osei<small>Kitchen Assistant</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Oakview House</td><td>Settled status</td><td class="datecell mono">—</td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee"><td><span class="person"><span class="avatar k" style="width:32px;height:32px;font-size:12px">IK</span><span>Ibrahim Kaya<small>Maintenance</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Hazel Lodge</td><td>Settled status</td><td class="datecell mono">—</td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">ED</span><span>Elif Demir<small>Care Assistant</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Riverside Court</td><td>Skilled Worker</td><td class="datecell mono">09 Feb 2028<small>visa expiry</small></td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="employee" data-sponsored="1"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">JA</span><span>Joy Adeyemi<small>Night Carer</small></span></span></td><td><span class="badge purple">Employee</span></td><td>Oakview House</td><td>Health &amp; Care</td><td class="datecell mono">15 May 2027<small>visa expiry</small></td><td><span class="cknum">100%</span></td><td><span class="st good"><i></i>In order</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">AD</span><span>Amina Diallo<small>Care Assistant, nights</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Riverside Court</td><td>Skilled Worker</td><td class="datecell mono">19 Oct 2026<small>starts</small></td><td><span class="cknum">15%</span></td><td><span class="st idle"><i></i>Just invited</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">PB</span><span>Peter Brennan<small>Maintenance Lead</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Hazel Lodge</td><td>British citizen</td><td class="datecell mono">04 Aug 2026<small>starts</small></td><td><span class="cknum">35%</span></td><td><span class="st warn"><i></i>Waiting on Peter</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar p" style="width:32px;height:32px;font-size:12px">IV</span><span>Ionela Vasile<small>Senior Carer</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Oakview House</td><td>Skilled Worker</td><td class="datecell mono">01 Oct 2026<small>starts</small></td><td><span class="cknum">55%</span></td><td><span class="st prog"><i></i>Documents in review</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar o" style="width:32px;height:32px;font-size:12px">GM</span><span>Grace Mensah<small>Registered Nurse</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Riverside Court</td><td>Skilled Worker</td><td class="datecell mono">15 Sep 2026<small>starts</small></td><td><span class="cknum">70%</span></td><td><span class="st prog"><i></i>Checks running</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar k" style="width:32px;height:32px;font-size:12px">DN</span><span>Daniel Nwosu<small>Care Assistant</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Hazel Lodge</td><td>Health &amp; Care</td><td class="datecell mono">01 Sep 2026<small>starts</small></td><td><span class="cknum">80%</span></td><td><span class="st prog"><i></i>Checks running</span></td></tr>
+        <tr class="rowlink" data-type="candidate"><td><span class="person"><span class="avatar l" style="width:32px;height:32px;font-size:12px">HK</span><span>Hana Kim<small>Care Assistant</small></span></span></td><td><span class="badge lime">Candidate</span></td><td>Oakview House</td><td>Settled status</td><td class="datecell mono">28 Jul 2026<small>starts</small></td><td><span class="cknum">90%</span></td><td><span class="st good"><i></i>Ready to start</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="empty-note" id="empty">No one matches that — try a shorter name, or clear the search.</div>
+    <div class="panel-foot" id="foot">Showing <b>18</b> of <b>67</b> people</div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var pills = document.querySelectorAll('.view-pill');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#tbody tr'));
+  var q = document.getElementById('q');
+  var foot = document.getElementById('foot');
+  var empty = document.getElementById('empty');
+  var activeView = 'all';
+
+  var totals = { all: 67, employees: 61, candidates: 6, sponsored: 24, action: 3, expiring: 3 };
+  var nouns = { all: 'people', employees: 'employees', candidates: 'candidates', sponsored: 'sponsored people', action: 'people who need action', expiring: 'people whose visas expire soon' };
+
+  function matchesView(tr) {
+    switch (activeView) {
+      case 'employees': return tr.dataset.type === 'employee';
+      case 'candidates': return tr.dataset.type === 'candidate';
+      case 'sponsored': return tr.dataset.sponsored === '1';
+      case 'action': return tr.dataset.action === '1';
+      case 'expiring': return tr.dataset.expiring === '1';
+      default: return true;
+    }
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (tr) {
+      var ok = matchesView(tr) && (!term || tr.textContent.toLowerCase().indexOf(term) !== -1);
+      tr.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    var total = totals[activeView];
+    var noun = nouns[activeView];
+    if (term) {
+      foot.innerHTML = 'Showing <b>' + shown + '</b> match' + (shown === 1 ? '' : 'es') + ' in ' + noun;
+    } else if (shown === total) {
+      foot.innerHTML = 'Showing all <b>' + total + '</b> ' + noun;
+    } else {
+      foot.innerHTML = 'Showing <b>' + shown + '</b> of <b>' + total + '</b> ' + noun + ' — the rest are all in order';
+    }
+    empty.style.display = shown ? 'none' : 'block';
+  }
+
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      activeView = p.dataset.view;
+      pills.forEach(function (x) { x.classList.toggle('active', x === p); });
+      apply();
+    });
+  });
+  q.addEventListener('input', apply);
+  apply();
+
+  rows.forEach(function (tr) {
+    tr.addEventListener('click', function () { window.location.href = '../employee-detail/index.html'; });
+  });
+})();
+</script>
+</body>
+</html>

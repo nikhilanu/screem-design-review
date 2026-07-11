@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 04 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 04 · "Drawer stack"
+   Profile as stacked expandable drawers — the two with
+   issues open by default, everything calm below.
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+.wrap { max-width:840px; margin:0 auto; }
+
+/* ── header (one loud black element) ───────────────────── */
+.hdr { background:var(--ink); border-radius:22px; padding:26px 30px; margin:6px 0 22px; color:#fffefa; }
+.hdr-top { display:flex; align-items:center; gap:18px; }
+.hdr .ava { width:60px; height:60px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); font-size:20px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.hdr .who { min-width:0; flex:1; }
+.hdr h1 { font-family:var(--font-sub); font-weight:360; font-size:29px; letter-spacing:-.01em; color:#fffefa; line-height:1.1; }
+.hdr .role { color:#fffefab3; font-size:14px; margin-top:3px; }
+.hdr .chip { flex:none; display:inline-flex; align-items:center; gap:8px; border:1px solid #fffefa2e; border-radius:100px; padding:7px 14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--orange-tint); white-space:nowrap; }
+.hdr .chip i { width:7px; height:7px; border-radius:100%; background:var(--orange); flex:none; }
+.hdr .verdict { font-family:var(--font-sub); font-weight:360; font-size:20px; line-height:1.35; color:#fffefa; margin:20px 0 16px; }
+.hdr .verdict em { font-style:normal; color:var(--lime); }
+.hdr .meter-wrap { display:flex; align-items:center; gap:14px; }
+.hdr .meter { flex:1; height:9px; border-radius:6px; background:#ffffff1f; overflow:hidden; }
+.hdr .meter i { display:block; height:100%; border-radius:6px; background:var(--lime); }
+.hdr .meter-lab { font-size:13px; color:#fffefacc; white-space:nowrap; }
+.hdr .meter-lab b { color:var(--lime); font-family:var(--font-display); font-weight:320; font-size:18px; }
+@media (max-width:600px) { .hdr-top { flex-wrap:wrap; } }
+
+/* ── drawers ───────────────────────────────────────────── */
+.drawer { background:var(--raised); border:1px solid var(--line-weak); border-radius:16px; box-shadow:var(--card-shadow); margin-bottom:12px; overflow:hidden; }
+.drawer[open] { box-shadow:0 1px 2px #1c140010, 0 6px 22px #1c140012; }
+.drawer.warn { border-color:var(--orange-tint); }
+.drawer > summary { display:flex; align-items:center; gap:13px; padding:16px 20px; cursor:pointer; list-style:none; }
+.drawer > summary::-webkit-details-marker { display:none; }
+.drawer > summary:hover { background:var(--paper); }
+.d-ic { width:38px; height:38px; border-radius:11px; flex:none; display:inline-flex; align-items:center; justify-content:center; background:var(--purple-soft); color:var(--purple-deep); }
+.drawer.warn .d-ic { background:var(--orange-soft); color:var(--orange-deep); }
+.d-name { font-size:16px; font-weight:600; color:var(--ink); }
+.owner { display:inline-flex; align-items:center; gap:6px; border-radius:100px; padding:3px 9px; font-size:11.5px; font-weight:600; white-space:nowrap; margin-left:11px; }
+.owner .av { width:15px; height:15px; border-radius:100%; font-size:8px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
+.owner.maria { background:var(--purple-soft); color:var(--purple-deep); } .owner.maria .av { background:var(--purple-deep); color:#fff; }
+.owner.you { background:var(--sunken); color:var(--ink-soft); } .owner.you .av { background:var(--ink); color:var(--lime); }
+.owner.sys { background:var(--lime-soft); color:var(--lime-deep); } .owner.sys .av { background:var(--lime-deep); color:var(--lime); }
+.d-status { margin-left:auto; display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; border-radius:100px; padding:4px 11px; white-space:nowrap; }
+.d-status.good { background:var(--lime-soft); color:var(--lime-deep); }
+.d-status.warn { background:var(--orange-soft); color:var(--orange-deep); }
+.d-status.mono { background:var(--sunken); color:var(--ink-soft); font-family:var(--font-mono); font-weight:500; }
+.d-status i { width:7px; height:7px; border-radius:100%; flex:none; }
+.d-status.good i { background:var(--lime-deep); } .d-status.warn i { background:var(--orange); }
+.chev { width:16px; height:16px; color:var(--faint); flex:none; transition:transform .3s var(--ease-emphasized); margin-left:4px; }
+.drawer[open] > summary .chev { transform:rotate(90deg); }
+@media (max-width:560px) { .owner { display:none; } }
+
+.d-body { padding:4px 20px 18px; border-top:1px solid var(--line-subtle); }
+
+/* issue callout */
+.callout { display:flex; align-items:flex-start; gap:13px; background:var(--orange-soft); border:1px solid var(--orange-tint); border-radius:13px; padding:15px 17px; margin:14px 0 6px; }
+.callout .ci { width:30px; height:30px; border-radius:9px; background:#fff; color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.callout .cg { flex:1; min-width:0; }
+.callout .cg .code { font-family:var(--font-mono); font-size:12px; color:var(--orange-deep); font-weight:500; }
+.callout .cg b { display:block; color:var(--ink); font-weight:600; font-size:15px; margin-top:1px; }
+.callout .cg small { display:block; color:var(--orange-deep); font-size:13px; margin-top:3px; }
+.callout .fix { align-self:center; border:none; background:var(--lime); color:var(--ink); border-radius:100px; padding:9px 17px; font-size:13.5px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.callout .fix:hover { background:var(--lime-tint); }
+.callout .fix.grey { background:#fff; color:var(--ink); border:1px solid var(--orange-tint); }
+.callout .fix.grey:hover { background:var(--paper); }
+@media (max-width:560px) { .callout { flex-wrap:wrap; } }
+
+/* kv grid */
+.kvgrid { display:grid; grid-template-columns:1fr 1fr; margin-top:6px; }
+.kv { padding:12px 0; border-top:1px solid var(--line-subtle); display:flex; flex-direction:column; gap:3px; }
+.kvgrid .kv:nth-child(-n+2) { border-top:none; }
+.kv:nth-child(odd) { padding-right:22px; }
+.kv .k { color:var(--muted); font-size:12.5px; }
+.kv .v { color:var(--ink); font-weight:500; font-size:14.5px; }
+.kv .v.mono { font-family:var(--font-mono); font-size:13px; font-weight:400; }
+.kv .v.hot { color:var(--orange-deep); }
+.kv .v .note { color:var(--muted); font-weight:400; font-size:13px; }
+.kv.full { grid-column:1 / -1; padding-right:0; }
+@media (max-width:520px) { .kvgrid { grid-template-columns:1fr; } .kv:nth-child(odd) { padding-right:0; } .kvgrid .kv:nth-child(2) { border-top:1px solid var(--line-subtle); } }
+
+/* doc + check + timeline rows */
+.doc-row { display:flex; align-items:center; gap:12px; padding:11px 0; border-top:1px solid var(--line-subtle); font-size:14px; }
+.doc-row:first-of-type { border-top:none; }
+.doc-row .dic { width:30px; height:30px; border-radius:9px; background:var(--paper); border:1px solid var(--line-weak); display:inline-flex; align-items:center; justify-content:center; flex:none; color:var(--muted); }
+.doc-row .grow { flex:1; min-width:0; font-weight:500; color:var(--ink); }
+.st { display:inline-flex; align-items:center; gap:7px; font-weight:500; font-size:13px; color:var(--ink-soft); white-space:nowrap; }
+.st i { width:8px; height:8px; border-radius:100%; flex:none; }
+.st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); } .st.good { color:var(--lime-deep); }
+.st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); } .st.warn { color:var(--orange-deep); }
+
+.cgrp-h { display:flex; align-items:center; gap:9px; font-size:13px; font-weight:600; color:var(--ink-soft); padding:12px 0 2px; }
+.cgrp-h .tally { margin-left:auto; font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+.cgrp-h .tally.ok { color:var(--lime-deep); } .cgrp-h .tally.bad { color:var(--orange-deep); }
+.crow { display:flex; align-items:center; gap:11px; padding:9px 0; border-top:1px solid var(--line-subtle); font-size:13.5px; }
+.crow .cmark { width:21px; height:21px; border-radius:7px; flex:none; display:inline-flex; align-items:center; justify-content:center; }
+.crow .cmark svg { width:12px; height:12px; }
+.crow.pass .cmark { background:var(--lime-soft); color:var(--lime-deep); }
+.crow.fail .cmark { background:var(--orange-soft); color:var(--orange-deep); }
+.crow.sched .cmark { background:var(--purple-soft); color:var(--purple-deep); }
+.crow .code { font-family:var(--font-mono); font-size:11.5px; color:var(--faint); width:54px; flex:none; }
+.crow .grow { flex:1; min-width:0; color:var(--ink-body); }
+.crow .grow b { color:var(--ink); font-weight:600; }
+
+.tl-row { display:flex; gap:15px; padding:11px 0; border-top:1px solid var(--line-subtle); font-size:14px; }
+.tl-row:first-of-type { border-top:none; }
+.tl-row .when { font-family:var(--font-mono); font-size:12px; color:var(--faint); width:86px; flex:none; padding-top:2px; }
+.tl-row .dot { width:10px; height:10px; border-radius:100%; flex:none; margin-top:4px; background:var(--line-mid); box-shadow:0 0 0 3px var(--sunken); }
+.tl-row.milestone .dot { background:var(--purple); box-shadow:0 0 0 3px var(--purple-soft); }
+.tl-row.hot .dot { background:var(--orange); box-shadow:0 0 0 3px var(--orange-soft); }
+.tl-row .what { color:var(--ink-soft); }
+.tl-row .what b { color:var(--ink); font-weight:600; }
+.tl-row .what .code { font-family:var(--font-mono); font-size:12px; color:var(--faint); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 20 20"><path d="m7 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pay" viewBox="0 0 20 20"><rect x="2.6" y="5.2" width="14.8" height="9.6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-cert" viewBox="0 0 20 20"><circle cx="10" cy="7.8" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m7.6 11.4-1.2 6 3.6-1.9 3.6 1.9-1.2-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <!-- header -->
+  <div class="hdr">
+    <div class="hdr-top">
+      <span class="ava">MO</span>
+      <div class="who">
+        <h1>Maria Okafor</h1>
+        <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route · since 12 Aug 2023 (3 years)</div>
+      </div>
+      <span class="chip"><i></i>Needs action · 2 items</span>
+    </div>
+    <div class="verdict">Maria's file is in good shape — <em>28 of 32 checks pass</em>. Two papers need your signature this week, and both are already drafted for you.</div>
+    <div class="meter-wrap">
+      <span class="meter"><i style="width:88%"></i></span>
+      <span class="meter-lab"><b>88%</b> · 28 / 32 passing</span>
+    </div>
+  </div>
+
+  <!-- PERSONAL -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-person"/></svg></span>
+      <span class="d-name">Personal</span>
+      <span class="owner maria"><span class="av">MO</span>Maria provides</span>
+      <span class="d-status good"><i></i>100% complete</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="kvgrid">
+        <div class="kv"><span class="k">Date of birth</span><span class="v">14 May 1991</span></div>
+        <div class="kv"><span class="k">Nationality</span><span class="v">Nigerian</span></div>
+        <div class="kv"><span class="k">Email</span><span class="v mono">maria.okafor@fernbank.co.uk</span></div>
+        <div class="kv"><span class="k">Phone</span><span class="v mono">07700 900412</span></div>
+        <div class="kv full"><span class="k">Home address</span><span class="v">22 Elm Grove, Leeds LS8 2AT</span></div>
+        <div class="kv"><span class="k">Passport</span><span class="v mono">6602214187 · exp 03 Feb 2029</span></div>
+        <div class="kv"><span class="k">National Insurance</span><span class="v mono">QQ 12 34 56 C</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- EMPLOYMENT — warn, open -->
+  <details class="drawer warn" open>
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-case"/></svg></span>
+      <span class="d-name">Employment</span>
+      <span class="owner you"><span class="av">FB</span>You provide</span>
+      <span class="d-status warn"><i></i>1 item needs you</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="callout">
+        <span class="ci"><svg class="icon"><use href="#i-pay"/></svg></span>
+        <span class="cg"><span class="code">SW-11 · Salary change not yet reported</span><b>June pay rise of +£1,900 must be reported to the Home Office</b><small>screem has already written the report — this is a 3-minute read, not a form to fill in.</small></span>
+        <button class="fix grey" data-act="salary">Review report</button>
+      </div>
+      <div class="kvgrid">
+        <div class="kv"><span class="k">Start date</span><span class="v">12 Aug 2023 · 3 years</span></div>
+        <div class="kv"><span class="k">Job title · SOC code</span><span class="v">Senior Care Assistant · 6136</span></div>
+        <div class="kv"><span class="k">Team · site</span><span class="v">Care team · Oakview House</span></div>
+        <div class="kv"><span class="k">Contract</span><span class="v">Permanent · 37.5 hrs/wk</span></div>
+        <div class="kv"><span class="k">Salary</span><span class="v">£26,700 <span class="note">— £1,200 above the £25,500 going rate</span></span></div>
+        <div class="kv"><span class="k">Payroll change</span><span class="v hot">+£1,900 in June — not yet reported</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- VISA — good -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-shield"/></svg></span>
+      <span class="d-name">Visa &amp; right to work</span>
+      <span class="owner maria"><span class="av">MO</span>Maria provides</span>
+      <span class="d-status good"><i></i>All clear</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="kvgrid">
+        <div class="kv"><span class="k">Visa route</span><span class="v">Skilled Worker</span></div>
+        <div class="kv"><span class="k">Visa expires</span><span class="v hot">12 Aug 2026 · 33 days</span></div>
+        <div class="kv"><span class="k">Right-to-work check</span><span class="v">eVisa share code verified 14 Feb 2026</span></div>
+        <div class="kv"><span class="k">Audit trail</span><span class="v">Stored</span></div>
+        <div class="kv full"><span class="k">Repeat right-to-work check</span><span class="v">Scheduled 12 Aug 2026</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SPONSORSHIP — warn, open -->
+  <details class="drawer warn" open>
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-cert"/></svg></span>
+      <span class="d-name">Sponsorship</span>
+      <span class="owner you"><span class="av">FB</span>You provide</span>
+      <span class="d-status warn"><i></i>1 item needs you</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="callout">
+        <span class="ci"><svg class="icon"><use href="#i-cert"/></svg></span>
+        <span class="cg"><span class="code">SW-04 · Certificate of Sponsorship expires within 60 days</span><b>Her Certificate of Sponsorship runs out on 12 August</b><small>The renewal is drafted and already checked against the going rate — it just wants your signature (~6 min).</small></span>
+        <button class="fix" data-act="cos">Review &amp; sign</button>
+      </div>
+      <div class="kvgrid">
+        <div class="kv"><span class="k">Certificate of Sponsorship (CoS)</span><span class="v mono">C2G7X44210091</span></div>
+        <div class="kv"><span class="k">Assigned</span><span class="v">12 Aug 2023</span></div>
+        <div class="kv"><span class="k">Expires</span><span class="v hot">12 Aug 2026</span></div>
+        <div class="kv"><span class="k">Renewal pack</span><span class="v">Drafted by screem</span></div>
+        <div class="kv full"><span class="k">Salary vs certificate</span><span class="v">Consistent with the certificate</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RECORDS -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-pay"/></svg></span>
+      <span class="d-name">Records</span>
+      <span class="owner sys"><span class="av">S</span>screem imports</span>
+      <span class="d-status good"><i></i>All clear</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="kvgrid">
+        <div class="kv"><span class="k">June payslip (gross)</span><span class="v">£2,225 — matches contract ✓</span></div>
+        <div class="kv"><span class="k">June attendance</span><span class="v">Clear — no unexplained absence ✓</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- DOCUMENTS -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-doc"/></svg></span>
+      <span class="d-name">Documents</span>
+      <span class="owner sys"><span class="av">S</span>5 on file</span>
+      <span class="d-status good"><i></i>All verified</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="doc-row"><span class="dic"><svg class="icon" style="width:15px;height:15px"><use href="#i-doc"/></svg></span><span class="grow">Passport</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="dic"><svg class="icon" style="width:15px;height:15px"><use href="#i-shield"/></svg></span><span class="grow">eVisa share code result</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="dic"><svg class="icon" style="width:15px;height:15px"><use href="#i-cert"/></svg></span><span class="grow">Certificate of Sponsorship</span><span class="st warn"><i></i>Expires 12 Aug — renewal drafted</span></div>
+      <div class="doc-row"><span class="dic"><svg class="icon" style="width:15px;height:15px"><use href="#i-case"/></svg></span><span class="grow">Employment contract</span><span class="st good"><i></i>Verified</span></div>
+      <div class="doc-row"><span class="dic"><svg class="icon" style="width:15px;height:15px"><use href="#i-pay"/></svg></span><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+    </div>
+  </details>
+
+  <!-- CHECKS -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-check"/></svg></span>
+      <span class="d-name">Checks</span>
+      <span class="owner sys"><span class="av">S</span>rule engine</span>
+      <span class="d-status mono">28 / 32</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="cgrp-h">Right to work<span class="tally ok">6 / 6 ✓</span></div>
+      <div class="crow pass"><span class="cmark"><svg><use href="#i-check"/></svg></span><span class="code">RTW-01</span><span class="grow"><b>Right-to-work evidence current</b></span></div>
+      <div class="cgrp-h">Visa &amp; passport<span class="tally">5 / 6 · 1 scheduled</span></div>
+      <div class="crow pass"><span class="cmark"><svg><use href="#i-check"/></svg></span><span class="code">VIS-01</span><span class="grow">Passport valid</span></div>
+      <div class="crow sched"><span class="cmark"><svg><use href="#i-clock"/></svg></span><span class="code">RTW-06</span><span class="grow">Repeat right-to-work check scheduled 12 Aug</span></div>
+      <div class="cgrp-h">Sponsorship<span class="tally bad">6 / 8 · 2 failing</span></div>
+      <div class="crow fail"><span class="cmark"><svg><use href="#i-x"/></svg></span><span class="code">SW-04</span><span class="grow"><b>Certificate of Sponsorship expires within 60 days</b></span></div>
+      <div class="crow fail"><span class="cmark"><svg><use href="#i-x"/></svg></span><span class="code">SW-11</span><span class="grow"><b>Salary change not yet reported</b></span></div>
+      <div class="cgrp-h">Pay &amp; attendance<span class="tally ok">11 / 11 ✓</span></div>
+      <div class="crow pass"><span class="cmark"><svg><use href="#i-check"/></svg></span><span class="code">PAY-02</span><span class="grow">Payslip matches certificate salary</span></div>
+      <div class="crow pass"><span class="cmark"><svg><use href="#i-check"/></svg></span><span class="code">ATT-02</span><span class="grow">No unexplained absence</span></div>
+    </div>
+  </details>
+
+  <!-- HISTORY -->
+  <details class="drawer">
+    <summary>
+      <span class="d-ic"><svg class="icon"><use href="#i-clock"/></svg></span>
+      <span class="d-name">History</span>
+      <span class="owner sys"><span class="av">S</span>audit trail</span>
+      <span class="d-status mono">6 events</span>
+      <svg class="chev"><use href="#i-chevron"/></svg>
+    </summary>
+    <div class="d-body">
+      <div class="tl-row hot"><span class="when">Today 6:00</span><span class="dot"></span><span class="what"><b>Renewal pack drafted</b> by screem <span class="code">SW-04</span></span></div>
+      <div class="tl-row"><span class="when">8 Jul 14:12</span><span class="dot"></span><span class="what"><b>Salary change detected</b> from the payroll feed</span></div>
+      <div class="tl-row"><span class="when">3 Jul</span><span class="dot"></span><span class="what">June attendance imported — <b>clear</b></span></div>
+      <div class="tl-row"><span class="when">2 Jul</span><span class="dot"></span><span class="what">June payslip <b>verified</b></span></div>
+      <div class="tl-row"><span class="when">14 Feb</span><span class="dot"></span><span class="what">Right to work <b>verified</b> — evidence stored</span></div>
+      <div class="tl-row milestone"><span class="when">12 Aug 2023</span><span class="dot"></span><span class="what"><b>Hired</b> and certificate assigned</span></div>
+    </div>
+  </details>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+document.querySelectorAll('.callout .fix').forEach(function (b) {
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    b.textContent = b.dataset.act === 'cos' ? 'Signed ✓' : 'Reviewed ✓';
+    b.disabled = true; b.style.opacity = '.6'; b.style.cursor = 'default';
+    var drawer = b.closest('.drawer');
+    var status = drawer.querySelector('.d-status');
+    status.className = 'd-status good';
+    status.innerHTML = '<i></i>All clear';
+  });
+});
+</script>
+</body>
+</html>

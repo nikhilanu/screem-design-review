@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 06 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 06 · "Fact ledger"
+   Facts left, what the rules make of them right — aligned, linked.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+/* ── sticky slim header ────────────────────────────────── */
+.bar { position:sticky; top:0; z-index:60; background:color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter:blur(9px); border-bottom:1px solid var(--line-subtle); }
+.bar-in { max-width:1180px; margin:0 auto; padding:11px 32px; display:flex; align-items:center; gap:16px; }
+.bar .ava { width:34px; height:34px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:12.5px; flex:none; }
+.bar .who b { font-family:var(--font-sub); font-weight:360; font-size:19px; color:var(--ink); letter-spacing:-.01em; }
+.bar .who small { display:block; font-size:12px; color:var(--muted); margin-top:-1px; }
+.bar .score { display:inline-flex; align-items:center; gap:9px; margin-left:8px; padding-left:16px; border-left:1px solid var(--line-weak); }
+.bar .score .rw { position:relative; width:34px; height:34px; flex:none; }
+.bar .score .rw svg { width:100%; height:100%; transform:rotate(-90deg); }
+.bar .score b { font-family:var(--font-display); font-weight:320; font-size:19px; color:var(--ink); line-height:1; }
+.bar .score small { display:block; font-size:11.5px; color:var(--muted); }
+.bar .acts { margin-left:auto; display:flex; gap:9px; align-items:center; }
+.btn { display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 15px; border-radius:100px; font-size:13.5px; font-weight:600; cursor:pointer; border:1px solid var(--line-weak); background:var(--raised); color:var(--ink); }
+.btn:hover { border-color:var(--line-mid); }
+.btn .icon { width:14px; height:14px; }
+.btn.lime { background:var(--lime); border-color:var(--lime); color:var(--ink); }
+.btn.lime:hover { background:var(--lime-tint); border-color:var(--lime-tint); }
+.btn.done { background:var(--sunken); border-color:var(--line-weak); color:var(--faint); pointer-events:none; }
+.btn.done .icon { color:var(--lime-deep); }
+@media (max-width:820px) { .bar .who small, .bar .score small { display:none; } .bar .acts .lbl { display:none; } }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; }
+.back:hover { color:var(--purple-deep); }
+
+/* ── page ──────────────────────────────────────────────── */
+.wrap { max-width:1180px; margin:0 auto; padding:26px 32px 130px; }
+.lead { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:24px; }
+.lead h1 { font-family:var(--font-sub); font-weight:360; font-size:27px; letter-spacing:-.01em; color:var(--ink); }
+.lead p { color:var(--muted); font-size:14.5px; margin-top:4px; max-width:560px; }
+.lead .key { display:flex; gap:16px; font-size:12.5px; color:var(--muted); }
+.lead .key span { display:inline-flex; align-items:center; gap:6px; }
+.lead .key i { width:9px; height:9px; border-radius:3px; flex:none; }
+
+/* column captions */
+.cols-head { display:grid; grid-template-columns:1fr 56px 1fr; align-items:baseline; margin-bottom:6px; }
+.cols-head .ch { font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); }
+.cols-head .ch .big { display:block; font-family:var(--font-sub); font-weight:360; font-size:19px; letter-spacing:-.01em; text-transform:none; color:var(--ink); margin-top:3px; }
+.cols-head .ch.r { text-align:left; }
+
+/* section band */
+.band { display:grid; grid-template-columns:1fr 56px 1fr; margin-top:14px; }
+.band > .sec-title { grid-column:1 / -1; display:flex; align-items:center; gap:9px; font-size:11.5px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin:16px 0 9px; }
+.band > .sec-title .own { margin-left:6px; letter-spacing:0; text-transform:none; font-weight:400; color:var(--faint); font-size:11.5px; }
+.band > .sec-title::after { content:""; flex:1; height:1px; background:var(--line-subtle); }
+
+/* cells */
+.cell { display:flex; flex-direction:column; gap:8px; }
+.cell.left { align-items:stretch; }
+
+/* fact ledger row */
+.lrow { background:var(--raised); border-radius:12px; box-shadow:var(--card-shadow); padding:11px 15px; display:flex; align-items:center; gap:12px; }
+.lrow.warn { box-shadow:0 0 0 1px var(--orange-tint), var(--card-shadow); }
+.lrow .body { flex:1; min-width:0; }
+.lrow .k { font-size:11.5px; color:var(--muted); }
+.lrow .v { font-size:14.5px; font-weight:500; color:var(--ink); margin-top:1px; }
+.lrow .v.mono { font-family:var(--font-mono); font-size:12.5px; font-weight:400; }
+.lrow .warnflag { color:var(--orange-deep); }
+.lrow .stamp { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:var(--lime-deep); background:var(--lime-soft); border-radius:6px; padding:3px 8px; white-space:nowrap; flex:none; }
+.lrow .stamp svg { width:11px; height:11px; }
+.lrow .stamp.warn { color:var(--orange-deep); background:var(--orange-soft); }
+.lrow .owner { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:500; border-radius:100px; padding:3px 9px; white-space:nowrap; flex:none; }
+.lrow .owner.maria { background:var(--purple-soft); color:var(--purple-deep); }
+.lrow .owner.emp { background:var(--sunken); color:var(--muted); }
+.lrow .owner .d { width:15px; height:15px; border-radius:100%; font-size:8px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
+.lrow .owner.maria .d { background:var(--purple-tint); color:#fff; }
+.lrow .owner.emp .d { background:var(--line-mid); color:var(--raised); }
+
+/* check result row (right) */
+.crow { background:var(--raised); border-radius:12px; box-shadow:var(--card-shadow); padding:11px 15px; display:flex; align-items:center; gap:11px; }
+.crow .cico { width:24px; height:24px; border-radius:7px; flex:none; display:inline-flex; align-items:center; justify-content:center; }
+.crow .cico svg { width:14px; height:14px; }
+.crow.pass .cico { background:var(--lime-soft); color:var(--lime-deep); }
+.crow.fail .cico { background:var(--orange-soft); color:var(--orange-deep); }
+.crow.sched .cico { background:var(--purple-soft); color:var(--purple-deep); }
+.crow .body { flex:1; min-width:0; }
+.crow .nm { font-size:13.5px; font-weight:600; color:var(--ink); }
+.crow .code { font-family:var(--font-mono); font-size:10.5px; color:var(--faint); margin-left:7px; }
+.crow .sub { font-size:12px; color:var(--muted); margin-top:1px; }
+.crow.fail { box-shadow:0 0 0 1px var(--orange-tint), var(--card-shadow); }
+.crow .tag { font-size:11px; font-weight:600; white-space:nowrap; flex:none; }
+.crow.fail .tag { color:var(--orange-deep); }
+.crow.sched .tag { color:var(--purple-deep); }
+.crow .fixmini { background:var(--lime); color:var(--ink); border:none; border-radius:8px; padding:6px 11px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; white-space:nowrap; flex:none; }
+.crow .fixmini:hover { background:var(--lime-tint); }
+.crow .fixmini.ghost { background:var(--sunken); color:var(--ink); }
+.crow .fixmini.ghost:hover { background:var(--line-subtle); }
+
+/* connector */
+.conn { position:relative; }
+.conn::before { content:""; position:absolute; left:50%; top:0; bottom:-14px; border-left:1.5px dashed var(--line-weak); transform:translateX(-.75px); }
+.band:last-child .conn::before { bottom:50%; }
+.conn .node { position:absolute; top:14px; left:50%; transform:translateX(-50%); width:11px; height:11px; border-radius:100%; background:var(--paper); border:2px solid var(--line-mid); z-index:1; }
+.conn .node.hot { border-color:var(--orange); background:var(--orange-soft); }
+.conn .node::before, .conn .node::after { content:""; position:absolute; top:50%; height:0; border-top:1.5px dashed var(--line-mid); width:20px; }
+.conn .node::before { right:100%; margin-right:2px; }
+.conn .node::after { left:100%; margin-left:2px; }
+.conn .node.hot::before, .conn .node.hot::after { border-top-color:var(--orange-tint); }
+
+@media (max-width:820px) {
+  .cols-head { grid-template-columns:1fr; }
+  .cols-head .ch.mid, .cols-head .ch.r { display:none; }
+  .band { grid-template-columns:1fr; }
+  .band .conn { display:none; }
+  .band .cell.right { margin-top:10px; }
+  .band .cell.right::before { content:"↳ what the rules make of it"; font-size:11.5px; color:var(--faint); font-style:italic; margin-bottom:2px; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 20 20"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 20 20"><path d="M10 3.2 17.5 16.5H2.5L10 3.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8.3v3.4M10 14.2h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="back" href="../employee-listing/index.html">←</a>
+    <span class="ava">MO</span>
+    <span class="who"><b>Maria Okafor</b><small>Senior Care Assistant · Oakview House</small></span>
+    <span class="score">
+      <span class="rw">
+        <svg viewBox="0 0 34 34" role="img" aria-label="88 percent">
+          <circle cx="17" cy="17" r="13" fill="none" stroke="var(--line-subtle)" stroke-width="4"/>
+          <circle cx="17" cy="17" r="13" fill="none" stroke="var(--lime-deep)" stroke-width="4" stroke-dasharray="71.5 81.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span><b>88%</b><small>28 of 32</small></span>
+    </span>
+    <span class="acts">
+      <button class="btn lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg><span class="lbl">Review &amp; sign renewal</span></button>
+      <button class="btn" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg><span class="lbl">Review salary report</span></button>
+    </span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lead">
+    <div>
+      <h1>Cause and effect</h1>
+      <p>On the left, every fact on Maria's record. On the right, what the 32 rules make of them — read straight across.</p>
+    </div>
+    <div class="key">
+      <span><i style="background:var(--lime)"></i>Passes</span>
+      <span><i style="background:var(--orange)"></i>Needs you</span>
+      <span><i style="background:var(--purple-tint)"></i>Scheduled</span>
+    </div>
+  </div>
+
+  <div class="cols-head">
+    <div class="ch">The record<span class="big">The facts</span></div>
+    <div class="ch mid"></div>
+    <div class="ch r">The engine<span class="big">What the rules make of them</span></div>
+  </div>
+
+  <!-- PERSONAL -->
+  <div class="band">
+    <div class="sec-title">Personal <span class="own">— Maria provides</span></div>
+    <div class="cell left">
+      <div class="lrow"><div class="body"><div class="k">Passport</div><div class="v mono">6602214187 · exp 03 Feb 2029</div></div><span class="stamp"><svg><use href="#i-check"/></svg>03 Feb 29</span><span class="owner maria"><span class="d">M</span>Maria</span></div>
+      <div class="lrow"><div class="body"><div class="k">National Insurance</div><div class="v mono">QQ 12 34 56 C</div></div><span class="owner maria"><span class="d">M</span>Maria</span></div>
+      <div class="lrow"><div class="body"><div class="k">Date of birth · nationality</div><div class="v">14 May 1991 · Nigerian</div></div><span class="owner maria"><span class="d">M</span>Maria</span></div>
+    </div>
+    <div class="conn"><span class="node"></span></div>
+    <div class="cell right">
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Passport valid and unexpired<span class="code">VIS-01</span></div><div class="sub">Expiry is years away.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">NI number valid format<span class="code">PAY-04</span></div><div class="sub">Matches HMRC pattern.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+    </div>
+  </div>
+
+  <!-- EMPLOYMENT -->
+  <div class="band">
+    <div class="sec-title">Employment <span class="own">— employer provides</span></div>
+    <div class="cell left">
+      <div class="lrow"><div class="body"><div class="k">Role · SOC code</div><div class="v">Senior Care Assistant · 6136</div></div><span class="owner emp"><span class="d">F</span>Fernbank</span></div>
+      <div class="lrow"><div class="body"><div class="k">Contracted salary</div><div class="v">£26,700 · £1,200 above going rate</div></div><span class="owner emp"><span class="d">F</span>Fernbank</span></div>
+      <div class="lrow warn"><div class="body"><div class="k warnflag">Payroll change · June</div><div class="v warnflag">+£1,900 — not yet reported</div></div><span class="stamp warn"><svg><use href="#i-warn"/></svg>8 Jul</span></div>
+    </div>
+    <div class="conn"><span class="node hot"></span></div>
+    <div class="cell right">
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Role and SOC code consistent<span class="code">SW-02</span></div><div class="sub">Job title maps to code 6136.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Salary meets the going rate<span class="code">SW-01</span></div><div class="sub">£26,700 vs £25,500.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+      <div class="crow fail"><span class="cico"><svg><use href="#i-x"/></svg></span><div class="body"><div class="nm">Salary change not yet reported<span class="code">SW-11</span></div><div class="sub">Report drafted · due within 10 days.</div></div><button class="fixmini ghost" data-act="salary">Review · 3 min</button></div>
+    </div>
+  </div>
+
+  <!-- VISA & RIGHT TO WORK -->
+  <div class="band">
+    <div class="sec-title">Visa &amp; right to work <span class="own">— from the Home Office feed</span></div>
+    <div class="cell left">
+      <div class="lrow"><div class="body"><div class="k">Skilled Worker visa</div><div class="v warnflag">Expires 12 Aug 2026 · 33 days</div></div><span class="stamp warn"><svg><use href="#i-clock"/></svg>12 Aug</span></div>
+      <div class="lrow"><div class="body"><div class="k">eVisa share code</div><div class="v">Verified — audit trail stored</div></div><span class="stamp"><svg><use href="#i-check"/></svg>14 Feb 26</span></div>
+    </div>
+    <div class="conn"><span class="node"></span></div>
+    <div class="cell right">
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Right-to-work evidence current<span class="code">RTW-01</span></div><div class="sub">Share code checked and stored.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+      <div class="crow sched"><span class="cico"><svg><use href="#i-clock"/></svg></span><div class="body"><div class="nm">Repeat right-to-work check<span class="code">RTW-06</span></div><div class="sub">Booked for 12 Aug 2026.</div></div><span class="tag">SCHEDULED</span></div>
+      <div class="crow sched"><span class="cico"><svg><use href="#i-clock"/></svg></span><div class="body"><div class="nm">Visa renewal reminder<span class="code">VIS-02</span></div><div class="sub">Reminder set for 12 Aug 2026.</div></div><span class="tag">SCHEDULED</span></div>
+    </div>
+  </div>
+
+  <!-- SPONSORSHIP -->
+  <div class="band">
+    <div class="sec-title">Sponsorship <span class="own">— employer provides</span></div>
+    <div class="cell left">
+      <div class="lrow"><div class="body"><div class="k">Certificate of Sponsorship</div><div class="v mono">C2G7X44210091</div></div><span class="stamp"><svg><use href="#i-check"/></svg>12 Aug 23</span></div>
+      <div class="lrow warn"><div class="body"><div class="k warnflag">Certificate expiry</div><div class="v warnflag">12 Aug 2026 · renewal drafted</div></div><span class="stamp warn"><svg><use href="#i-clock"/></svg>12 Aug</span></div>
+    </div>
+    <div class="conn"><span class="node hot"></span></div>
+    <div class="cell right">
+      <div class="crow fail"><span class="cico"><svg><use href="#i-x"/></svg></span><div class="body"><div class="nm">Certificate expires within 60 days<span class="code">SW-04</span></div><div class="sub">33 days left · renewal drafted for you.</div></div><button class="fixmini" data-act="cos">Review · 6 min</button></div>
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Start date matches certificate<span class="code">SW-09</span></div><div class="sub">Both read 12 Aug 2023.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+    </div>
+  </div>
+
+  <!-- RECORDS -->
+  <div class="band">
+    <div class="sec-title">Records <span class="own">— imported feeds</span></div>
+    <div class="cell left">
+      <div class="lrow"><div class="body"><div class="k">June payslip</div><div class="v">£2,225 gross — matches contract</div></div><span class="stamp"><svg><use href="#i-check"/></svg>2 Jul 26</span></div>
+      <div class="lrow"><div class="body"><div class="k">June attendance</div><div class="v">Clear — no unexplained absence</div></div><span class="stamp"><svg><use href="#i-check"/></svg>3 Jul 26</span></div>
+    </div>
+    <div class="conn"><span class="node"></span></div>
+    <div class="cell right">
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">Payslip matches certificate salary<span class="code">PAY-02</span></div><div class="sub">Gross pay reconciles to contract.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+      <div class="crow pass"><span class="cico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="nm">No unexplained absence<span class="code">ATT-02</span></div><div class="sub">Hours logged all month.</div></div><span class="tag" style="color:var(--lime-deep)">PASS</span></div>
+    </div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+function wire(sel, txt) {
+  document.querySelectorAll('[data-act="' + sel + '"]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (b.classList.contains('btn')) {
+        b.classList.add('done');
+        b.innerHTML = '<svg class="icon"><use href="#i-check"/></svg><span class="lbl">' + txt + '</span>';
+      } else {
+        b.textContent = txt;
+        b.style.background = 'var(--sunken)'; b.style.color = 'var(--faint)'; b.style.pointerEvents = 'none';
+      }
+    });
+  });
+}
+wire('cos', 'Signed');
+wire('salary', 'Reviewed');
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem home · 13 — Analyst split</title>
+<meta name="description" content="screem home variation 13 — analyst split: guided actions on the left, a living compliance chart on the right." />
+<style>
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1;
+  --raised: #fffefa;
+  --sunken: #f1eee1;
+  --ink: #000000;
+  --ink-body: #211e15;
+  --ink-soft: #4c473a;
+  --muted: #6f6a5a;
+  --faint: #a19a86;
+  --line-subtle: #ece8d9;
+  --line-weak: #e1dcc9;
+  --line-mid: #cec7af;
+  --purple: #7d39eb;
+  --purple-deep: #5a1fbc;
+  --purple-soft: #f0e9fd;
+  --purple-tint: #c9a6f7;
+  --lime: #bfff1f;
+  --lime-deep: #44610a;
+  --lime-soft: #f1fbd2;
+  --lime-tint: #dcf584;
+  --orange: #ed621d;
+  --orange-deep: #b8480e;
+  --orange-soft: #fcead9;
+  --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --soft-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink-body);
+  font-size: 15.5px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.mono { font-family: var(--font-mono); }
+.icon { width: 17px; height: 17px; flex: none; }
+
+/* live dot */
+.live-dot { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 100%; background: var(--lime); flex: none; }
+.live-dot::before { content: ""; position: absolute; inset: -1px; border-radius: 100%; border: 1px solid var(--lime-deep); opacity: .55; }
+.live-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 100%; border: 1.5px solid var(--lime); opacity: 0; animation: halo 2.6s var(--ease-out-cubic) infinite; }
+@keyframes halo { 0% { transform: scale(.7); opacity: .8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .07s; } .rise.d2 { animation-delay: .14s; } .rise.d3 { animation-delay: .21s; }
+
+/* ── frame ─────────────────────────────────────────────── */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 36px 72px; }
+@media (max-width: 720px) { .wrap { padding: 0 18px 56px; } }
+
+.top { display: flex; align-items: center; gap: 12px; height: 62px; border-bottom: 1px solid var(--line-subtle); }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.top .sep { color: var(--line-mid); }
+.top .org { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.top .right { margin-left: auto; display: inline-flex; align-items: center; gap: 11px; font-size: 14px; color: var(--muted); }
+.avatar { width: 27px; height: 27px; border-radius: 100%; flex: none; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.k { background: var(--ink); color: var(--lime); }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.l { background: var(--lime-soft); color: var(--lime-deep); }
+.avatar.lg { width: 42px; height: 42px; font-size: 14px; }
+@media (max-width: 720px) { .top .date { display: none; } }
+
+/* ── slim black verdict strip — the page's one loud element ── */
+.strip { display: flex; align-items: center; gap: 15px; background: var(--ink); color: #fffefa; border-radius: 18px; padding: 15px 24px; margin: 26px 0 24px; }
+.strip .line { font-family: var(--font-sub); font-weight: 360; font-size: 19.5px; letter-spacing: -.005em; line-height: 1.35; min-width: 0; flex: 1 1 260px; }
+.strip .line em { font-style: normal; color: var(--lime); }
+.strip .line span { color: #fffefaa8; font-family: var(--font-sans); font-size: 14.5px; }
+.strip .end { margin-left: auto; display: inline-flex; align-items: center; gap: 13px; flex: none; }
+.strip .sweep { font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: #fffefa82; white-space: nowrap; }
+.mini-ring { position: relative; width: 46px; height: 46px; flex: none; }
+.mini-ring svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+.mini-ring b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 320; font-size: 13.5px; color: var(--lime); }
+@media (max-width: 880px) { .strip { flex-wrap: wrap; } .strip .end { margin-left: 0; } .strip .sweep { display: none; } }
+
+/* ── the permanent split ───────────────────────────────── */
+.split { display: grid; grid-template-columns: 11fr 9fr; gap: 22px; align-items: start; }
+@media (max-width: 980px) { .split { grid-template-columns: 1fr; } }
+
+.sec-h { display: flex; align-items: baseline; gap: 11px; margin: 6px 0 12px; }
+.sec-h h2 { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
+.sec-h .sub { color: var(--faint); font-size: 13.5px; }
+
+/* action card — borderless, radius 22, shadow only */
+.card { background: var(--raised); border: none; border-radius: 22px; box-shadow: var(--soft-shadow); }
+.acts { padding: 6px 0; }
+.act-row { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-top: 1px solid var(--line-subtle); }
+.act-row:first-child { border-top: none; }
+.act-row .grow { flex: 1; min-width: 0; }
+.act-row .grow b { color: var(--ink); font-weight: 600; }
+.act-row .grow small { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+.act-row .pill { border: none; border-radius: 100px; height: 38px; padding: 0 19px; font-size: 14px; font-weight: 600; background: var(--lime); color: var(--ink); cursor: pointer; white-space: nowrap; flex: none; }
+.act-row .pill:hover { background: var(--lime-tint); }
+@media (max-width: 640px) { .act-row { flex-wrap: wrap; } .act-row .pill { margin-left: 58px; } }
+
+/* bare coming-up list */
+.later { margin-top: 26px; }
+.later .mini-row { display: flex; align-items: center; gap: 14px; padding: 12px 4px; border-top: 1px solid var(--line-subtle); font-size: 15px; }
+.later .mini-row:first-of-type { border-top: none; }
+.later .when { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); white-space: nowrap; min-width: 56px; }
+.later .mini-row .grow { flex: 1; min-width: 0; }
+.later .mini-row small { color: var(--faint); font-size: 13.5px; white-space: nowrap; }
+@media (max-width: 640px) { .later .mini-row small { display: none; } }
+
+/* footer meta */
+.foot { margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--line-subtle); font-size: 13px; color: var(--faint); display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── chart card ────────────────────────────────────────── */
+.chart-card { padding: 22px 24px 20px; }
+.chart-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
+.chart-top h2 { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
+.chart-top p { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.seg { margin-left: auto; display: inline-flex; border: 1px solid var(--line-weak); background: var(--sunken); border-radius: 10px; padding: 2px; gap: 2px; flex: none; }
+.seg button { border: none; background: transparent; border-radius: 8px; padding: 5px 13px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; }
+.seg button:hover { color: var(--ink); }
+.seg button.on { background: var(--raised); color: var(--ink); box-shadow: var(--card-shadow); }
+
+.chart-wrap { position: relative; margin-top: 12px; }
+.chart-wrap svg { display: block; width: 100%; height: auto; cursor: crosshair; }
+.axis-lab { font-family: var(--font-sans); font-size: 11px; fill: var(--muted); }
+.tip {
+  position: absolute; pointer-events: none; opacity: 0; z-index: 5;
+  transform: translate(-50%, calc(-100% - 13px));
+  background: var(--ink); color: #fffefa; border-radius: 9px; padding: 6px 11px;
+  font-size: 12.5px; white-space: nowrap; box-shadow: 0 4px 14px #1c140038;
+  transition: opacity .15s var(--ease-emphasized);
+}
+.tip b { color: var(--lime); font-family: var(--font-mono); font-weight: 500; font-size: 13px; }
+.tip::after { content: ""; position: absolute; left: 50%; bottom: -4px; width: 8px; height: 8px; background: var(--ink); transform: translateX(-50%) rotate(45deg); border-radius: 2px; }
+.chart-note { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 4px; }
+.chart-note i.k-line { width: 14px; height: 3px; border-radius: 2px; background: var(--purple); flex: none; }
+.chart-note i.k-dot { width: 8px; height: 8px; border-radius: 100%; background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); flex: none; }
+
+/* pack sparkbars */
+.packs-h { font-size: 14px; font-weight: 600; color: var(--ink); margin: 22px 0 2px; padding-top: 18px; border-top: 1px solid var(--line-subtle); }
+.packs-sub { font-size: 12.5px; color: var(--faint); margin-bottom: 12px; }
+.packs { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; align-items: end; }
+.pk { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 5px; border-radius: 10px; padding: 8px 3px 9px; cursor: default; }
+.pk:hover { background: var(--paper); }
+.pk .pv { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
+.pk i { display: block; width: 20px; border-radius: 5px 5px 2px 2px; background: var(--purple-tint); }
+.pk.low i { background: var(--orange-tint); }
+.pk.low .pv { color: var(--orange-deep); font-weight: 500; }
+.pk label { font-size: 10.5px; line-height: 1.25; color: var(--muted); text-align: center; min-height: 26px; }
+@media (max-width: 480px) { .packs { grid-template-columns: repeat(4, 1fr); } }
+
+/* variations chip */
+.var-chip { position: fixed; right: 18px; bottom: 18px; z-index: 999; background: var(--ink); color: var(--lime); font-family: var(--font-mono); font-size: 12px; letter-spacing: .02em; padding: 9px 15px; border-radius: 100px; box-shadow: 0 5px 16px #1c140033; }
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="index.html"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</a>
+    <span class="sep">·</span>
+    <span class="org">Fernbank Care Group</span>
+    <span class="right"><span class="date">Friday 10 July 2026</span><span class="avatar k">PS</span></span>
+  </header>
+
+  <!-- verdict strip — one line, first thing Priya reads -->
+  <section class="strip rise" aria-label="Today's verdict">
+    <span class="live-dot"></span>
+    <p class="line">Your licence is <em>quiet</em>&nbsp; — &nbsp;3 things need you, about 15 minutes. <span>Everything else is looked after.</span></p>
+    <span class="end">
+      <span class="sweep">Checked 6:00 am</span>
+      <span class="mini-ring" title="85% of your workforce is fully compliant">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#fffefa26" stroke-width="3.4"/>
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--lime)" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="82.8 97.4"/>
+        </svg>
+        <b>85</b>
+      </span>
+    </span>
+  </section>
+
+  <div class="split">
+
+    <!-- LEFT · needs your attention -->
+    <div class="rise d1">
+      <div class="sec-h"><h2>Needs your attention</h2><span class="sub">about 15 minutes all together</span></div>
+
+      <div class="card acts">
+        <div class="act-row">
+          <span class="avatar lg o">MO</span>
+          <span class="grow">
+            <b>Maria Okafor</b> — sign off her drafted Certificate of Sponsorship (CoS) renewal
+            <small>Her current one expires 12 Aug · the salary-change report is drafted too · about 6 min</small>
+          </span>
+          <button class="pill">Review and sign</button>
+        </div>
+        <div class="act-row">
+          <span class="avatar lg p">JT</span>
+          <span class="grow">
+            <b>Jakub Tan</b> — run his repeat right-to-work check
+            <small>Due by 15 Jul · about 3 min</small>
+          </span>
+          <button class="pill">Start check</button>
+        </div>
+        <div class="act-row">
+          <span class="avatar lg p">SD</span>
+          <span class="grow">
+            <b>Sam Devi</b> — June pay came in lower than his contract
+            <small>£1,712 paid vs £1,845 contracted · about 4 min</small>
+          </span>
+          <button class="pill">Take a look</button>
+        </div>
+      </div>
+
+      <div class="later">
+        <div class="sec-h"><h2>Coming up</h2><span class="sub">nothing to do yet — screem will nudge you</span></div>
+        <div class="mini-row">
+          <span class="when">28 JUL</span>
+          <span class="grow">Nadia Aziz's renewal window opens — screem will draft it for you</span>
+          <small>sponsorship</small>
+        </div>
+        <div class="mini-row">
+          <span class="when">1 AUG</span>
+          <span class="grow">July payslips arrive and get checked against contracts</span>
+          <small>payslips</small>
+        </div>
+        <div class="mini-row">
+          <span class="when">1 OCT</span>
+          <span class="grow">Autumn attendance records are due</span>
+          <small>attendance</small>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span>Licence EMP 4482913 · rating A · expires 14 Mar 2028</span>
+        <span>·</span><span>61 employees, 24 sponsored</span>
+        <span>·</span><span>Oakview 26 · Riverside 21 · Hazel 14</span>
+      </div>
+    </div>
+
+    <!-- RIGHT · the analyst card -->
+    <div class="card chart-card rise d2">
+      <div class="chart-top">
+        <div>
+          <h2>Compliance, month by month</h2>
+          <p>52 of 61 people fully compliant — 85%, up from 71% last August</p>
+        </div>
+        <div class="seg" role="group" aria-label="Chart period">
+          <button type="button" data-p="6">6m</button>
+          <button type="button" data-p="12" class="on">12m</button>
+        </div>
+      </div>
+
+      <div class="chart-wrap" id="chart-wrap">
+        <svg id="trend" viewBox="0 0 560 240" role="img" aria-label="Compliance percentage by month, rising from 71 to 85">
+          <defs>
+            <linearGradient id="areafill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7d39eb" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#7d39eb" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- gridlines -->
+          <line x1="38" x2="542" y1="55.2" y2="55.2" stroke="#ece8d9" stroke-width="1"/>
+          <line x1="38" x2="542" y1="133.6" y2="133.6" stroke="#ece8d9" stroke-width="1"/>
+          <line x1="38" x2="542" y1="212" y2="212" stroke="#e1dcc9" stroke-width="1"/>
+          <text class="axis-lab" x="30" y="59" text-anchor="end">90%</text>
+          <text class="axis-lab" x="30" y="137.5" text-anchor="end">80%</text>
+          <text class="axis-lab" x="30" y="216" text-anchor="end">70%</text>
+          <!-- data (drawn by JS) -->
+          <path id="t-area" d="" fill="url(#areafill)"/>
+          <path id="t-line" d="" fill="none" stroke="#7d39eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <line id="t-guide" x1="0" x2="0" y1="26" y2="212" stroke="#cec7af" stroke-width="1" stroke-dasharray="3 4" style="opacity:0"/>
+          <circle id="t-focus" r="4.5" fill="#fffefa" stroke="#7d39eb" stroke-width="2.2" style="opacity:0"/>
+          <circle id="t-today" r="5" fill="var(--lime)" stroke="#44610a" stroke-width="1.4"/>
+          <g id="t-x"></g>
+        </svg>
+        <div class="tip" id="tip" aria-hidden="true"></div>
+      </div>
+      <p class="chart-note"><i class="k-line"></i>fully-compliant share of workforce<i class="k-dot" style="margin-left:8px"></i>today</p>
+
+      <h3 class="packs-h">The seven checks behind that line</h3>
+      <p class="packs-sub">Share of the 412 automatic checks passing in each area — 403 passing overall</p>
+      <div class="packs">
+        <div class="pk" title="Right-to-work checks — 98% passing"><span class="pv">98</span><i style="height:44px"></i><label>Right to work</label></div>
+        <div class="pk" title="Visas — 95% passing"><span class="pv">95</span><i style="height:38px"></i><label>Visas</label></div>
+        <div class="pk low" title="Sponsorship — 92% passing, one of the two lowest"><span class="pv">92</span><i style="height:32px"></i><label>Sponsor&shy;ship</label></div>
+        <div class="pk" title="Certificates — 100% passing"><span class="pv">100</span><i style="height:48px"></i><label>Certifi&shy;cates</label></div>
+        <div class="pk" title="Attendance — 96% passing"><span class="pv">96</span><i style="height:40px"></i><label>Attend&shy;ance</label></div>
+        <div class="pk" title="Payslips — 94% passing"><span class="pv">94</span><i style="height:36px"></i><label>Payslips</label></div>
+        <div class="pk low" title="Students — 88% passing, one of the two lowest"><span class="pv">88</span><i style="height:24px"></i><label>Students</label></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var MONTHS = ['Aug 2025','Sep 2025','Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026','May 2026','Jun 2026','Jul 2026'];
+  var SHORT  = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  var VALS   = [71,72,70,74,76,75,78,79,81,80,83,85];
+  var W = 560, H = 240, L = 38, R = 18, T = 26, B = 28;
+  var BASE = 212; /* y for 65% */
+
+  var svg   = document.getElementById('trend');
+  var tip   = document.getElementById('tip');
+  var guide = document.getElementById('t-guide');
+  var focus = document.getElementById('t-focus');
+  var pts   = [];
+
+  function y(v) { return T + (90 - v) / 25 * (BASE - T); }
+
+  function render(n) {
+    var vs = VALS.slice(-n), ms = MONTHS.slice(-n), ss = SHORT.slice(-n);
+    pts = vs.map(function (v, i) {
+      return { x: L + i * (W - L - R) / (vs.length - 1), y: y(v), v: v, m: ms[i], s: ss[i] };
+    });
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1); }).join(' ');
+    document.getElementById('t-line').setAttribute('d', line);
+    document.getElementById('t-area').setAttribute('d', line + ' L' + pts[pts.length - 1].x.toFixed(1) + ' ' + BASE + ' L' + pts[0].x.toFixed(1) + ' ' + BASE + ' Z');
+    var last = pts[pts.length - 1];
+    var dot = document.getElementById('t-today');
+    dot.setAttribute('cx', last.x); dot.setAttribute('cy', last.y);
+    var gx = document.getElementById('t-x'), out = '';
+    pts.forEach(function (p, i) {
+      if (n === 12 && i % 2 === 1) return;
+      out += '<text class="axis-lab" x="' + p.x + '" y="' + (H - 6) + '" text-anchor="middle">' + p.s + '</text>';
+    });
+    gx.innerHTML = out;
+    hide();
+  }
+
+  function hide() {
+    tip.style.opacity = 0;
+    guide.style.opacity = 0;
+    focus.style.opacity = 0;
+  }
+
+  svg.addEventListener('mousemove', function (e) {
+    var r = svg.getBoundingClientRect();
+    var sx = (e.clientX - r.left) * W / r.width;
+    var best = pts[0];
+    for (var i = 1; i < pts.length; i++) if (Math.abs(pts[i].x - sx) < Math.abs(best.x - sx)) best = pts[i];
+    guide.setAttribute('x1', best.x); guide.setAttribute('x2', best.x);
+    focus.setAttribute('cx', best.x); focus.setAttribute('cy', best.y);
+    guide.style.opacity = 1; focus.style.opacity = 1;
+    tip.innerHTML = '<b>' + best.v + '%</b> compliant · ' + best.m;
+    tip.style.left = (best.x / W * 100) + '%';
+    tip.style.top = (best.y / H * 100) + '%';
+    tip.style.opacity = 1;
+  });
+  svg.addEventListener('mouseleave', hide);
+
+  var segBtns = document.querySelectorAll('.seg button');
+  segBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      segBtns.forEach(function (o) { o.classList.remove('on'); });
+      b.classList.add('on');
+      render(parseInt(b.dataset.p, 10));
+    });
+  });
+
+  render(12);
+})();
+</script>
+
+</body>
+</html>

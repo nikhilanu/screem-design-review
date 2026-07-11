@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 18 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 18 · "Ask about Maria"
+   A person-scoped concierge — ask her file a question.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:14px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+.wrap { max-width:740px; margin:0 auto; }
+
+/* ── header card ───────────────────────────────────────── */
+.p-card { background:var(--raised); border-radius:22px; box-shadow:0 1px 2px #1c140010, 0 6px 22px #1c14000f; padding:24px 26px; margin:8px 0 22px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.p-ring { position:relative; width:78px; height:78px; flex:none; }
+.p-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.p-ring .ava { position:absolute; inset:8px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; }
+.p-who { min-width:0; flex:1; }
+.p-who h1 { font-family:var(--font-sub); font-weight:360; font-size:28px; letter-spacing:-.01em; color:var(--ink); line-height:1.1; }
+.p-who .role { color:var(--muted); font-size:14.5px; margin-top:4px; }
+.p-who .verdict { display:inline-flex; align-items:center; gap:8px; margin-top:9px; font-size:14.5px; color:var(--ink-soft); font-weight:500; }
+.p-who .verdict i { width:9px; height:9px; border-radius:100%; background:var(--orange); flex:none; }
+.p-tasks { display:flex; flex-direction:column; gap:8px; flex:none; }
+.tpill { display:inline-flex; align-items:center; gap:9px; height:38px; padding:0 16px; border-radius:100px; border:none; font-size:13.5px; font-weight:600; cursor:pointer; font-family:inherit; white-space:nowrap; }
+.tpill.lime { background:var(--lime); color:var(--ink); }
+.tpill.lime:hover { background:var(--lime-tint); }
+.tpill.ink { background:var(--ink); color:var(--paper); }
+.tpill.ink:hover { background:var(--purple); }
+.tpill .icon { width:14px; height:14px; }
+.tpill.done { background:var(--sunken); color:var(--faint); pointer-events:none; }
+.tpill.done .icon { color:var(--lime-deep); }
+@media (max-width:620px) { .p-card { flex-direction:column; align-items:flex-start; } .p-tasks { flex-direction:row; flex-wrap:wrap; } }
+
+/* ── chat ──────────────────────────────────────────────── */
+.chat-shell { border-radius:20px; background:var(--raised); box-shadow:var(--card-shadow); display:flex; flex-direction:column; height:min(64vh, 560px); overflow:hidden; margin-bottom:30px; border:1px solid var(--line-weak); }
+.chat-head { display:flex; align-items:center; gap:11px; padding:16px 22px; border-bottom:1px solid var(--line-subtle); font-weight:600; font-size:16px; color:var(--ink); }
+.chat-head .s-ava { width:30px; height:30px; border-radius:9px; background:var(--ink); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.chat-head .s-ava svg { width:14px; height:15px; color:var(--lime); }
+.chat-head small { color:var(--muted); font-weight:400; font-size:13px; }
+.chat-scroll { flex:1; overflow-y:auto; padding:22px; display:flex; flex-direction:column; gap:16px; background:var(--paper); }
+.msg { display:flex; gap:11px; max-width:86%; }
+.msg .m-ava { width:28px; height:28px; border-radius:9px; flex:none; display:inline-flex; align-items:center; justify-content:center; margin-top:2px; background:var(--ink); }
+.msg .m-ava svg { width:13px; height:14px; color:var(--lime); }
+.msg .bubble { border:1px solid var(--line-weak); background:var(--raised); border-radius:14px 14px 14px 4px; padding:13px 16px; font-size:15px; box-shadow:var(--card-shadow); min-width:0; line-height:1.6; }
+.msg .bubble p + p { margin-top:9px; }
+.msg .bubble b { color:var(--ink); }
+.msg.me { align-self:flex-end; flex-direction:row-reverse; }
+.msg.me .bubble { background:var(--ink); border-color:var(--ink); color:var(--paper); border-radius:14px 14px 4px 14px; }
+.bubble .b-meter { margin:11px 0 4px; }
+.bubble .b-meter .meter { height:8px; border-radius:5px; background:var(--line-subtle); overflow:hidden; }
+.bubble .b-meter .meter i { display:block; height:100%; border-radius:5px; background:var(--lime); }
+.bubble .b-split { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; }
+.bubble .b-split span { display:inline-flex; align-items:center; gap:7px; font-size:13.5px; color:var(--ink-soft); }
+.bubble .b-split i { width:9px; height:9px; border-radius:3px; flex:none; }
+.bubble .b-src { display:flex; align-items:center; gap:8px; margin-top:12px; padding-top:10px; border-top:1px dashed var(--line-weak); font-size:13px; color:var(--faint); }
+.bubble .b-src .icon { width:13px; height:13px; }
+.bubble .b-list { margin:9px 0 2px; display:flex; flex-direction:column; gap:9px; }
+.bubble .b-list span { display:flex; align-items:center; gap:9px; font-size:14.5px; }
+.bubble .b-list .st { margin-left:auto; }
+.bubble .b-list .when { margin-left:auto; font-size:13px; color:var(--muted); font-family:var(--font-mono); }
+.st { display:inline-flex; align-items:center; gap:7px; font-weight:500; font-size:13.5px; color:var(--ink-soft); white-space:nowrap; }
+.st i { width:8px; height:8px; border-radius:100%; flex:none; }
+.st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); } .st.good { color:var(--lime-deep); }
+.st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); } .st.warn { color:var(--orange-deep); }
+.typing { display:inline-flex; gap:4px; padding:4px 2px; }
+.typing i { width:6px; height:6px; border-radius:100%; background:var(--faint); animation:tblink 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay:.18s; } .typing i:nth-child(3) { animation-delay:.36s; }
+@keyframes tblink { 0%,60%,100% { opacity:.3; transform:none; } 30% { opacity:1; transform:translateY(-3px); } }
+.chat-sugs { display:flex; gap:8px; flex-wrap:wrap; padding:13px 20px; border-top:1px solid var(--line-subtle); background:var(--raised); }
+.sug { border:1px solid var(--line-weak); background:var(--paper); border-radius:100px; padding:7px 15px; font-size:13.5px; font-weight:500; color:var(--ink-soft); cursor:pointer; font-family:inherit; }
+.sug:hover { border-color:var(--purple-tint); color:var(--purple-deep); }
+.chat-input { display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:1px solid var(--line-subtle); background:var(--raised); }
+.chat-input input { flex:1; border:1px solid var(--line-weak); background:var(--paper); border-radius:11px; padding:12px 16px; font-family:var(--font-sans); font-size:15px; color:var(--ink-body); outline:none; min-width:0; }
+.chat-input input:focus { border-color:var(--purple-tint); }
+.chat-input .send { width:42px; height:42px; border-radius:11px; background:var(--ink); border:1px solid var(--ink); color:var(--lime); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:none; }
+.chat-input .send:hover { background:var(--purple); border-color:var(--purple); }
+
+/* ── glance accordion ──────────────────────────────────── */
+.glance-h { font-size:13px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin:0 0 12px; display:flex; align-items:center; gap:10px; }
+.glance-h::after { content:""; flex:1; height:1px; background:var(--line-subtle); }
+.acc { background:var(--sunken); border:1px solid var(--line-subtle); border-radius:14px; overflow:hidden; margin-bottom:10px; }
+.acc-btn { display:flex; align-items:center; gap:11px; width:100%; text-align:left; background:transparent; border:none; cursor:pointer; padding:15px 18px; font-size:14.5px; font-weight:600; color:var(--ink); font-family:inherit; }
+.acc-btn .icon { width:16px; height:16px; color:var(--muted); }
+.acc-btn .own { margin-left:auto; font-weight:400; font-size:12.5px; color:var(--faint); }
+.acc-btn .chev { margin-left:10px; width:14px; height:14px; color:var(--faint); transition:transform .3s var(--ease-emphasized); }
+.acc.open .acc-btn .chev { transform:rotate(90deg); }
+.acc-body { display:none; padding:0 18px 6px; }
+.acc.open .acc-body { display:block; }
+.acc-grid { display:grid; grid-template-columns:1fr 1fr; }
+.acc-row { padding:11px 0; border-top:1px solid var(--line-weak); font-size:14px; display:flex; flex-direction:column; gap:2px; }
+.acc-row .k { color:var(--muted); font-size:12.5px; }
+.acc-row .v { color:var(--ink); font-weight:500; }
+.acc-row .v.mono { font-family:var(--font-mono); font-size:13px; font-weight:400; }
+.acc-row .v.warn { color:var(--orange-deep); }
+.acc-doc { display:flex; align-items:center; gap:11px; padding:11px 0; border-top:1px solid var(--line-weak); font-size:14px; }
+.acc-doc:first-child { border-top:none; }
+.acc-doc .grow { flex:1; min-width:0; font-weight:500; color:var(--ink); }
+@media (max-width:560px) { .acc-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-send" viewBox="0 0 20 20"><path d="m3 10 14-6.5L13.4 17l-3-5.4L3 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.4 11.6 17 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3.2" y="4.4" width="13.6" height="12.4" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.2 8.4h13.6M7 2.8v3M13 2.8v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html"><svg class="icon" style="width:15px;height:15px"><use href="#i-arrow" style="transform:scaleX(-1);transform-origin:center"/></svg>All people</a>
+
+  <!-- header card -->
+  <div class="p-card">
+    <span class="p-ring">
+      <svg viewBox="0 0 78 78" role="img" aria-label="88 percent of Maria's checks passing">
+        <circle cx="39" cy="39" r="32" fill="none" stroke="var(--line-subtle)" stroke-width="6"/>
+        <circle cx="39" cy="39" r="32" fill="none" stroke="var(--lime-deep)" stroke-width="6" stroke-dasharray="176.9 201" stroke-linecap="round"/>
+      </svg>
+      <span class="ava">MO</span>
+    </span>
+    <div class="p-who">
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route</div>
+      <div class="verdict"><i></i>28 of 32 checks passing — 88%. Two things need you.</div>
+    </div>
+    <div class="p-tasks">
+      <button class="tpill lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Sign renewal · 6 min</button>
+      <button class="tpill ink" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review report · 3 min</button>
+    </div>
+  </div>
+
+  <!-- chat -->
+  <div class="chat-shell">
+    <div class="chat-head">
+      <span class="s-ava"><svg viewBox="0 0 512 568"><use href="#s-mark"/></svg></span>
+      Ask about Maria… <small>— everything screem knows from her record</small>
+    </div>
+    <div class="chat-scroll" id="chat-scroll">
+      <div class="msg bot">
+        <span class="m-ava"><svg viewBox="0 0 512 568"><use href="#s-mark"/></svg></span>
+        <div class="bubble">
+          <p>Hello Priya. I hold Maria's whole record — her right to work, visa, sponsorship, pay and history. Ask me anything below, or type your own question.</p>
+        </div>
+      </div>
+    </div>
+    <div class="chat-sugs">
+      <button class="sug">Is Maria compliant?</button>
+      <button class="sug">When does her visa run out?</button>
+      <button class="sug">What documents does she have?</button>
+      <button class="sug">What changed recently?</button>
+      <button class="sug">What do I need to do?</button>
+    </div>
+    <div class="chat-input">
+      <input id="chat-text" type="text" placeholder="Ask about Maria…" aria-label="Ask about Maria" autocomplete="off" />
+      <button class="send" id="chat-send" aria-label="Send"><svg class="icon" style="width:18px;height:18px"><use href="#i-send"/></svg></button>
+    </div>
+  </div>
+
+  <!-- glance accordion -->
+  <div class="glance-h">Everything at a glance</div>
+
+  <div class="acc" data-acc>
+    <button class="acc-btn"><svg class="icon"><use href="#i-person"/></svg>Personal <span class="own">Maria provides</span><svg class="icon chev"><use href="#i-arrow"/></svg></button>
+    <div class="acc-body"><div class="acc-grid">
+      <div class="acc-row"><span class="k">Date of birth</span><span class="v">14 May 1991</span></div>
+      <div class="acc-row"><span class="k">Nationality</span><span class="v">Nigerian</span></div>
+      <div class="acc-row"><span class="k">Email</span><span class="v mono">maria.okafor@fernbank.co.uk</span></div>
+      <div class="acc-row"><span class="k">Phone</span><span class="v mono">07700 900412</span></div>
+      <div class="acc-row"><span class="k">Address</span><span class="v">22 Elm Grove, Leeds LS8 2AT</span></div>
+      <div class="acc-row"><span class="k">National Insurance</span><span class="v mono">QQ 12 34 56 C</span></div>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <button class="acc-btn"><svg class="icon"><use href="#i-case"/></svg>Employment <span class="own">employer provides</span><svg class="icon chev"><use href="#i-arrow"/></svg></button>
+    <div class="acc-body"><div class="acc-grid">
+      <div class="acc-row"><span class="k">Start date</span><span class="v">12 Aug 2023 · 3 years</span></div>
+      <div class="acc-row"><span class="k">Role · SOC code</span><span class="v">Senior Care Assistant · 6136</span></div>
+      <div class="acc-row"><span class="k">Team · site</span><span class="v">Care team · Oakview House</span></div>
+      <div class="acc-row"><span class="k">Contract</span><span class="v">Permanent, 37.5 hrs/wk</span></div>
+      <div class="acc-row"><span class="k">Salary</span><span class="v">£26,700 — £1,200 above going rate</span></div>
+      <div class="acc-row"><span class="k">Payroll change</span><span class="v warn">+£1,900 in June — not yet reported</span></div>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <button class="acc-btn"><svg class="icon"><use href="#i-shield"/></svg>Visa &amp; sponsorship <span class="own">employer provides</span><svg class="icon chev"><use href="#i-arrow"/></svg></button>
+    <div class="acc-body"><div class="acc-grid">
+      <div class="acc-row"><span class="k">Visa route</span><span class="v">Skilled Worker</span></div>
+      <div class="acc-row"><span class="k">Visa expires</span><span class="v warn">12 Aug 2026 · 33 days</span></div>
+      <div class="acc-row"><span class="k">Right-to-work check</span><span class="v">eVisa share code verified 14 Feb 2026</span></div>
+      <div class="acc-row"><span class="k">Repeat check</span><span class="v">Scheduled 12 Aug 2026</span></div>
+      <div class="acc-row"><span class="k">Certificate of Sponsorship (CoS)</span><span class="v mono">C2G7X44210091</span></div>
+      <div class="acc-row"><span class="k">Assigned · expires</span><span class="v">12 Aug 2023 · 12 Aug 2026</span></div>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <button class="acc-btn"><svg class="icon"><use href="#i-doc"/></svg>Documents <span class="own">5 on file</span><svg class="icon chev"><use href="#i-arrow"/></svg></button>
+    <div class="acc-body">
+      <div class="acc-doc"><span class="grow">Passport <span class="mono" style="color:var(--muted);font-weight:400">6602214187 · exp 03 Feb 2029</span></span><span class="st good"><i></i>Verified</span></div>
+      <div class="acc-doc"><span class="grow">eVisa share code result</span><span class="st good"><i></i>Verified</span></div>
+      <div class="acc-doc"><span class="grow">Certificate of Sponsorship</span><span class="st warn"><i></i>Expires 12 Aug — renewal drafted</span></div>
+      <div class="acc-doc"><span class="grow">Employment contract</span><span class="st good"><i></i>Verified</span></div>
+      <div class="acc-doc"><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+    </div>
+  </div>
+
+  <div class="acc" data-acc>
+    <button class="acc-btn"><svg class="icon"><use href="#i-clock"/></svg>History <span class="own">newest first</span><svg class="icon chev"><use href="#i-arrow"/></svg></button>
+    <div class="acc-body">
+      <div class="acc-doc"><span class="grow" style="font-weight:400">Renewal pack drafted by screem — rule SW-04</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">Today 6:00</span></div>
+      <div class="acc-doc"><span class="grow" style="font-weight:400">Salary change detected from payroll feed</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">8 Jul 14:12</span></div>
+      <div class="acc-doc"><span class="grow" style="font-weight:400">June attendance imported — clear</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">3 Jul</span></div>
+      <div class="acc-doc"><span class="grow" style="font-weight:400">June payslip verified</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">2 Jul</span></div>
+      <div class="acc-doc"><span class="grow" style="font-weight:400">Right to work verified, evidence stored</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">14 Feb</span></div>
+      <div class="acc-doc"><span class="grow" style="font-weight:400">Hired and certificate assigned</span><span class="st" style="font-family:var(--font-mono);color:var(--faint)">12 Aug 2023</span></div>
+    </div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* header task pills */
+$('[data-act="cos"]').addEventListener('click', function () { this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Signed'; this.classList.add('done'); });
+$('[data-act="salary"]').addEventListener('click', function () { this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Reviewed'; this.classList.add('done'); });
+
+/* accordion */
+$$('[data-acc]').forEach((a, i) => {
+  if (i === 0) a.classList.add('open');
+  a.querySelector('.acc-btn').addEventListener('click', () => a.classList.toggle('open'));
+});
+
+/* chat — scoped to Maria */
+const chatScroll = $('#chat-scroll');
+const chatInput = $('#chat-text');
+const svgMark = '<svg viewBox="0 0 512 568"><use href="#s-mark"/></svg>';
+function pushMsg(kind, html) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + kind;
+  div.innerHTML = kind === 'bot'
+    ? `<span class="m-ava">${svgMark}</span><div class="bubble">${html}</div>`
+    : `<div class="bubble">${html}</div>`;
+  chatScroll.appendChild(div);
+  chatScroll.scrollTop = chatScroll.scrollHeight;
+  return div;
+}
+const SRC = t => `<div class="b-src"><svg class="icon"><use href="#i-shield"/></svg>${t}</div>`;
+const FROM = SRC('From Maria’s record · sweep 6:00');
+
+const ANSWERS = [
+  { test: /complian|in order|status|how (is|many).*(ok|fine|good|pass)|score|checks/i, html: () => `
+      <p><b>Maria is nearly clear — 28 of her 32 checks pass, a score of 88%.</b> Two checks are failing and two are scheduled ahead.</p>
+      <div class="b-meter"><div class="meter"><i style="width:88%"></i></div></div>
+      <div class="b-split">
+        <span><i style="background:var(--lime)"></i>28 passing</span>
+        <span><i style="background:var(--orange)"></i>2 need you</span>
+        <span><i style="background:var(--purple-tint)"></i>2 scheduled</span>
+      </div>
+      <p>The two that need you: her <b>Certificate of Sponsorship (CoS)</b> expires within 60 days (SW-04) and her June pay rise isn't reported yet (SW-11). Both fixes are already drafted.</p>
+      ${FROM}` },
+  { test: /visa|expir|run out|passport|right to work|rtw/i, html: () => `
+      <p><b>Maria's Skilled Worker visa expires on 12 August 2026 — that's 33 days away.</b></p>
+      <div class="b-list">
+        <span>Visa expires<span class="when">12 Aug 2026</span></span>
+        <span>Passport 6602214187 valid until<span class="when">03 Feb 2029</span></span>
+        <span>Right-to-work check verified<span class="when">14 Feb 2026</span></span>
+        <span>Repeat right-to-work check scheduled<span class="when">12 Aug 2026</span></span>
+      </div>
+      <p>Her right to work is current and the audit trail is stored. The visa renewal reminder (VIS-02) is already set for you.</p>
+      ${FROM}` },
+  { test: /document|paper(work)?|file|upload|passport|payslip|contract/i, html: () => `
+      <p><b>Maria has five documents on file. Four are verified; one needs your signature.</b></p>
+      <div class="b-list">
+        <span>Passport<span class="st good"><i></i>Verified</span></span>
+        <span>eVisa share code result<span class="st good"><i></i>Verified</span></span>
+        <span>Certificate of Sponsorship<span class="st warn"><i></i>Renewal drafted</span></span>
+        <span>Employment contract<span class="st good"><i></i>Verified</span></span>
+        <span>June payslip<span class="st good"><i></i>Verified</span></span>
+      </div>
+      <p>The only one not fully green is her certificate — the renewal pack is drafted and checked against the going rate, it just needs signing.</p>
+      ${FROM}` },
+  { test: /chang|recent|new|happen|latest|update|activit|histor/i, html: () => `
+      <p><b>Two things changed on Maria's record this month.</b></p>
+      <div class="b-list">
+        <span>Renewal pack drafted by screem (SW-04)<span class="when">Today 6:00</span></span>
+        <span>Salary change detected from payroll<span class="when">8 Jul 14:12</span></span>
+        <span>June attendance imported — clear<span class="when">3 Jul</span></span>
+        <span>June payslip verified<span class="when">2 Jul</span></span>
+      </div>
+      <p>The pay rise of +£1,900 in June is what triggered the salary-report task. When a fact changes, her 32 checks re-run automatically.</p>
+      ${FROM}` },
+  { test: /(need|have) to do|what.*(do|task|action|next|today|this week)|to.?do|sign|report/i, html: () => `
+      <p><b>Two things need you this week — about 9 minutes altogether.</b></p>
+      <div class="b-list">
+        <span>1. Review &amp; sign her certificate renewal<span class="when">~6 min</span></span>
+        <span>2. Review the drafted salary-change report<span class="when">~3 min</span></span>
+      </div>
+      <p>Both are due 14 July and both are already written by screem — you're reviewing, not filling in forms. Everything else about Maria is handled.</p>
+      ${FROM}` },
+];
+const FALLBACK = () => `
+      <p>I can answer anything that's in Maria's record — try one of these:</p>
+      <div class="b-list">
+        <span>“Is Maria compliant?”</span>
+        <span>“When does her visa run out?”</span>
+        <span>“What documents does she have?”</span>
+        <span>“What do I need to do?”</span>
+      </div>
+      ${SRC('Answers always come from Maria’s record — never guessed')}`;
+
+let chatBusy = false;
+function ask(q) {
+  if (!q || chatBusy) return;
+  chatBusy = true;
+  pushMsg('me', q.replace(/</g, '&lt;'));
+  const t = pushMsg('bot', '<span class="typing"><i></i><i></i><i></i></span>');
+  setTimeout(() => {
+    const a = ANSWERS.find(x => x.test.test(q));
+    t.querySelector('.bubble').innerHTML = a ? a.html() : FALLBACK();
+    chatScroll.scrollTop = chatScroll.scrollHeight;
+    chatBusy = false;
+  }, rm ? 60 : 850 + Math.random() * 450);
+}
+$('#chat-send').addEventListener('click', () => { ask(chatInput.value.trim()); chatInput.value = ''; });
+chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') { ask(chatInput.value.trim()); chatInput.value = ''; } });
+$$('.sug').forEach(s => s.addEventListener('click', () => ask(s.textContent)));
+</script>
+</body>
+</html>

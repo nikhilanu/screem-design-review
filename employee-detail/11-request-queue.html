@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 11 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 11 · "Request queue"
+   Left: her facts, each field filled ✓ or waiting on Maria.
+   "Ask Maria" moves a field into the sticky Requests rail,
+   which you then send as one secure link.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button, textarea { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:1160px; margin:0 auto; }
+
+/* ── header ────────────────────────────────────────────── */
+.p-head { display:flex; align-items:center; gap:18px; margin:8px 0 12px; flex-wrap:wrap; }
+.p-ring { position:relative; width:66px; height:66px; flex:none; }
+.p-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.p-ring .ava { position:absolute; inset:6px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; }
+.p-who { min-width:0; flex:1; }
+.p-who h1 { font-family:var(--font-sub); font-weight:360; font-size:27px; letter-spacing:-.01em; color:var(--ink); line-height:1.1; }
+.p-who .role { color:var(--muted); font-size:14px; margin-top:3px; }
+.p-status { display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:var(--lime); border-radius:100px; padding:7px 14px; font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; font-family:var(--font-mono); white-space:nowrap; }
+@media (max-width:560px) { .p-head { flex-direction:column; align-items:flex-start; } }
+.p-tasks { display:flex; gap:9px; flex-wrap:wrap; margin:0 0 26px; }
+.tpill { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 17px; border-radius:100px; font-size:14px; font-weight:600; cursor:pointer; border:none; font-family:var(--font-sans); white-space:nowrap; }
+.tpill .icon { width:14px; height:14px; }
+.tpill.lime { background:var(--lime); color:var(--ink); }
+.tpill.lime:hover { background:var(--lime-tint); }
+.tpill.ink { background:var(--ink); color:var(--paper); }
+.tpill.ink:hover { background:var(--purple); }
+
+/* ── split ─────────────────────────────────────────────── */
+.split { display:grid; grid-template-columns:1fr 400px; gap:24px; align-items:start; }
+@media (max-width:920px) { .split { grid-template-columns:1fr; } .queue-rail { position:static !important; } }
+
+/* ── fact sections (left) ──────────────────────────────── */
+.sec-lab { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin:28px 0 12px; display:flex; align-items:center; gap:10px; }
+.sec-lab:first-of-type { margin-top:4px; }
+.sec-lab .ico { width:15px; height:15px; color:var(--muted); }
+.sec-lab::after { content:""; flex:1; height:1px; background:var(--line-subtle); }
+.card { background:var(--raised); border:1px solid var(--line-weak); border-radius:16px; box-shadow:var(--card-shadow); overflow:hidden; }
+.frow { display:flex; align-items:center; gap:14px; padding:14px 20px; border-top:1px solid var(--line-subtle); font-size:14.5px; }
+.frow:first-child { border-top:none; }
+.frow .fl { width:170px; flex:none; color:var(--muted); font-size:13px; }
+.frow .fv { flex:1; min-width:0; color:var(--ink); font-weight:500; }
+.frow .fv.mono { font-family:var(--font-mono); font-size:13px; font-weight:400; }
+.frow .fv small { display:block; font-weight:400; color:var(--muted); font-size:12.5px; margin-top:1px; }
+@media (max-width:560px) { .frow { flex-wrap:wrap; gap:6px; } .frow .fl { width:100%; } }
+
+.tick { color:var(--lime-deep); flex:none; display:inline-flex; }
+.tick svg { width:16px; height:16px; }
+.chip { display:inline-flex; align-items:center; gap:7px; padding:4px 11px; border-radius:100px; font-size:12.5px; font-weight:600; white-space:nowrap; }
+.chip.wait { background:var(--orange-soft); color:var(--orange-deep); }
+.chip.stale { background:var(--orange-soft); color:var(--orange-deep); border:1px dashed var(--orange-tint); }
+.chip.queued { background:var(--purple-soft); color:var(--purple-deep); }
+.chip.reqd { background:var(--lime-soft); color:var(--lime-deep); }
+.chip i { width:7px; height:7px; border-radius:100%; flex:none; }
+.chip.wait i, .chip.stale i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); }
+.chip.reqd i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+
+.ask { margin-left:auto; display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 13px; border-radius:100px; border:1px solid var(--line-weak); background:var(--raised); color:var(--ink-soft); font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; flex:none; }
+.ask:hover { border-color:var(--orange-tint); color:var(--orange-deep); background:var(--orange-soft); }
+.ask svg { width:14px; height:14px; }
+.ask[disabled] { opacity:.5; cursor:default; pointer-events:none; }
+.frow.done-req .fv { color:var(--muted); }
+
+/* ── queue rail (right, sticky) ────────────────────────── */
+.queue-rail { position:sticky; top:16px; }
+.queue { background:var(--raised); border:1px solid var(--line-weak); border-radius:18px; box-shadow:var(--card-shadow); overflow:hidden; }
+.q-head { display:flex; align-items:center; gap:11px; padding:18px 20px; border-bottom:1px solid var(--line-subtle); }
+.q-head .q-ico { width:36px; height:36px; border-radius:10px; background:var(--ink); color:var(--lime); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.q-head h2 { font-family:var(--font-sub); font-weight:360; font-size:19px; color:var(--ink); }
+.q-head .cnt { margin-left:auto; font-size:12.5px; font-weight:600; color:var(--purple-deep); background:var(--purple-soft); border-radius:100px; padding:3px 11px; }
+.q-empty { padding:34px 22px; text-align:center; color:var(--muted); font-size:13.5px; line-height:1.6; }
+.q-empty .qe-ico { width:44px; height:44px; border-radius:12px; background:var(--sunken); color:var(--faint); display:inline-flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.q-empty b { color:var(--ink); display:block; margin-bottom:3px; }
+.q-list { display:flex; flex-direction:column; }
+.q-item { display:flex; align-items:flex-start; gap:11px; padding:13px 20px; border-top:1px solid var(--line-subtle); font-size:13.5px; }
+.q-item:first-child { border-top:none; }
+.q-item .qi-ico { width:26px; height:26px; border-radius:8px; background:var(--orange-soft); color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; flex:none; margin-top:1px; }
+.q-item .qi-ico svg { width:14px; height:14px; }
+.q-item .grow { flex:1; min-width:0; }
+.q-item .grow b { display:block; color:var(--ink); font-weight:600; font-size:13.5px; }
+.q-item .grow small { display:block; color:var(--muted); font-size:12px; margin-top:1px; }
+.q-item .qt { font-family:var(--font-mono); font-size:11px; color:var(--faint); white-space:nowrap; flex:none; }
+.q-item .qx { border:none; background:transparent; color:var(--faint); cursor:pointer; padding:2px; flex:none; }
+.q-item .qx:hover { color:var(--orange-deep); }
+.q-item .qx svg { width:14px; height:14px; }
+.q-item.sent .qi-ico { background:var(--lime-soft); color:var(--lime-deep); }
+
+.q-msg { padding:16px 20px; border-top:1px solid var(--line-subtle); background:var(--sunken); }
+.q-msg .qm-lab { font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:7px; display:flex; align-items:center; gap:7px; }
+.q-msg .qm-lab svg { width:14px; height:14px; color:var(--muted); }
+.q-msg textarea { width:100%; border:1px solid var(--line-weak); background:var(--paper); border-radius:11px; padding:11px 13px; font-size:13.5px; color:var(--ink-body); line-height:1.55; resize:none; outline:none; }
+.q-msg textarea:focus { border-color:var(--purple-tint); box-shadow:0 0 0 3px var(--purple-soft); }
+.q-msg .qm-note { font-size:12px; color:var(--muted); margin-top:8px; display:flex; align-items:center; gap:7px; line-height:1.45; }
+.q-msg .qm-note svg { width:13px; height:13px; color:var(--purple-deep); flex:none; }
+.q-foot { padding:15px 20px; }
+.q-send { width:100%; display:inline-flex; align-items:center; justify-content:center; gap:9px; height:44px; border-radius:12px; background:var(--ink); color:var(--paper); font-size:14.5px; font-weight:600; border:none; cursor:pointer; }
+.q-send:hover { background:var(--purple); }
+.q-send[disabled] { background:var(--sunken); color:var(--faint); cursor:default; }
+.q-send svg { width:16px; height:16px; }
+.q-sent-note { text-align:center; font-size:12.5px; color:var(--lime-deep); margin-top:11px; display:none; align-items:center; justify-content:center; gap:7px; }
+.q-sent-note.show { display:flex; }
+.q-sent-note svg { width:14px; height:14px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 20 20"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-send" viewBox="0 0 20 20"><path d="m3 10 14-6.5L13.4 17l-3-5.4L3 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.4 11.6 17 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 20 20"><path d="M3 11.5 5 4.5h10l2 7M3 11.5V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4.5M3 11.5h4l1 2h4l1-2h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 20 20"><rect x="4.5" y="8.5" width="11" height="8" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 8.5V6.5a3.2 3.2 0 0 1 6.4 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="p-head">
+    <span class="p-ring">
+      <svg viewBox="0 0 66 66" role="img" aria-label="88 percent of Maria's checks passing">
+        <circle cx="33" cy="33" r="28" fill="none" stroke="var(--line-subtle)" stroke-width="5.5"/>
+        <circle cx="33" cy="33" r="28" fill="none" stroke="var(--lime-deep)" stroke-width="5.5" stroke-dasharray="154.8 175.9" stroke-linecap="round"/>
+      </svg>
+      <span class="ava">MO</span>
+    </span>
+    <div class="p-who">
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker · 88% · 28 of 32 checks pass</div>
+    </div>
+    <span class="p-status">Needs action · 2</span>
+  </div>
+
+  <div class="p-tasks">
+    <button class="tpill lime"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal · 6 min</button>
+    <button class="tpill ink"><svg class="icon"><use href="#i-arrow"/></svg>Review salary report · 3 min</button>
+  </div>
+
+  <div class="split">
+    <!-- ── LEFT: her facts ─────────────────────────── -->
+    <div class="facts">
+      <div class="sec-lab"><svg class="icon ico"><use href="#i-person"/></svg>Personal</div>
+      <div class="card">
+        <div class="frow"><span class="fl">Date of birth</span><span class="fv">14 May 1991</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow"><span class="fl">Nationality</span><span class="fv">Nigerian</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow"><span class="fl">Email · phone</span><span class="fv mono">maria.okafor@fernbank.co.uk · 07700 900412</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow" data-field="Updated address history"><span class="fl">Address history</span>
+          <span class="fv">22 Elm Grove, Leeds LS8 2AT<small>Older addresses not on file</small></span>
+          <span class="chip wait"><i></i>Waiting on Maria · since 2 Jul</span>
+          <button class="ask" data-ask="Updated address history" data-detail="Her previous addresses for the last 5 years"><svg><use href="#i-plus"/></svg>Ask Maria</button>
+        </div>
+        <div class="frow" data-field="Next-of-kin details"><span class="fl">Next of kin</span>
+          <span class="fv" style="color:var(--muted)">Not provided</span>
+          <span class="chip wait"><i></i>Waiting on Maria · since 27 Jun</span>
+          <button class="ask" data-ask="Next-of-kin details" data-detail="Emergency contact name, relationship and number"><svg><use href="#i-plus"/></svg>Ask Maria</button>
+        </div>
+        <div class="frow"><span class="fl">National Insurance</span><span class="fv mono">QQ 12 34 56 C</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+      </div>
+
+      <div class="sec-lab"><svg class="icon ico"><use href="#i-shield"/></svg>Visa &amp; documents</div>
+      <div class="card">
+        <div class="frow"><span class="fl">Right to work</span><span class="fv">eVisa share code verified 14 Feb 2026</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow" data-field="New passport scan"><span class="fl">Passport scan</span>
+          <span class="fv">6602214187<small>Renewed — new document expires 03 Feb 2029</small></span>
+          <span class="chip wait"><i></i>Waiting on Maria · since 5 Jul</span>
+          <button class="ask" data-ask="New passport scan after renewal" data-detail="A clear photo of her renewed passport photo page"><svg><use href="#i-plus"/></svg>Ask Maria</button>
+        </div>
+        <div class="frow done-req" data-field="Proof of address refresh"><span class="fl">Proof of address</span>
+          <span class="fv">Utility bill<small>Last provided Mar 2024 — over 2 years old</small></span>
+          <span class="chip stale"><i></i>Stale · ask to refresh</span>
+          <button class="ask" data-ask="Fresh proof of address" data-detail="A recent bill or bank letter, dated within 3 months"><svg><use href="#i-plus"/></svg>Ask Maria</button>
+        </div>
+      </div>
+
+      <div class="sec-lab"><svg class="icon ico"><use href="#i-case"/></svg>Employment &amp; records</div>
+      <div class="card">
+        <div class="frow"><span class="fl">Role · SOC code</span><span class="fv">Senior Care Assistant · 6136</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow"><span class="fl">Salary</span><span class="fv">£26,700<small>+£1,900 change in June — report drafted</small></span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow"><span class="fl">June payslip</span><span class="fv">£2,225 gross — matches contract</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+        <div class="frow"><span class="fl">June attendance</span><span class="fv">Clear — no unexplained absence</span><span class="tick"><svg><use href="#i-check"/></svg></span></div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: requests rail ────────────────────── -->
+    <aside class="queue-rail">
+      <div class="queue">
+        <div class="q-head">
+          <span class="q-ico"><svg class="icon"><use href="#i-inbox"/></svg></span>
+          <h2>Requests</h2>
+          <span class="cnt" id="qCnt">0 items</span>
+        </div>
+
+        <div class="q-empty" id="qEmpty">
+          <span class="qe-ico"><svg class="icon" style="width:20px;height:20px"><use href="#i-inbox"/></svg></span>
+          <b>Nothing to ask yet</b>
+          Add the fields waiting on Maria — the orange ones on the left — and send them in one secure link.
+        </div>
+
+        <div class="q-list" id="qList"></div>
+
+        <div class="q-msg" id="qMsg" style="display:none">
+          <div class="qm-lab"><svg><use href="#i-send"/></svg>Message preview</div>
+          <textarea id="qText" rows="4">Hi Maria, please update a few things on your file so your checks stay green. It takes about five minutes — thank you!</textarea>
+          <div class="qm-note"><svg><use href="#i-lock"/></svg>We'll text and email her a secure link — she never needs a password or an account.</div>
+        </div>
+
+        <div class="q-foot" id="qFoot" style="display:none">
+          <button class="q-send" id="qSend"><svg class="icon"><use href="#i-send"/></svg>Send request to Maria</button>
+          <div class="q-sent-note" id="qSentNote"><svg class="icon"><use href="#i-check"/></svg>Sent — she'll get a secure link now</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var list = document.getElementById('qList');
+  var empty = document.getElementById('qEmpty');
+  var msg = document.getElementById('qMsg');
+  var foot = document.getElementById('qFoot');
+  var cnt = document.getElementById('qCnt');
+  var sendBtn = document.getElementById('qSend');
+  var sentNote = document.getElementById('qSentNote');
+  var items = [];
+  var sent = false;
+
+  function nowStamp() {
+    var d = new Date();
+    var h = d.getHours(), m = d.getMinutes();
+    return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+  }
+  function refresh() {
+    var has = items.length > 0;
+    empty.style.display = has ? 'none' : 'block';
+    msg.style.display = has ? 'block' : 'none';
+    foot.style.display = has ? 'block' : 'none';
+    cnt.textContent = items.length + (items.length === 1 ? ' item' : ' items');
+  }
+
+  document.querySelectorAll('.ask').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (sent) return;
+      var title = btn.dataset.ask;
+      var detail = btn.dataset.detail;
+      var row = btn.closest('.frow');
+
+      // mark field as queued
+      var chip = row.querySelector('.chip');
+      chip.className = 'chip queued';
+      chip.innerHTML = '<i></i>In this request';
+      btn.disabled = true;
+      btn.innerHTML = '<svg><use href="#i-check"/></svg>Added';
+
+      // add to queue
+      var li = document.createElement('div');
+      li.className = 'q-item';
+      li.innerHTML = '<span class="qi-ico"><svg><use href="#i-clock"/></svg></span>' +
+        '<span class="grow"><b>' + title + '</b><small>' + detail + '</small></span>' +
+        '<span class="qt">' + nowStamp() + '</span>' +
+        '<button class="qx" aria-label="Remove"><svg><use href="#i-x"/></svg></button>';
+      list.appendChild(li);
+      items.push(title);
+
+      li.querySelector('.qx').addEventListener('click', function () {
+        list.removeChild(li);
+        items = items.filter(function (t) { return t !== title; });
+        chip.className = row.querySelector('.chip.stale, .chip') && row.dataset.field === 'Proof of address refresh' ? 'chip stale' : 'chip wait';
+        // restore original chip text
+        if (row.dataset.field === 'Proof of address refresh') { chip.className = 'chip stale'; chip.innerHTML = '<i></i>Stale · ask to refresh'; }
+        else { chip.className = 'chip wait'; chip.innerHTML = '<i></i>Waiting on Maria'; }
+        btn.disabled = false;
+        btn.innerHTML = '<svg><use href="#i-plus"/></svg>Ask Maria';
+        refresh();
+      });
+      refresh();
+    });
+  });
+
+  sendBtn.addEventListener('click', function () {
+    if (items.length === 0 || sent) return;
+    sent = true;
+    // mark queue items sent
+    list.querySelectorAll('.q-item').forEach(function (li) {
+      li.classList.add('sent');
+      li.querySelector('.qi-ico').innerHTML = '<svg><use href="#i-check"/></svg>';
+      var x = li.querySelector('.qx'); if (x) x.remove();
+    });
+    // mark left fields Requested ✓
+    document.querySelectorAll('.frow .chip.queued').forEach(function (chip) {
+      chip.className = 'chip reqd';
+      chip.innerHTML = '<i></i>Requested ✓';
+    });
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Request sent';
+    sentNote.classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>

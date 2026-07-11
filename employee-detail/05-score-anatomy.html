@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 05 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 05 · "Score anatomy"
+   Why 88%? Every check shows which facts it read.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:760px; margin:0 auto; }
+
+/* ── hero — the one loud black element ─────────────────── */
+.hero { background:var(--ink); border-radius:22px; padding:30px 32px; display:flex; align-items:center; gap:30px; margin:8px 0 12px; }
+.hero-ring { position:relative; width:96px; height:96px; flex:none; }
+.hero-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.hero-ring .rv { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.hero-ring .rv b { font-family:var(--font-display); font-weight:320; font-size:30px; color:var(--lime); line-height:1; }
+.hero-ring .rv span { font-size:10px; color:#fffefa8c; margin-top:2px; font-family:var(--font-mono); letter-spacing:.04em; }
+.hero-body { flex:1; min-width:0; }
+.hero-body .who { display:flex; align-items:center; gap:11px; margin-bottom:9px; }
+.hero-body .ava { width:34px; height:34px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex:none; }
+.hero-body .who b { font-family:var(--font-sub); font-weight:360; font-size:23px; color:#fffefa; letter-spacing:-.01em; }
+.hero-body .who small { display:block; font-size:12.5px; color:#fffefa9e; }
+.hero-tally { font-size:14.5px; color:#fffefad1; }
+.hero-tally b { color:#fffefa; font-weight:600; }
+.hero-verdict { font-size:14px; color:#fffefaad; margin-top:5px; line-height:1.5; }
+.hero-btns { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+.hbtn { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px; border-radius:100px; font-size:14px; font-weight:600; cursor:pointer; border:none; font-family:inherit; }
+.hbtn .icon { width:15px; height:15px; }
+.hbtn.lime { background:var(--lime); color:var(--ink); }
+.hbtn.lime:hover { background:var(--lime-tint); }
+.hbtn.ghost { background:#ffffff17; color:#fffefa; }
+.hbtn.ghost:hover { background:#ffffff26; }
+.hbtn.done { background:#ffffff12; color:#fffefa8c; pointer-events:none; }
+.hbtn.done .icon { color:var(--lime); }
+@media (max-width:600px) { .hero { flex-direction:column; text-align:center; } .hero-body .who { justify-content:center; } .hero-btns { justify-content:center; } }
+
+.checked-line { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:13px; margin:0 2px 34px; }
+.live-dot { position:relative; display:inline-block; width:8px; height:8px; border-radius:100%; background:var(--lime); flex:none; }
+.live-dot::before { content:""; position:absolute; inset:-1px; border-radius:100%; border:1px solid var(--lime-deep); opacity:.55; }
+
+/* ── section: why 88% ──────────────────────────────────── */
+.why-h { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+.why-h h2 { font-family:var(--font-sub); font-weight:360; font-size:27px; letter-spacing:-.01em; color:var(--ink); }
+.why-h span { color:var(--muted); font-size:14px; }
+.why-sub { color:var(--muted); font-size:14.5px; margin-bottom:26px; max-width:620px; }
+
+/* group */
+.grp { margin-bottom:22px; }
+.grp-h { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.grp-h .dot { width:9px; height:9px; border-radius:100%; flex:none; }
+.grp-h.fail .dot { background:var(--orange); }
+.grp-h.sched .dot { background:var(--purple-tint); box-shadow:inset 0 0 0 1px var(--purple-deep); }
+.grp-h.pass .dot { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+.grp-h .n { margin-left:auto; font-weight:500; letter-spacing:0; text-transform:none; color:var(--faint); font-size:12.5px; }
+
+/* check card / row */
+.chk { background:var(--raised); border-radius:14px; box-shadow:var(--card-shadow); padding:16px 18px; margin-bottom:10px; display:flex; gap:14px; align-items:flex-start; }
+.chk.compact { padding:12px 16px; box-shadow:none; background:var(--sunken); }
+.chk .badge-ico { width:26px; height:26px; border-radius:8px; flex:none; display:inline-flex; align-items:center; justify-content:center; margin-top:1px; }
+.chk .badge-ico svg { width:15px; height:15px; }
+.chk.fail .badge-ico { background:var(--orange-soft); color:var(--orange-deep); }
+.chk.sched .badge-ico { background:var(--purple-soft); color:var(--purple-deep); }
+.chk.pass .badge-ico { background:var(--lime-soft); color:var(--lime-deep); }
+.chk .body { flex:1; min-width:0; }
+.chk .top { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.chk .nm { font-weight:600; color:var(--ink); font-size:15px; }
+.chk.compact .nm { font-size:14px; }
+.chk .code { font-family:var(--font-mono); font-size:11.5px; color:var(--faint); background:var(--sunken); border-radius:5px; padding:1px 7px; }
+.chk.compact .code { background:var(--line-subtle); }
+.chk .desc { font-size:13.5px; color:var(--muted); margin-top:3px; }
+.chk .reads { display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-top:10px; }
+.chk .reads .lbl { font-size:11.5px; color:var(--faint); font-family:var(--font-mono); letter-spacing:.03em; text-transform:uppercase; }
+.fchip { display:inline-flex; align-items:center; gap:6px; background:var(--paper); border:1px solid var(--line-weak); border-radius:7px; padding:3px 9px; font-size:12.5px; font-weight:500; color:var(--ink-soft); }
+.fchip::before { content:""; width:6px; height:6px; border-radius:2px; background:var(--purple-tint); flex:none; }
+.fchip.hot { background:var(--orange-soft); border-color:var(--orange-tint); color:var(--orange-deep); }
+.fchip.hot::before { background:var(--orange); }
+.chk.compact .reads { margin-top:7px; }
+.chk .fixbtn { display:inline-flex; align-items:center; gap:7px; margin-top:12px; background:var(--lime); color:var(--ink); border:none; border-radius:9px; padding:8px 15px; font-size:13.5px; font-weight:600; cursor:pointer; font-family:inherit; }
+.chk .fixbtn:hover { background:var(--lime-tint); }
+.chk .fixbtn.ghost { background:var(--sunken); color:var(--ink); }
+.chk .fixbtn.ghost:hover { background:var(--line-subtle); }
+.chk .fixbtn .mins { font-weight:400; color:var(--lime-deep); }
+.chk .fixbtn.ghost .mins { color:var(--muted); }
+.chk .stword { margin-left:auto; font-size:12.5px; font-weight:600; white-space:nowrap; }
+.chk.fail .stword { color:var(--orange-deep); }
+.chk.sched .stword { color:var(--purple-deep); }
+.chk.pass .stword { color:var(--lime-deep); }
+
+.more-btn { display:inline-flex; align-items:center; gap:9px; width:100%; justify-content:center; background:transparent; border:1px dashed var(--line-mid); border-radius:12px; padding:13px; font-size:14px; font-weight:600; color:var(--ink-soft); cursor:pointer; font-family:inherit; margin-top:2px; }
+.more-btn:hover { border-color:var(--purple-tint); color:var(--purple-deep); background:var(--purple-soft); }
+.more-btn .icon { width:15px; height:15px; }
+.hidden-checks { display:none; }
+.hidden-checks.open { display:block; }
+
+/* ── facts grid ────────────────────────────────────────── */
+.facts-h { display:flex; align-items:baseline; gap:12px; margin:38px 0 6px; }
+.facts-h h2 { font-family:var(--font-sub); font-weight:360; font-size:23px; letter-spacing:-.01em; color:var(--ink); }
+.facts-h span { color:var(--muted); font-size:13.5px; }
+.facts-note { color:var(--muted); font-size:13.5px; margin-bottom:18px; }
+.facts-note b { color:var(--orange-deep); }
+.facts-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-subtle); border:1px solid var(--line-weak); border-radius:14px; overflow:hidden; }
+.fact { background:var(--raised); padding:12px 15px; }
+.fact .k { font-size:12px; color:var(--muted); }
+.fact .v { font-size:14px; font-weight:500; color:var(--ink); margin-top:2px; }
+.fact .v.mono { font-family:var(--font-mono); font-size:12.5px; font-weight:400; }
+.fact.flag { background:var(--orange-soft); }
+.fact.flag .k { color:var(--orange-deep); }
+.fact.flag .v { color:var(--orange-deep); display:flex; align-items:center; gap:7px; }
+.fact.flag .v svg { width:14px; height:14px; flex:none; }
+@media (max-width:560px) { .facts-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 20 20"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 20 20"><path d="M10 3.2 17.5 16.5H2.5L10 3.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8.3v3.4M10 14.2h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <!-- ══ HERO ═══════════════════════════════════════════ -->
+  <div class="hero">
+    <span class="hero-ring">
+      <svg viewBox="0 0 96 96" role="img" aria-label="88 percent — 28 of 32 checks passing">
+        <circle cx="48" cy="48" r="42" fill="none" stroke="#ffffff1f" stroke-width="8"/>
+        <circle cx="48" cy="48" r="42" fill="none" stroke="var(--orange)" stroke-width="8" stroke-dasharray="33 264" stroke-dashoffset="-230.9" stroke-linecap="round"/>
+        <circle cx="48" cy="48" r="42" fill="none" stroke="var(--lime)" stroke-width="8" stroke-dasharray="230.9 264" stroke-linecap="round"/>
+      </svg>
+      <span class="rv"><b>88%</b><span>SCORE</span></span>
+    </span>
+    <div class="hero-body">
+      <div class="who">
+        <span class="ava">MO</span>
+        <span><b>Maria Okafor</b><small>Senior Care Assistant · Oakview House · Skilled Worker route</small></span>
+      </div>
+      <div class="hero-tally"><b>28 of 32 checks passing.</b> Two need your voice, two are scheduled.</div>
+      <div class="hero-verdict">Her file is in good shape — right to work, pay and attendance all pass. The two open items are drafted and waiting on you, about 9 minutes altogether.</div>
+      <div class="hero-btns">
+        <button class="hbtn lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal</button>
+        <button class="hbtn ghost" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review salary report</button>
+      </div>
+    </div>
+  </div>
+  <div class="checked-line"><span class="live-dot"></span>Checked this morning at 6:00 · 32 rules run against her record</div>
+
+  <!-- ══ WHY 88% ════════════════════════════════════════ -->
+  <div class="why-h">
+    <h2>Why 88%?</h2>
+    <span>every check, and the facts it read</span>
+  </div>
+  <p class="why-sub">The score is just arithmetic: 28 of 32 rules pass. Each rule reads a few facts from her record — when a fact changes, its rules re-run. Here is every one.</p>
+
+  <!-- FAILING -->
+  <div class="grp">
+    <div class="grp-h fail"><span class="dot"></span>Failing<span class="n">2 checks · both drafted for you</span></div>
+
+    <div class="chk fail">
+      <span class="badge-ico"><svg><use href="#i-x"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Certificate of Sponsorship expires within 60 days</span><span class="code">SW-04</span><span class="stword">FAILING</span></div>
+        <div class="desc">Her certificate runs out on 12 Aug 2026 — 33 days away. The renewal pack is drafted and checked against the going rate.</div>
+        <div class="reads"><span class="lbl">reads</span>
+          <span class="fchip hot">certificate expiry</span>
+          <span class="fchip">today's date</span>
+        </div>
+        <button class="fixbtn" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal <span class="mins">· ~6 min</span></button>
+      </div>
+    </div>
+
+    <div class="chk fail">
+      <span class="badge-ico"><svg><use href="#i-x"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Salary change not yet reported to the Home Office</span><span class="code">SW-11</span><span class="stword">FAILING</span></div>
+        <div class="desc">June payroll shows +£1,900 — this must be reported within 10 working days. screem has written the report for you.</div>
+        <div class="reads"><span class="lbl">reads</span>
+          <span class="fchip">contracted salary</span>
+          <span class="fchip hot">June payroll</span>
+        </div>
+        <button class="fixbtn ghost" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review the drafted report <span class="mins">· ~3 min</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULED -->
+  <div class="grp">
+    <div class="grp-h sched"><span class="dot"></span>Scheduled<span class="n">2 checks · nothing to do yet</span></div>
+
+    <div class="chk sched">
+      <span class="badge-ico"><svg><use href="#i-clock"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Repeat right-to-work check falls due</span><span class="code">RTW-06</span><span class="stword">12 AUG</span></div>
+        <div class="desc">A follow-up right-to-work check is booked for the day her visa expires. screem will remind you a week before.</div>
+        <div class="reads"><span class="lbl">reads</span>
+          <span class="fchip">visa expiry</span>
+          <span class="fchip">last check date</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chk sched">
+      <span class="badge-ico"><svg><use href="#i-clock"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Visa renewal reminder set</span><span class="code">VIS-02</span><span class="stword">12 AUG</span></div>
+        <div class="desc">Her Skilled Worker visa expires 12 Aug 2026. A reminder is set so the renewal is never a surprise.</div>
+        <div class="reads"><span class="lbl">reads</span>
+          <span class="fchip">visa expiry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSING -->
+  <div class="grp">
+    <div class="grp-h pass"><span class="dot"></span>Passing<span class="n">28 checks · all clear</span></div>
+
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Right-to-work evidence is current</span><span class="code">RTW-01</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">eVisa share code</span><span class="fchip">check date</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Payslip matches the certificate salary</span><span class="code">PAY-02</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">June payslip</span><span class="fchip">contracted salary</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">No unexplained absence this month</span><span class="code">ATT-02</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">June attendance</span><span class="fchip">contracted hours</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Role and SOC code are consistent</span><span class="code">SW-02</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">job title</span><span class="fchip">SOC code 6136</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Passport valid and unexpired</span><span class="code">VIS-01</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">passport expiry</span><span class="fchip">today's date</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Salary meets the going rate</span><span class="code">SW-01</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">contracted salary</span><span class="fchip">going rate 6136</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">Share code matches passport identity</span><span class="code">RTW-02</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">share code result</span><span class="fchip">passport</span></div>
+      </div>
+    </div>
+    <div class="chk pass">
+      <span class="badge-ico"><svg><use href="#i-check"/></svg></span>
+      <div class="body">
+        <div class="top"><span class="nm">A payslip is on file for the month</span><span class="code">PAY-01</span><span class="stword">PASS</span></div>
+        <div class="reads"><span class="lbl">reads</span><span class="fchip">June payslip</span></div>
+      </div>
+    </div>
+
+    <div class="hidden-checks" id="moreChecks">
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Guaranteed hours meet the threshold</span><span class="code">SW-03</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">contracted hours</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Visa route matches the certificate</span><span class="code">VIS-03</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">visa route</span><span class="fchip">certificate</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Check dated before employment began</span><span class="code">RTW-03</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">check date</span><span class="fchip">start date</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Evidence stored in the audit trail</span><span class="code">RTW-04</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">audit trail</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Share code belongs to a current visa</span><span class="code">RTW-05</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">share code</span><span class="fchip">visa expiry</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">PAYE reference recorded</span><span class="code">PAY-03</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">PAYE reference</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">National Insurance number valid</span><span class="code">PAY-04</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">NI number</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Pay frequency matches the contract</span><span class="code">PAY-05</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">payroll feed</span><span class="fchip">contract</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Gross pay above National Minimum Wage</span><span class="code">PAY-06</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">June payslip</span><span class="fchip">age</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Weekly hours logged for the month</span><span class="code">ATT-01</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">attendance log</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Hours within the contracted range</span><span class="code">ATT-03</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">attendance</span><span class="fchip">contracted hours</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">No unauthorised leave recorded</span><span class="code">ATT-04</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">attendance</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Working pattern matches the contract</span><span class="code">ATT-05</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">attendance</span><span class="fchip">contract</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Workplace address on record</span><span class="code">SW-05</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">site address</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Sponsor licence rating active</span><span class="code">SW-06</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">licence rating</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Certificate reference recorded</span><span class="code">SW-07</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">certificate no.</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Job is on the eligible occupation list</span><span class="code">SW-08</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">SOC code 6136</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Start date matches the certificate</span><span class="code">SW-09</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">start date</span><span class="fchip">certificate</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">eVisa type recorded</span><span class="code">VIS-04</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">visa type</span></div></div></div>
+      <div class="chk pass compact"><span class="badge-ico"><svg><use href="#i-check"/></svg></span><div class="body"><div class="top"><span class="nm">Cooling-off period not triggered</span><span class="code">VIS-05</span><span class="stword">PASS</span></div><div class="reads"><span class="fchip">visa history</span></div></div></div>
+    </div>
+
+    <button class="more-btn" id="moreBtn"><svg class="icon"><use href="#i-plus"/></svg><span id="moreLabel">+20 more passing checks</span> ✓</button>
+  </div>
+
+  <!-- ══ FACTS GRID ═════════════════════════════════════ -->
+  <div class="facts-h"><h2>The facts these checks read</h2><span>her record, compact</span></div>
+  <p class="facts-note">Two fields are behind today's open items — <b>highlighted below</b>. Change either and its checks re-run.</p>
+  <div class="facts-grid">
+    <div class="fact"><div class="k">Date of birth</div><div class="v">14 May 1991</div></div>
+    <div class="fact"><div class="k">Nationality</div><div class="v">Nigerian</div></div>
+    <div class="fact"><div class="k">Passport</div><div class="v mono">6602214187 · exp 03 Feb 2029</div></div>
+    <div class="fact"><div class="k">National Insurance</div><div class="v mono">QQ 12 34 56 C</div></div>
+    <div class="fact"><div class="k">Role · SOC code</div><div class="v">Senior Care Assistant · 6136</div></div>
+    <div class="fact"><div class="k">Contract</div><div class="v">Permanent · 37.5 hrs/wk</div></div>
+    <div class="fact"><div class="k">Contracted salary</div><div class="v">£26,700 <span style="color:var(--muted);font-weight:400">· going rate £25,500</span></div></div>
+    <div class="fact flag"><div class="k">June payroll change</div><div class="v"><svg><use href="#i-warn"/></svg>+£1,900 — not yet reported</div></div>
+    <div class="fact"><div class="k">Visa route · expiry</div><div class="v">Skilled Worker · 12 Aug 2026</div></div>
+    <div class="fact flag"><div class="k">Certificate of Sponsorship expiry</div><div class="v"><svg><use href="#i-warn"/></svg>12 Aug 2026 · renewal drafted</div></div>
+    <div class="fact"><div class="k">Right to work</div><div class="v">Verified 14 Feb 2026</div></div>
+    <div class="fact"><div class="k">June payslip · attendance</div><div class="v">£2,225 gross · clear</div></div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var moreBtn = document.getElementById('moreBtn');
+  var more = document.getElementById('moreChecks');
+  var label = document.getElementById('moreLabel');
+  moreBtn.addEventListener('click', function () {
+    var open = more.classList.toggle('open');
+    label.textContent = open ? 'Show fewer' : '+20 more passing checks';
+    moreBtn.innerHTML = open
+      ? '<svg class="icon"><use href="#i-check"/></svg><span id="moreLabel">Show fewer</span>'
+      : '<svg class="icon"><use href="#i-plus"/></svg><span id="moreLabel">+20 more passing checks</span> ✓';
+  });
+  function done(sel, txt) {
+    document.querySelectorAll('[data-act="' + sel + '"]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (b.classList.contains('fixbtn')) {
+          b.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + txt;
+          b.style.pointerEvents = 'none'; b.style.opacity = '.7';
+        } else {
+          b.classList.add('done');
+          b.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + txt;
+        }
+      });
+    });
+  }
+  done('cos', 'Signed');
+  done('salary', 'Reviewed');
+})();
+</script>
+</body>
+</html>

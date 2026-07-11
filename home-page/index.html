@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem — 20 home page variations</title>
+<style>
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+:root {
+  --paper:#faf8f1; --raised:#fffefa; --sunken:#f1eee1; --ink:#000; --ink-body:#211e15;
+  --muted:#6f6a5a; --faint:#a19a86; --line-subtle:#ece8d9; --line-weak:#e1dcc9;
+  --purple:#7d39eb; --purple-deep:#5a1fbc; --purple-soft:#f0e9fd;
+  --lime:#bfff1f; --lime-deep:#44610a; --lime-soft:#f1fbd2;
+  --orange:#ed621d; --orange-deep:#b8480e; --orange-soft:#fcead9;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Inter",-apple-system,sans-serif; background:var(--paper); color:var(--ink-body); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; padding:48px 40px 100px; }
+::selection { background:var(--lime); color:var(--ink); }
+a { color:inherit; text-decoration:none; }
+.masthead { max-width:1560px; margin:0 auto 10px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+.masthead h1 { font-family:"Arcadia",Georgia,serif; font-weight:360; font-size:34px; color:var(--ink); letter-spacing:-.01em; }
+.masthead .mono { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); }
+.masthead p { width:100%; color:var(--muted); max-width:760px; }
+.fam { max-width:1560px; margin:44px auto 0; }
+.fam-h { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.fam-h .tick { width:10px; height:10px; border-radius:3px; background:var(--lime); }
+.fam-h.f2 .tick { background:var(--purple); } .fam-h.f3 .tick { background:var(--orange); }
+.fam-h.f4 .tick { background:var(--ink); } .fam-h.f5 .tick { background:var(--orange-soft); border:1px solid var(--orange); }
+.fam-h h2 { font-size:19px; font-weight:600; color:var(--ink); }
+.fam-h span { color:var(--faint); font-size:13.5px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, 372px); gap:22px; justify-content:start; }
+.card { background:var(--raised); border-radius:18px; box-shadow:0 1px 3px #0000000d, 0 6px 20px #1c14000d; overflow:hidden; display:block; transition:transform .25s cubic-bezier(.2,0,0,1), box-shadow .25s; }
+.card:hover { transform:translateY(-3px); box-shadow:0 2px 6px #00000012, 0 14px 34px #1c140018; }
+.shot { display:block; position:relative; width:100%; height:213px; overflow:hidden; background:var(--sunken); border-bottom:1px solid var(--line-subtle); }
+.meta { display:block; }
+.meta .row { display:flex; }
+.shot iframe { width:1440px; height:826px; border:0; transform:scale(0.2583); transform-origin:0 0; pointer-events:none; }
+.meta { padding:13px 16px 15px; }
+.meta .row { display:flex; align-items:baseline; gap:9px; }
+.meta .num { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--faint); }
+.meta b { font-size:15.5px; color:var(--ink); font-weight:600; }
+.meta p { color:var(--muted); font-size:12.5px; margin-top:3px; }
+.back { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12.5px; font-weight:500; z-index:10; box-shadow:0 6px 20px #00000030; }
+@media (max-width:860px) { body { padding:28px 16px 90px; } .grid { grid-template-columns:1fr; } .shot iframe { transform:scale(0.235); } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <h1>The home page, twenty ways</h1>
+  <span class="mono">screem · v1.1 design system · same data, different ideologies</span>
+  <p>Every variation answers the same three questions — <b>am I safe?</b> (the verdict), <b>what do I do?</b> (Maria, Jakub, Sam), and <b>is the rest handled?</b> — but each stakes out a different idea of what a compliance home should be. Click any card to open it full size.</p>
+</div>
+
+<div class="fam">
+  <div class="fam-h"><span class="tick"></span><h2>Narrative</h2><span>the page reads like a briefing</span></div>
+  <div class="grid">
+    <a class="card" href="01-morning-brief.html"><span class="shot"><iframe src="01-morning-brief.html" loading="lazy" tabindex="-1" title="01"></iframe></span><span class="meta"><span class="row"><span class="num">01</span><b>Morning brief</b></span><p>The refined classic — verdict banner, three big action cards, quiet strip.</p></span></a>
+    <a class="card" href="02-letter.html"><span class="shot"><iframe src="02-letter.html" loading="lazy" tabindex="-1" title="02"></iframe></span><span class="meta"><span class="row"><span class="num">02</span><b>The letter</b></span><p>No cards at all — a personal letter from screem, typography does the work.</p></span></a>
+    <a class="card" href="03-agenda.html"><span class="shot"><iframe src="03-agenda.html" loading="lazy" tabindex="-1" title="03"></iframe></span><span class="meta"><span class="row"><span class="num">03</span><b>Agenda</b></span><p>A day-planner timeline — today, next week, August, autumn.</p></span></a>
+    <a class="card" href="04-checklist.html"><span class="shot"><iframe src="04-checklist.html" loading="lazy" tabindex="-1" title="04"></iframe></span><span class="meta"><span class="row"><span class="num">04</span><b>Checklist</b></span><p>Friday's list — five ticks, two already done by screem, a progress bar.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f2"><span class="tick"></span><h2>Consumer fintech</h2><span>Wise energy — pills, discs, borderless</span></div>
+  <div class="grid">
+    <a class="card" href="05-wise-baseline.html"><span class="shot"><iframe src="05-wise-baseline.html" loading="lazy" tabindex="-1" title="05"></iframe></span><span class="meta"><span class="row"><span class="num">05</span><b>Wise baseline</b></span><p>The current build — the control sample the rest compare against.</p></span></a>
+    <a class="card" href="06-balances.html"><span class="shot"><iframe src="06-balances.html" loading="lazy" tabindex="-1" title="06"></iframe></span><span class="meta"><span class="row"><span class="num">06</span><b>Balances</b></span><p>Compliance as money — a health balance, category cards, a statement feed.</p></span></a>
+    <a class="card" href="07-pill-nav.html"><span class="shot"><iframe src="07-pill-nav.html" loading="lazy" tabindex="-1" title="07"></iframe></span><span class="meta"><span class="row"><span class="num">07</span><b>Pill nav</b></span><p>No sidebar — app-style top pills, one centred column, zero chrome.</p></span></a>
+    <a class="card" href="08-feed.html"><span class="shot"><iframe src="08-feed.html" loading="lazy" tabindex="-1" title="08"></iframe></span><span class="meta"><span class="row"><span class="num">08</span><b>Feed</b></span><p>Stories row of faces with status rings, then a scrolling feed of cards.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f3"><span class="tick"></span><h2>Compliance industry</h2><span>Vanta / Drata / UK traffic-light idioms, made warm</span></div>
+  <div class="grid">
+    <a class="card" href="09-score-cockpit.html"><span class="shot"><iframe src="09-score-cockpit.html" loading="lazy" tabindex="-1" title="09"></iframe></span><span class="meta"><span class="row"><span class="num">09</span><b>Score cockpit</b></span><p>Big donut, checks passing, pass-rate bars per area — the Vanta pattern.</p></span></a>
+    <a class="card" href="10-traffic-board.html"><span class="shot"><iframe src="10-traffic-board.html" loading="lazy" tabindex="-1" title="10"></iframe></span><span class="meta"><span class="row"><span class="num">10</span><b>Traffic board</b></span><p>Three columns — needs you, being handled, all clear. Triage at a glance.</p></span></a>
+    <a class="card" href="11-heat-grid.html"><span class="shot"><iframe src="11-heat-grid.html" loading="lazy" tabindex="-1" title="11"></iframe></span><span class="meta"><span class="row"><span class="num">11</span><b>Heat grid</b></span><p>Sites × areas matrix — where the risk lives, in one look.</p></span></a>
+    <a class="card" href="12-inspection-lens.html"><span class="shot"><iframe src="12-inspection-lens.html" loading="lazy" tabindex="-1" title="12"></iframe></span><span class="meta"><span class="row"><span class="num">12</span><b>Inspection lens</b></span><p>"If the Home Office knocked today" — a readiness dial and their questions.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f4"><span class="tick"></span><h2>Data-forward</h2><span>for the numbers-lover</span></div>
+  <div class="grid">
+    <a class="card" href="13-analyst-split.html"><span class="shot"><iframe src="13-analyst-split.html" loading="lazy" tabindex="-1" title="13"></iframe></span><span class="meta"><span class="row"><span class="num">13</span><b>Analyst split</b></span><p>Actions left, a genuinely interactive trend chart right.</p></span></a>
+    <a class="card" href="14-bento.html"><span class="shot"><iframe src="14-bento.html" loading="lazy" tabindex="-1" title="14"></iframe></span><span class="meta"><span class="row"><span class="num">14</span><b>Bento</b></span><p>One composed tile grid — verdict tile, action tiles, chart, ask screem.</p></span></a>
+    <a class="card" href="15-worklist.html"><span class="shot"><iframe src="15-worklist.html" loading="lazy" tabindex="-1" title="15"></iframe></span><span class="meta"><span class="row"><span class="num">15</span><b>Worklist</b></span><p>The operator's queue — a rich grouped table with inline actions.</p></span></a>
+    <a class="card" href="16-nightwatch.html"><span class="shot"><iframe src="16-nightwatch.html" loading="lazy" tabindex="-1" title="16"></iframe></span><span class="meta"><span class="row"><span class="num">16</span><b>Nightwatch</b></span><p>The outlier — dark mode. screem watches while you sleep.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f5"><span class="tick"></span><h2>Human &amp; novel</h2><span>people first, or one thing at a time</span></div>
+  <div class="grid">
+    <a class="card" href="17-concierge.html"><span class="shot"><iframe src="17-concierge.html" loading="lazy" tabindex="-1" title="17"></iframe></span><span class="meta"><span class="row"><span class="num">17</span><b>Concierge</b></span><p>The assistant is the homepage — ask anything, actions in the first answer.</p></span></a>
+    <a class="card" href="18-people-wall.html"><span class="shot"><iframe src="18-people-wall.html" loading="lazy" tabindex="-1" title="18"></iframe></span><span class="meta"><span class="row"><span class="num">18</span><b>People wall</b></span><p>The workforce as faces — only three of sixty-one need you.</p></span></a>
+    <a class="card" href="19-poster-split.html"><span class="shot"><iframe src="19-poster-split.html" loading="lazy" tabindex="-1" title="19"></iframe></span><span class="meta"><span class="row"><span class="num">19</span><b>Poster split</b></span><p>A giant black "quiet." poster beside a calm worklist — both brand volumes.</p></span></a>
+    <a class="card" href="20-zen.html"><span class="shot"><iframe src="20-zen.html" loading="lazy" tabindex="-1" title="20"></iframe></span><span class="meta"><span class="row"><span class="num">20</span><b>Zen</b></span><p>One thing at a time — a single card, three dots, then "that's everything."</p></span></a>
+  </div>
+</div>
+
+<a class="back" href="../index.html">← all screem versions</a>
+</body>
+</html>

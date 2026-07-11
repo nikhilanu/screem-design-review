@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 17 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 17 · "Narrated profile"
+   Read her file like a person, scan it like a table.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+
+/* ── chrome ────────────────────────────────────────────── */
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:700px; margin:0 auto; }
+
+/* ── header ────────────────────────────────────────────── */
+.p-head { display:flex; align-items:center; gap:18px; margin:8px 0 30px; flex-wrap:wrap; }
+.p-ring { position:relative; width:74px; height:74px; flex:none; }
+.p-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.p-ring .ava { position:absolute; inset:7px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:17px; }
+.p-who { min-width:0; flex:1; }
+.p-who h1 { font-family:var(--font-sub); font-weight:360; font-size:29px; letter-spacing:-.01em; color:var(--ink); }
+.p-who .role { color:var(--muted); font-size:14.5px; margin-top:3px; }
+.p-status { display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:var(--lime); border-radius:100px; padding:8px 15px; font-size:12px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; font-family:var(--font-mono); white-space:nowrap; }
+@media (max-width:560px) { .p-head { flex-direction:column; align-items:flex-start; } }
+
+/* ── narrative ─────────────────────────────────────────── */
+.narrative { font-size:19px; line-height:1.72; color:var(--ink-body); margin-bottom:20px; }
+.narrative p { margin-bottom:20px; }
+.narrative p:last-child { margin-bottom:0; }
+.narrative b { color:var(--ink); font-weight:600; }
+.ichip { display:inline-flex; align-items:center; background:var(--lime-soft); color:var(--lime-deep); border-radius:6px; padding:1px 9px; font-size:16px; font-weight:600; white-space:nowrap; }
+.ipill { display:inline-flex; align-items:center; gap:7px; vertical-align:middle; height:37px; padding:0 18px; margin-left:6px; border-radius:100px; border:none; font-size:14.5px; font-weight:600; cursor:pointer; font-family:var(--font-sans); position:relative; top:-2px; }
+.ipill.lime { background:var(--lime); color:var(--ink); }
+.ipill.lime:hover { background:var(--lime-tint); }
+.ipill.ink { background:var(--ink); color:var(--paper); }
+.ipill.ink:hover { background:var(--purple); }
+.ipill .icon { width:14px; height:14px; }
+.ipill.done { background:var(--sunken); color:var(--faint); pointer-events:none; }
+.ipill.done .icon { color:var(--lime-deep); }
+
+.narrative-foot { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:13.5px; margin:2px 0 40px; padding-top:2px; }
+.narrative-foot .live-dot { position:relative; display:inline-block; width:8px; height:8px; border-radius:100%; background:var(--lime); flex:none; }
+.narrative-foot .live-dot::before { content:""; position:absolute; inset:-1px; border-radius:100%; border:1px solid var(--lime-deep); opacity:.55; }
+
+/* ── quiet fact sections ──────────────────────────────────*/
+.sec-lab { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin:34px 0 12px; display:flex; align-items:center; gap:10px; }
+.sec-lab:first-of-type { margin-top:6px; }
+.sec-lab::after { content:""; flex:1; height:1px; background:var(--line-subtle); }
+.qcard { background:var(--sunken); border:1px solid var(--line-subtle); border-radius:16px; padding:6px 22px; margin-bottom:10px; }
+.qhead { display:flex; align-items:center; gap:10px; padding:14px 0; font-weight:600; font-size:14.5px; color:var(--ink); }
+.qhead .icon { color:var(--muted); width:16px; height:16px; }
+.qhead .own { margin-left:auto; font-weight:400; font-size:12.5px; color:var(--faint); }
+.qgrid { display:grid; grid-template-columns:1fr 1fr; }
+.qrow { padding:10px 0; border-top:1px solid var(--line-weak); font-size:14px; display:flex; flex-direction:column; gap:2px; }
+.qgrid .qrow:nth-child(-n+2) { border-top:1px solid var(--line-weak); }
+.qrow .k { color:var(--muted); font-size:12.5px; }
+.qrow .v { color:var(--ink); font-weight:500; }
+.qrow .v.mono { font-family:var(--font-mono); font-size:13px; font-weight:400; }
+@media (max-width:560px) { .qgrid { grid-template-columns:1fr; } .qcard { padding:4px 16px; } }
+
+/* documents */
+.doc-row { display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--line-weak); font-size:14px; }
+.doc-row:first-child { border-top:1px solid var(--line-weak); }
+.doc-row .ic { width:30px; height:30px; border-radius:9px; background:var(--raised); border:1px solid var(--line-weak); display:inline-flex; align-items:center; justify-content:center; flex:none; color:var(--muted); }
+.doc-row .grow { flex:1; min-width:0; font-weight:500; color:var(--ink); }
+.st { display:inline-flex; align-items:center; gap:7px; font-weight:500; font-size:13px; color:var(--ink-soft); white-space:nowrap; }
+.st i { width:8px; height:8px; border-radius:100%; flex:none; }
+.st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+.st.good { color:var(--lime-deep); }
+.st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); }
+.st.warn { color:var(--orange-deep); }
+
+/* history */
+.h-row { display:flex; gap:14px; padding:11px 0; border-top:1px solid var(--line-weak); font-size:14px; }
+.h-row:first-child { border-top:1px solid var(--line-weak); }
+.h-row .when { font-family:var(--font-mono); font-size:12px; color:var(--faint); width:78px; flex:none; padding-top:1px; }
+.h-row .what b { color:var(--ink); font-weight:600; }
+.h-row .what { color:var(--ink-soft); }
+
+.close-line { text-align:center; color:var(--muted); font-size:14px; margin:38px 0 4px; }
+.close-line b { color:var(--ink); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="p-head">
+    <span class="p-ring">
+      <svg viewBox="0 0 74 74" role="img" aria-label="88 percent of Maria's checks passing">
+        <circle cx="37" cy="37" r="31" fill="none" stroke="var(--line-subtle)" stroke-width="6"/>
+        <circle cx="37" cy="37" r="31" fill="none" stroke="var(--lime-deep)" stroke-width="6" stroke-dasharray="171.4 194.8" stroke-linecap="round"/>
+      </svg>
+      <span class="ava">MO</span>
+    </span>
+    <div class="p-who">
+      <h1>Maria Okafor</h1>
+      <div class="role">Senior Care Assistant · Oakview House · Skilled Worker route</div>
+    </div>
+    <span class="p-status">Needs action · 2 items</span>
+  </div>
+
+  <div class="narrative">
+    <p>Maria has been a Senior Care Assistant at Oakview House for three years, since 12&nbsp;Aug&nbsp;2023. Her file is in good shape — <span class="ichip">28 of 32 checks pass</span>, a score of <span class="ichip">88%</span> — and her right to work, passport and June payslip are all verified with nothing for you to do.</p>
+    <p>But two papers need you this week. Her <b>Certificate of Sponsorship</b> runs out on <span class="ichip">12 August</span> — the renewal is drafted and already checked against the going rate, it just wants your signature.<button class="ipill lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review and sign</button></p>
+    <p>And her June pay rise of <span class="ichip">+£1,900</span> must be reported to the Home Office within 10 working days — screem has already written the report for you, so this is a two-minute read, not a form to fill in.<button class="ipill ink" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review report</button></p>
+  </div>
+  <div class="narrative-foot"><span class="live-dot"></span>Checked this morning at 6:00 · 32 checks run against her record</div>
+
+  <div class="sec-lab"><svg class="icon" style="width:14px;height:14px"><use href="#i-person"/></svg>Personal <span class="own" style="margin-left:2px">— Maria provides</span></div>
+  <div class="qcard">
+    <div class="qgrid">
+      <div class="qrow"><span class="k">Date of birth</span><span class="v">14 May 1991</span></div>
+      <div class="qrow"><span class="k">Nationality</span><span class="v">Nigerian</span></div>
+      <div class="qrow"><span class="k">Email</span><span class="v mono">maria.okafor@fernbank.co.uk</span></div>
+      <div class="qrow"><span class="k">Phone</span><span class="v mono">07700 900412</span></div>
+      <div class="qrow"><span class="k">Address</span><span class="v">22 Elm Grove, Leeds LS8 2AT</span></div>
+      <div class="qrow"><span class="k">National Insurance</span><span class="v mono">QQ 12 34 56 C</span></div>
+    </div>
+  </div>
+
+  <div class="sec-lab"><svg class="icon" style="width:14px;height:14px"><use href="#i-case"/></svg>Employment <span class="own" style="margin-left:2px">— employer provides</span></div>
+  <div class="qcard">
+    <div class="qgrid">
+      <div class="qrow"><span class="k">Start date</span><span class="v">12 Aug 2023 · 3 years</span></div>
+      <div class="qrow"><span class="k">Role · SOC code</span><span class="v">Senior Care Assistant · 6136</span></div>
+      <div class="qrow"><span class="k">Team · site</span><span class="v">Care team · Oakview House</span></div>
+      <div class="qrow"><span class="k">Contract</span><span class="v">Permanent, 37.5 hrs/wk</span></div>
+      <div class="qrow"><span class="k">Salary</span><span class="v">£26,700 <span style="color:var(--muted); font-weight:400">— £1,200 above the £25,500 going rate</span></span></div>
+      <div class="qrow"><span class="k">Payroll change</span><span class="v" style="color:var(--orange-deep)">+£1,900 in June — not yet reported</span></div>
+    </div>
+  </div>
+
+  <div class="sec-lab"><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg>Visa &amp; sponsorship</div>
+  <div class="qcard">
+    <div class="qgrid">
+      <div class="qrow"><span class="k">Visa route</span><span class="v">Skilled Worker</span></div>
+      <div class="qrow"><span class="k">Visa expires</span><span class="v" style="color:var(--orange-deep)">12 Aug 2026 · 33 days</span></div>
+      <div class="qrow"><span class="k">Right to work</span><span class="v">eVisa share code verified 14 Feb 2026</span></div>
+      <div class="qrow"><span class="k">Repeat check</span><span class="v">Scheduled 12 Aug 2026</span></div>
+      <div class="qrow"><span class="k">Certificate of Sponsorship</span><span class="v mono">C2G7X44210091</span></div>
+      <div class="qrow"><span class="k">Certificate assigned · expires</span><span class="v">12 Aug 2023 · 12 Aug 2026</span></div>
+    </div>
+  </div>
+
+  <div class="sec-lab"><svg class="icon" style="width:14px;height:14px"><use href="#i-doc"/></svg>Documents</div>
+  <div class="qcard">
+    <div class="doc-row"><span class="ic"><svg class="icon" style="width:15px;height:15px"><use href="#i-doc"/></svg></span><span class="grow">Passport</span><span class="st good"><i></i>Verified</span></div>
+    <div class="doc-row"><span class="ic"><svg class="icon" style="width:15px;height:15px"><use href="#i-shield"/></svg></span><span class="grow">eVisa share code result</span><span class="st good"><i></i>Verified</span></div>
+    <div class="doc-row"><span class="ic"><svg class="icon" style="width:15px;height:15px"><use href="#i-shield"/></svg></span><span class="grow">Certificate of Sponsorship</span><span class="st warn"><i></i>Expires 12 Aug — renewal drafted</span></div>
+    <div class="doc-row"><span class="ic"><svg class="icon" style="width:15px;height:15px"><use href="#i-case"/></svg></span><span class="grow">Employment contract</span><span class="st good"><i></i>Verified</span></div>
+    <div class="doc-row"><span class="ic"><svg class="icon" style="width:15px;height:15px"><use href="#i-doc"/></svg></span><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+  </div>
+
+  <div class="sec-lab"><svg class="icon" style="width:14px;height:14px"><use href="#i-clock"/></svg>History</div>
+  <div class="qcard">
+    <div class="h-row"><span class="when">Today 6:00</span><span class="what">Renewal pack <b>drafted</b> by screem — rule SW-04</span></div>
+    <div class="h-row"><span class="when">8 Jul 14:12</span><span class="what">Salary change <b>detected</b> from the payroll feed</span></div>
+    <div class="h-row"><span class="when">3 Jul</span><span class="what">June attendance imported — <b>clear</b></span></div>
+    <div class="h-row"><span class="when">2 Jul</span><span class="what">June payslip <b>verified</b></span></div>
+    <div class="h-row"><span class="when">14 Feb</span><span class="what">Right to work <b>verified</b>, evidence stored</span></div>
+    <div class="h-row"><span class="when">12 Aug 2023</span><span class="what"><b>Hired</b> and certificate assigned</span></div>
+  </div>
+
+  <div class="close-line">Everything else about <b>Maria</b> is in order — right to work, passport, June's pay and attendance all check out.</div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+document.querySelector('[data-act="cos"]').addEventListener('click', function () {
+  this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Signed';
+  this.classList.add('done');
+});
+document.querySelector('[data-act="salary"]').addEventListener('click', function () {
+  this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Reviewed';
+  this.classList.add('done');
+});
+</script>
+</body>
+</html>

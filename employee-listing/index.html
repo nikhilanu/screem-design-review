@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem — 20 employee listing variations</title>
+<style>
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+:root {
+  --paper:#faf8f1; --raised:#fffefa; --sunken:#f1eee1; --ink:#000; --ink-body:#211e15;
+  --muted:#6f6a5a; --faint:#a19a86; --line-subtle:#ece8d9; --line-weak:#e1dcc9;
+  --purple:#7d39eb; --purple-soft:#f0e9fd; --lime:#bfff1f; --lime-soft:#f1fbd2;
+  --orange:#ed621d; --orange-soft:#fcead9;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Inter",-apple-system,sans-serif; background:var(--paper); color:var(--ink-body); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; padding:48px 40px 100px; }
+::selection { background:var(--lime); color:var(--ink); }
+a { color:inherit; text-decoration:none; }
+.masthead { max-width:1560px; margin:0 auto 10px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+.masthead h1 { font-family:"Arcadia",Georgia,serif; font-weight:360; font-size:34px; color:var(--ink); letter-spacing:-.01em; }
+.masthead .mono { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); }
+.masthead p { width:100%; color:var(--muted); max-width:780px; }
+.fam { max-width:1560px; margin:44px auto 0; }
+.fam-h { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.fam-h .tick { width:10px; height:10px; border-radius:3px; background:var(--lime); }
+.fam-h.f2 .tick { background:var(--purple); } .fam-h.f3 .tick { background:var(--orange); }
+.fam-h.f4 .tick { background:var(--ink); } .fam-h.f5 .tick { background:var(--orange-soft); border:1px solid var(--orange); }
+.fam-h h2 { font-size:19px; font-weight:600; color:var(--ink); }
+.fam-h span { color:var(--faint); font-size:13.5px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, 372px); gap:22px; justify-content:start; }
+.card { background:var(--raised); border-radius:18px; box-shadow:0 1px 3px #0000000d, 0 6px 20px #1c14000d; overflow:hidden; display:block; transition:transform .25s cubic-bezier(.2,0,0,1), box-shadow .25s; }
+.card:hover { transform:translateY(-3px); box-shadow:0 2px 6px #00000012, 0 14px 34px #1c140018; }
+.shot { display:block; position:relative; width:100%; height:213px; overflow:hidden; background:var(--sunken); border-bottom:1px solid var(--line-subtle); }
+.shot iframe { width:1440px; height:826px; border:0; transform:scale(0.2583); transform-origin:0 0; pointer-events:none; }
+.meta { display:block; padding:13px 16px 15px; }
+.meta .row { display:flex; align-items:baseline; gap:9px; }
+.meta .num { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--faint); }
+.meta b { font-size:15.5px; color:var(--ink); font-weight:600; }
+.meta p { color:var(--muted); font-size:12.5px; margin-top:3px; }
+.back { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12.5px; font-weight:500; z-index:10; box-shadow:0 6px 20px #00000030; }
+@media (max-width:860px) { body { padding:28px 16px 90px; } .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <h1>The people list, twenty ways</h1>
+  <span class="mono">screem · employees + candidates · same 67 people, different ideologies</span>
+  <p>Every variation lists the same 61 employees and 6 candidates and must answer: <b>who needs me?</b> (Maria, Jakub, Sam), <b>is everyone else fine?</b>, and <b>how do I find anyone?</b> — while keeping current staff and incoming candidates clearly distinct. Click any card to open it full size; click any person inside to reach the detail-page gallery.</p>
+</div>
+
+<div class="fam">
+  <div class="fam-h"><span class="tick"></span><h2>Table classics</h2><span>the trusted registers, refined</span></div>
+  <div class="grid">
+    <a class="card" href="01-stat-table.html"><span class="shot"><iframe src="01-stat-table.html" loading="lazy" tabindex="-1" title="01"></iframe></span><span class="meta"><span class="row"><span class="num">01</span><b>Stat table</b></span><p>Summary cards on top, tabbed employees/candidates tables with compliance meters — the classic.</p></span></a>
+    <a class="card" href="02-segmented-views.html"><span class="shot"><iframe src="02-segmented-views.html" loading="lazy" tabindex="-1" title="02"></iframe></span><span class="meta"><span class="row"><span class="num">02</span><b>Segmented views</b></span><p>No stat cards — saved-view pills (needs action, sponsored, expiring…) do the summarising.</p></span></a>
+    <a class="card" href="03-grouped-ledger.html"><span class="shot"><iframe src="03-grouped-ledger.html" loading="lazy" tabindex="-1" title="03"></iframe></span><span class="meta"><span class="row"><span class="num">03</span><b>Grouped ledger</b></span><p>One list grouped by urgency — needs you first, candidates last, sticky headers.</p></span></a>
+    <a class="card" href="04-split-pane.html"><span class="shot"><iframe src="04-split-pane.html" loading="lazy" tabindex="-1" title="04"></iframe></span><span class="meta"><span class="row"><span class="num">04</span><b>Split pane</b></span><p>Master-detail — compact list left, live person preview right.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f2"><span class="tick"></span><h2>People-first</h2><span>faces before rows</span></div>
+  <div class="grid">
+    <a class="card" href="05-people-grid.html"><span class="shot"><iframe src="05-people-grid.html" loading="lazy" tabindex="-1" title="05"></iframe></span><span class="meta"><span class="row"><span class="num">05</span><b>People grid</b></span><p>Card per person with a score ring; candidates with readiness bars below.</p></span></a>
+    <a class="card" href="06-site-roster.html"><span class="shot"><iframe src="06-site-roster.html" loading="lazy" tabindex="-1" title="06"></iframe></span><span class="meta"><span class="row"><span class="num">06</span><b>Site roster</b></span><p>Three home columns — managers think in buildings.</p></span></a>
+    <a class="card" href="07-directory.html"><span class="shot"><iframe src="07-directory.html" loading="lazy" tabindex="-1" title="07"></iframe></span><span class="meta"><span class="row"><span class="num">07</span><b>Directory</b></span><p>Search-first, A–Z, generous rows — the calmest, most human register.</p></span></a>
+    <a class="card" href="08-triage-hybrid.html"><span class="shot"><iframe src="08-triage-hybrid.html" loading="lazy" tabindex="-1" title="08"></iframe></span><span class="meta"><span class="row"><span class="num">08</span><b>Triage hybrid</b></span><p>Big cards for the three who need you, a quiet table for everyone else.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f3"><span class="tick"></span><h2>Compliance-forward</h2><span>the rule engine in the list</span></div>
+  <div class="grid">
+    <a class="card" href="09-score-ledger.html"><span class="shot"><iframe src="09-score-ledger.html" loading="lazy" tabindex="-1" title="09"></iframe></span><span class="meta"><span class="row"><span class="num">09</span><b>Score ledger</b></span><p>Sortable checks-passing meters with failing checks named inline.</p></span></a>
+    <a class="card" href="10-risk-lanes.html"><span class="shot"><iframe src="10-risk-lanes.html" loading="lazy" tabindex="-1" title="10"></iframe></span><span class="meta"><span class="row"><span class="num">10</span><b>Risk lanes</b></span><p>Stacked lanes of decreasing urgency — needs you, watched, in order, joining.</p></span></a>
+    <a class="card" href="11-deadline-radar.html"><span class="shot"><iframe src="11-deadline-radar.html" loading="lazy" tabindex="-1" title="11"></iframe></span><span class="meta"><span class="row"><span class="num">11</span><b>Deadline radar</b></span><p>A 90-day strip and a list sorted by the next date — compliance as a calendar.</p></span></a>
+    <a class="card" href="12-dual-board.html"><span class="shot"><iframe src="12-dual-board.html" loading="lazy" tabindex="-1" title="12"></iframe></span><span class="meta"><span class="row"><span class="num">12</span><b>Dual board</b></span><p>Two boards side by side — employees by status, candidates by pipeline stage.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f4"><span class="tick"></span><h2>Data-forward</h2><span>for the numbers-lover</span></div>
+  <div class="grid">
+    <a class="card" href="13-analytics-list.html"><span class="shot"><iframe src="13-analytics-list.html" loading="lazy" tabindex="-1" title="13"></iframe></span><span class="meta"><span class="row"><span class="num">13</span><b>Analytics list</b></span><p>Collapsible chart band over the full table, sparkline per person.</p></span></a>
+    <a class="card" href="14-bento-people.html"><span class="shot"><iframe src="14-bento-people.html" loading="lazy" tabindex="-1" title="14"></iframe></span><span class="meta"><span class="row"><span class="num">14</span><b>Bento people</b></span><p>The listing as a composed tile grid — summary, actions, roster, pipeline.</p></span></a>
+    <a class="card" href="15-spreadsheet.html"><span class="shot"><iframe src="15-spreadsheet.html" loading="lazy" tabindex="-1" title="15"></iframe></span><span class="meta"><span class="row"><span class="num">15</span><b>Spreadsheet</b></span><p>Airtable energy — filter row, sticky column, aggregate footer.</p></span></a>
+    <a class="card" href="16-command-list.html"><span class="shot"><iframe src="16-command-list.html" loading="lazy" tabindex="-1" title="16"></iframe></span><span class="meta"><span class="row"><span class="num">16</span><b>Command list</b></span><p>Linear-style speed — type to filter, icon statuses, keyboard hints.</p></span></a>
+  </div>
+</div>
+
+<div class="fam">
+  <div class="fam-h f5"><span class="tick"></span><h2>Novel &amp; human</h2><span>say it, walk it, or one thing at a time</span></div>
+  <div class="grid">
+    <a class="card" href="17-ask-the-list.html"><span class="shot"><iframe src="17-ask-the-list.html" loading="lazy" tabindex="-1" title="17"></iframe></span><span class="meta"><span class="row"><span class="num">17</span><b>Ask the list</b></span><p>Natural-language filters — "visas expiring soon" just works.</p></span></a>
+    <a class="card" href="18-site-cards.html"><span class="shot"><iframe src="18-site-cards.html" loading="lazy" tabindex="-1" title="18"></iframe></span><span class="meta"><span class="row"><span class="num">18</span><b>Site cards</b></span><p>Three big home cards with expanding rosters — walk the buildings.</p></span></a>
+    <a class="card" href="19-journey-flow.html"><span class="shot"><iframe src="19-journey-flow.html" loading="lazy" tabindex="-1" title="19"></iframe></span><span class="meta"><span class="row"><span class="num">19</span><b>Journey flow</b></span><p>Candidates flow left-to-right into the workforce — one continuum.</p></span></a>
+    <a class="card" href="20-zen-roster.html"><span class="shot"><iframe src="20-zen-roster.html" loading="lazy" tabindex="-1" title="20"></iframe></span><span class="meta"><span class="row"><span class="num">20</span><b>Zen roster</b></span><p>Three people who need you, a search box, and nothing else until you ask.</p></span></a>
+  </div>
+</div>
+
+<a class="back" href="../index.html">← all screem versions</a>
+</body>
+</html>

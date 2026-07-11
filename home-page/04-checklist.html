@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem home · 04 — Checklist</title>
+<meta name="description" content="screem home variation 04 — Friday's list: one dominant checklist card, two rows already ticked by screem, a progress bar that fills as you go." />
+<style>
+/* ════ screem home 04 · Checklist ════ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1;
+  --raised: #fffefa;
+  --sunken: #f1eee1;
+  --ink: #000000;
+  --ink-body: #211e15;
+  --ink-soft: #4c473a;
+  --muted: #6f6a5a;
+  --faint: #a19a86;
+  --line-subtle: #ece8d9;
+  --line-weak: #e1dcc9;
+  --line-mid: #cec7af;
+  --purple: #7d39eb;
+  --purple-deep: #5a1fbc;
+  --purple-soft: #f0e9fd;
+  --purple-tint: #c9a6f7;
+  --lime: #bfff1f;
+  --lime-deep: #44610a;
+  --lime-soft: #f1fbd2;
+  --lime-tint: #dcf584;
+  --orange: #ed621d;
+  --orange-deep: #b8480e;
+  --orange-soft: #fcead9;
+  --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink-body);
+  font-size: 15.5px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 8px; }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .07s; } .rise.d2 { animation-delay: .14s; } .rise.d3 { animation-delay: .21s; }
+
+.live-dot { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 100%; background: var(--lime); flex: none; }
+.live-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 100%; border: 1.5px solid var(--lime); opacity: 0; animation: halo 2.6s var(--ease-out-cubic) infinite; }
+@keyframes halo { 0% { transform: scale(.7); opacity: .8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
+
+/* ── shell ── */
+.shell { max-width: 780px; margin: 0 auto; padding: 0 24px 110px; }
+@media (max-width: 600px) { .shell { padding: 0 16px 90px; } }
+.topbar { display: flex; align-items: center; gap: 12px; height: 64px; }
+.topbar .brand { display: flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.topbar .brand svg { width: 16px; height: 18px; color: var(--ink); }
+.topbar .dot { color: var(--line-mid); }
+.topbar .org { font-size: 14.5px; color: var(--muted); }
+.topbar .avatar { margin-left: auto; }
+.avatar { width: 27px; height: 27px; border-radius: 100%; flex: none; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.k { background: var(--ink); color: var(--lime); }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.sm { width: 24px; height: 24px; font-size: 10px; }
+
+/* ── slim black verdict strip ── */
+.verdict-strip {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--ink); border-radius: 100px; padding: 12px 22px; margin: 22px 0 26px;
+  color: #fffefa; font-size: 14.5px;
+}
+.verdict-strip .ring { position: relative; width: 30px; height: 30px; flex: none; }
+.verdict-strip .ring svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+.verdict-strip b.q { font-family: var(--font-sub); font-weight: 360; font-size: 17px; }
+.verdict-strip b.q em { font-style: normal; color: var(--lime); }
+.verdict-strip .sep { color: #fffefa4d; }
+.verdict-strip .fact { color: #fffefab3; white-space: nowrap; }
+.verdict-strip .stamp { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: #fffefa80; white-space: nowrap; }
+@media (max-width: 640px) {
+  .verdict-strip { border-radius: 20px; flex-wrap: wrap; row-gap: 4px; }
+  .verdict-strip .stamp { margin-left: 0; width: 100%; }
+}
+
+/* ── the list card ── */
+.list-card { background: var(--raised); border-radius: 22px; box-shadow: var(--card-shadow); overflow: hidden; }
+.list-head { padding: 24px 28px 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.list-head h1 { font-family: var(--font-sub); font-weight: 360; font-size: 28px; letter-spacing: -.01em; color: var(--ink); }
+.list-head .sub { color: var(--muted); font-size: 14px; }
+
+/* progress */
+.prog-wrap { padding: 10px 28px 20px; }
+.prog-lab { display: flex; align-items: baseline; gap: 10px; font-size: 14px; color: var(--muted); margin-bottom: 9px; }
+.prog-lab b { color: var(--ink); font-weight: 600; font-size: 15px; }
+.prog-lab .all-done { color: var(--lime-deep); font-weight: 600; display: none; }
+.prog-lab.finished b, .prog-lab.finished .count-txt { display: none; }
+.prog-lab.finished .all-done { display: inline; }
+.prog { height: 14px; border-radius: 100px; background: var(--sunken); overflow: hidden; }
+.prog i { display: block; height: 100%; border-radius: 100px; background: var(--lime); box-shadow: inset 0 0 0 1px #44610a2e; transition: width .6s var(--ease-emphasized), background-color .4s; }
+.prog.full i { background: var(--lime); }
+
+/* rows */
+.row { display: flex; align-items: center; gap: 16px; padding: 19px 28px; border-top: 1px solid var(--line-subtle); }
+.row .grow { flex: 1; min-width: 0; }
+.row .grow b { display: block; font-size: 15.5px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.row .grow small { display: block; font-size: 13.5px; color: var(--muted); margin-top: 1px; }
+.row .mins { font-family: var(--font-mono); font-size: 11px; color: var(--faint); white-space: nowrap; letter-spacing: .04em; }
+
+/* big round checkbox */
+.cbx {
+  width: 24px; height: 24px; border-radius: 100px; flex: none; cursor: pointer; padding: 0;
+  border: 1.5px solid var(--line-mid); background: var(--raised);
+  display: inline-flex; align-items: center; justify-content: center; color: transparent;
+  transition: background-color .25s var(--ease-emphasized), border-color .25s var(--ease-emphasized), transform .25s var(--ease-emphasized);
+}
+.cbx svg { width: 13px; height: 13px; }
+.cbx:hover { border-color: var(--lime-deep); background: var(--lime-soft); }
+.row.done .cbx { background: var(--lime); border-color: var(--lime-deep); color: var(--ink); }
+.row.done .cbx:hover { transform: scale(1.06); }
+.row.done .grow b { text-decoration: line-through; color: var(--muted); font-weight: 500; }
+.row.done .grow small { color: var(--faint); }
+.row.auto .cbx { cursor: default; }
+.row.auto .cbx:hover { transform: none; }
+.row .auto-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--lime-soft); color: var(--lime-deep); border-radius: 100px; padding: 2px 11px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 38px; padding: 0 18px; border-radius: 100px; border: none; cursor: pointer;
+  font-size: 13.5px; font-weight: 600; font-family: inherit; white-space: nowrap; flex: none;
+}
+.pill.lime { background: var(--lime); color: var(--ink); }
+.pill.lime:hover { background: var(--lime-tint); }
+.pill.grey { background: var(--sunken); color: var(--ink); }
+.pill.grey:hover { background: var(--line-subtle); }
+.row.done .pill { display: none; }
+@media (max-width: 620px) {
+  .row { flex-wrap: wrap; }
+  .row .pill, .row .auto-tag { margin-left: 40px; }
+}
+
+/* foot note inside card */
+.list-foot { padding: 15px 28px 20px; border-top: 1px solid var(--line-subtle); font-size: 13.5px; color: var(--muted); display: flex; align-items: center; gap: 9px; }
+
+/* ── tiny stat chips ── */
+.chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; justify-content: center; }
+.stat-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--raised); border-radius: 100px; padding: 9px 17px;
+  box-shadow: var(--card-shadow); font-size: 13.5px; color: var(--muted);
+}
+.stat-chip b { color: var(--ink); font-weight: 600; }
+.stat-chip i { width: 8px; height: 8px; border-radius: 100px; flex: none; }
+.stat-chip i.l { background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.stat-chip i.o { background: var(--orange-tint); box-shadow: inset 0 0 0 1px var(--orange-deep); }
+.stat-chip i.p { background: var(--purple-tint); box-shadow: inset 0 0 0 1px var(--purple-deep); }
+
+/* variation chip */
+.var-chip {
+  position: fixed; right: 18px; bottom: 18px; z-index: 900;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--ink); color: var(--lime); border-radius: 100px;
+  padding: 8px 15px; font-size: 12px; font-weight: 600; letter-spacing: .02em;
+  box-shadow: 0 4px 16px #1c140030;
+}
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+  <div class="topbar">
+    <span class="brand"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</span>
+    <span class="dot">·</span>
+    <span class="org">Fernbank Care Group</span>
+    <span class="avatar k">PS</span>
+  </div>
+
+  <div class="verdict-strip rise">
+    <span class="ring">
+      <svg viewBox="0 0 30 30" role="img" aria-label="85 percent in order">
+        <circle cx="15" cy="15" r="11.5" fill="none" stroke="#fffefa26" stroke-width="4"/>
+        <circle cx="15" cy="15" r="11.5" fill="none" stroke="var(--lime)" stroke-width="4" stroke-dasharray="61.4 72.3" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <b class="q">Your licence is <em>quiet</em>.</b>
+    <span class="sep">·</span>
+    <span class="fact">3 things need you</span>
+    <span class="sep">·</span>
+    <span class="fact">about 15 min</span>
+    <span class="stamp"><span class="live-dot"></span>checked 6:00 am</span>
+  </div>
+
+  <div class="list-card rise d1">
+    <div class="list-head">
+      <h1>Friday's list</h1>
+      <span class="sub">10 July · screem did the first two while you slept</span>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-lab" id="prog-lab">
+        <b id="prog-count">2 of 5 done</b>
+        <span class="count-txt">— tick things off as you go</span>
+        <span class="all-done">All done — your morning is your own.</span>
+      </div>
+      <div class="prog"><i id="prog-fill" style="width:40%"></i></div>
+    </div>
+
+    <div class="row auto done">
+      <button class="cbx" aria-label="Done automatically" disabled><svg viewBox="0 0 20 20"><use href="#i-check"/></svg></button>
+      <span class="grow">
+        <b>Checked all 61 right-to-work records</b>
+        <small>every record confirmed against the Home Office view</small>
+      </span>
+      <span class="auto-tag">done automatically at 6:00</span>
+    </div>
+
+    <div class="row auto done">
+      <button class="cbx" aria-label="Done automatically" disabled><svg viewBox="0 0 20 20"><use href="#i-check"/></svg></button>
+      <span class="grow">
+        <b>Verified June payslips against contracts</b>
+        <small>59 of 61 matched · one query raised with payroll (Sam's, below)</small>
+      </span>
+      <span class="auto-tag">done automatically at 6:00</span>
+    </div>
+
+    <div class="row" data-task>
+      <button class="cbx" aria-label="Mark Maria's certificate renewal as done"><svg viewBox="0 0 20 20"><use href="#i-check"/></svg></button>
+      <span class="grow">
+        <b>Sign off Maria Okafor's Certificate of Sponsorship (CoS) renewal</b>
+        <small>expires 12 August · her salary-change report is drafted too</small>
+      </span>
+      <span class="mins">~6 min</span>
+      <button class="pill lime">Review and sign</button>
+    </div>
+
+    <div class="row" data-task>
+      <button class="cbx" aria-label="Mark Jakub's right-to-work check as done"><svg viewBox="0 0 20 20"><use href="#i-check"/></svg></button>
+      <span class="grow">
+        <b>Repeat Jakub Tan's right-to-work check</b>
+        <small>due by 15 July · everything is prepared</small>
+      </span>
+      <span class="mins">~3 min</span>
+      <button class="pill lime">Start check</button>
+    </div>
+
+    <div class="row" data-task>
+      <button class="cbx" aria-label="Mark Sam's pay query as done"><svg viewBox="0 0 20 20"><use href="#i-check"/></svg></button>
+      <span class="grow">
+        <b>Look at Sam Devi's June pay</b>
+        <small>£1,712 paid against £1,845 contracted · payroll asked to explain</small>
+      </span>
+      <span class="mins">~4 min</span>
+      <button class="pill grey">Take a look</button>
+    </div>
+
+    <div class="list-foot">
+      <span class="live-dot"></span>
+      Next on the horizon: Nadia Aziz's visa renewal window opens 28 Jul · July payslips 1 Aug · autumn attendance upload 1 Oct. screem will remind you.
+    </div>
+  </div>
+
+  <div class="chips rise d2">
+    <span class="stat-chip"><i class="l"></i><b>163 documents</b> all current</span>
+    <span class="stat-chip"><i class="o"></i><b>4 of 30</b> certificates left</span>
+    <span class="stat-chip"><i class="p"></i>audit-ready <b>96 / 100</b></span>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var TOTAL = 5;
+  var fill = document.getElementById('prog-fill');
+  var count = document.getElementById('prog-count');
+  var lab = document.getElementById('prog-lab');
+
+  function update() {
+    var done = document.querySelectorAll('.row.done').length;
+    count.textContent = done + ' of ' + TOTAL + ' done';
+    fill.style.width = (done / TOTAL * 100) + '%';
+    lab.classList.toggle('finished', done === TOTAL);
+  }
+
+  document.querySelectorAll('.row[data-task] .cbx').forEach(function (box) {
+    box.addEventListener('click', function () {
+      box.closest('.row').classList.toggle('done');
+      update();
+    });
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>

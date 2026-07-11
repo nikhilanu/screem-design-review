@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem people · 03 — Grouped ledger</title>
+<meta name="description" content="screem employer portal — grouped ledger: one continuous list grouped by urgency with sticky headers." />
+<style>
+/* SCREEM people listing · variation 03 "grouped ledger" — tokens verbatim from dashboard v1.1 */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1;
+  --ink: #000000; --ink-body: #211e15; --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86;
+  --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --soft-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --soft-shadow-up: 0 2px 4px #1c140014, 0 8px 24px #1c140014;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--paper); color: var(--ink-body); font-size: 15.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button, input { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.icon { width: 17px; height: 17px; flex: none; }
+.mono { font-family: var(--font-mono); }
+
+/* avatars */
+.avatar { border-radius: 100%; flex: none; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.l { background: var(--lime-soft); color: var(--lime-deep); }
+.avatar.k { background: var(--ink); color: var(--lime); }
+
+.st { display: inline-flex; align-items: center; gap: 7px; font-weight: 500; font-size: 13.5px; color: var(--ink-soft); white-space: nowrap; }
+.st i { width: 8px; height: 8px; border-radius: 100%; flex: none; }
+.st.good i { background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.st.warn i { background: var(--orange-tint); box-shadow: inset 0 0 0 1px var(--orange-deep); }
+.st.prog i { background: var(--purple-tint); box-shadow: inset 0 0 0 1px var(--purple-deep); }
+
+/* ── chrome ── */
+.bar { display: flex; align-items: center; gap: 13px; height: 62px; padding: 0 40px; border-bottom: 1px solid var(--line-subtle); position: sticky; top: 0; background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px); z-index: 60; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.bar .org { font-size: 14.5px; color: var(--muted); white-space: nowrap; }
+.bar .org b { color: var(--ink); font-weight: 600; }
+.bar .right { margin-left: auto; display: inline-flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+.bar .avatar { width: 27px; height: 27px; font-size: 11px; }
+@media (max-width: 800px) { .bar { padding: 0 18px; } .bar .when { display: none; } }
+
+.wrap { max-width: 1148px; margin: 0 auto; padding: 0 40px 100px; }
+@media (max-width: 800px) { .wrap { padding: 0 18px 90px; } }
+
+.var-chip { position: fixed; right: 18px; bottom: 18px; z-index: 99; display: inline-flex; align-items: center; gap: 7px; background: var(--ink); color: var(--lime); border-radius: 100px; padding: 9px 15px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; box-shadow: 0 8px 24px #1c140038; }
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+/* ── page head ── */
+.head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; margin: 32px 0 8px; flex-wrap: wrap; }
+.head h1 { font-family: var(--font-sub); font-weight: 360; font-size: 34px; letter-spacing: -.015em; color: var(--ink); line-height: 1.1; }
+.head-sub { color: var(--muted); font-size: 15px; max-width: 620px; margin-top: 8px; }
+.head-sub b { color: var(--ink); font-weight: 600; }
+
+.head-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex: none; }
+.search { display: inline-flex; align-items: center; gap: 9px; background: var(--sunken); border-radius: 100px; padding: 0 16px; height: 42px; width: 280px; box-shadow: inset 0 0 0 1px var(--line-weak); transition: box-shadow .2s var(--ease-emphasized), background-color .2s; }
+.search:focus-within { background: var(--raised); box-shadow: inset 0 0 0 1.5px var(--purple); }
+.search svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+.search input { border: none; background: none; outline: none; font-size: 14.5px; color: var(--ink-body); width: 100%; }
+.search input::placeholder { color: var(--faint); }
+.statline { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); letter-spacing: .01em; text-align: right; }
+.statline b { color: var(--ink-soft); font-weight: 500; }
+.statline .em { color: var(--orange-deep); font-weight: 500; }
+@media (max-width: 620px) { .head-tools { align-items: stretch; width: 100%; } .search { width: 100%; } .statline { text-align: left; } }
+
+/* ── ledger ── */
+.ledger { margin-top: 22px; }
+.g-head { position: sticky; top: 62px; z-index: 30; display: flex; align-items: baseline; gap: 12px; padding: 13px 18px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1.5px solid var(--line-weak); border-top: 1px solid var(--line-subtle); flex-wrap: wrap; }
+.g-head .tick { align-self: center; width: 22px; height: 22px; border-radius: 100%; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.g-head .tick svg { width: 13px; height: 13px; }
+.g-head .tick.orange { background: var(--orange); color: #fff; }
+.g-head .tick.purple { background: var(--purple); color: #fff; }
+.g-head .tick.lime { background: var(--lime); color: var(--lime-deep); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.g-head .tick.ink { background: var(--ink); color: var(--lime); }
+.g-head h2 { font-family: var(--font-sub); font-weight: 360; font-size: 20px; color: var(--ink); letter-spacing: -.01em; }
+.g-head .cnt { font-family: var(--font-mono); font-size: 13px; color: var(--muted); align-self: center; }
+.g-head .exp { font-size: 13.5px; color: var(--muted); align-self: center; }
+.g-head .exp.hot { color: var(--orange-deep); font-weight: 500; }
+
+/* rows */
+.lrow { display: grid; grid-template-columns: 40px minmax(0, 1.7fr) minmax(0, 1.3fr) 130px 168px; align-items: center; gap: 16px; padding: 12px 18px; border-bottom: 1px solid var(--line-subtle); cursor: pointer; position: relative; }
+.lrow:hover { background: var(--raised); }
+.lrow::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--line-mid); transition: width .15s var(--ease-emphasized); }
+.lrow.need::after { background: var(--orange); }
+.lrow.watch::after { background: var(--purple-tint); }
+.lrow.cand::after { background: var(--purple); }
+.lrow:hover::after { width: 3px; }
+
+.lrow .av { width: 40px; height: 40px; font-size: 14px; }
+.who b { display: block; font-weight: 600; color: var(--ink); font-size: 15px; line-height: 1.35; }
+.who span { display: block; font-size: 13px; color: var(--muted); }
+.who span.cand-role { color: var(--purple-deep); }
+.col-meta { font-size: 13.5px; color: var(--ink-soft); }
+.col-meta .sub { display: block; font-size: 12.5px; color: var(--muted); }
+.col-date { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.col-date b { display: block; color: var(--ink-soft); font-weight: 500; font-size: 12.5px; }
+.col-right { justify-self: end; display: inline-flex; align-items: center; }
+
+/* meter */
+.tmeter { display: inline-flex; align-items: center; gap: 9px; }
+.tmeter .track { width: 64px; height: 6px; border-radius: 4px; background: var(--line-subtle); overflow: hidden; flex: none; }
+.tmeter .track i { display: block; height: 100%; border-radius: 4px; background: var(--lime); }
+.tmeter.prog .track i { background: var(--purple-tint); }
+.tmeter b { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; color: var(--ink-soft); width: 34px; text-align: right; }
+
+/* inline lime action pill */
+.pill-lime { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 16px; border-radius: 100px; background: var(--lime); color: var(--ink); font-size: 13.5px; font-weight: 600; white-space: nowrap; box-shadow: 0 1px 2px #1c140012; }
+.pill-lime .icon { width: 14px; height: 14px; }
+.lrow:hover .pill-lime { background: var(--lime-tint); }
+
+/* quiet 'more' line */
+.more-line { display: flex; align-items: center; gap: 10px; padding: 13px 18px 13px 56px; border-bottom: 1px solid var(--line-subtle); font-size: 13.5px; color: var(--muted); }
+.more-line .dots { display: inline-flex; gap: 4px; }
+.more-line .dots i { width: 5px; height: 5px; border-radius: 100%; background: var(--lime-tint); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.more-line a.mlink { color: var(--purple-deep); font-weight: 500; }
+.more-line a.mlink:hover { color: var(--purple); }
+
+.no-hits { display: none; padding: 40px 18px; text-align: center; color: var(--muted); font-size: 14.5px; }
+.no-hits b { color: var(--ink); }
+
+/* responsive column collapse */
+@media (max-width: 880px) {
+  .lrow { grid-template-columns: 38px minmax(0, 1.7fr) 120px 160px; }
+  .col-meta { display: none; }
+  .g-head { top: 62px; }
+}
+@media (max-width: 620px) {
+  .lrow { grid-template-columns: 38px minmax(0, 1fr) 150px; padding: 12px 14px; }
+  .col-date { display: none; }
+  .more-line { padding-left: 44px; }
+}
+
+/* entrance */
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .07s; } .rise.d2 { animation-delay: .16s; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4.2l3 1.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 20 20"><path d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 20 20"><path d="M5.5 8.5a4.5 4.5 0 0 1 9 0c0 3 1 4.5 1.5 5.2H4c.5-.7 1.5-2.2 1.5-5.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.3 16.4a1.8 1.8 0 0 0 3.4 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.4 13.4 3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <a class="brand" href="../dashboard-v1.1-employer-b-clear.html"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</a>
+  <span class="org">· <b>Fernbank Care Group</b> · People</span>
+  <span class="right"><span class="when">Friday 10 July 2026</span><span class="avatar k">PS</span></span>
+</header>
+
+<main class="wrap">
+
+  <div class="head-row rise">
+    <div class="head">
+      <h1>Everyone, top to bottom</h1>
+      <p class="head-sub">One list, ordered by what matters most. <b>The three who need you are right at the top.</b></p>
+    </div>
+    <div class="head-tools">
+      <label class="search">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="q" type="search" placeholder="Find anyone by name or role…" autocomplete="off" aria-label="Search people" />
+      </label>
+      <p class="statline">61 employees · <b>52 in order</b> · 6 handled · <span class="em">3 need you</span> · avg 85%</p>
+    </div>
+  </div>
+
+  <div class="ledger rise d1" id="ledger">
+
+    <!-- GROUP 1 — needs you -->
+    <div class="g-head" data-group>
+      <span class="tick orange"><svg aria-hidden="true"><use href="#i-bell"/></svg></span>
+      <h2>Needs you</h2><span class="cnt">3</span>
+      <span class="exp hot">Do these first — each is a short job with a deadline coming up.</span>
+    </div>
+
+    <div class="lrow need" data-row data-name="Maria Okafor" data-role="Senior Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">MO</span>
+      <span class="who"><b>Maria Okafor</b><span>Senior Care Assistant · Oakview House</span></span>
+      <span class="col-meta">Certificate of Sponsorship renewal + unreported salary change<span class="sub">Skilled Worker</span></span>
+      <span class="col-date"><b>visa 12 Aug</b>33 days left</span>
+      <span class="col-right"><span class="pill-lime">Review and sign<svg class="icon"><use href="#i-arrow"/></svg></span></span>
+    </div>
+
+    <div class="lrow need" data-row data-name="Jakub Tan" data-role="Registered Nurse" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">JT</span>
+      <span class="who"><b>Jakub Tan</b><span>Registered Nurse · Riverside Court</span></span>
+      <span class="col-meta">Repeat right-to-work check due — routine recheck<span class="sub">Skilled Worker</span></span>
+      <span class="col-date"><b>due 15 Jul</b>5 days left</span>
+      <span class="col-right"><span class="pill-lime">Start check<svg class="icon"><use href="#i-arrow"/></svg></span></span>
+    </div>
+
+    <div class="lrow need" data-row data-name="Sam Devi" data-role="Activities Coordinator" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">SD</span>
+      <span class="who"><b>Sam Devi</b><span>Activities Coordinator · Hazel Lodge</span></span>
+      <span class="col-meta">June payslip £1,712 against £1,845 contracted<span class="sub">Settled status</span></span>
+      <span class="col-date"><b>one question</b>~2 minutes</span>
+      <span class="col-right"><span class="pill-lime">Take a look<svg class="icon"><use href="#i-arrow"/></svg></span></span>
+    </div>
+
+    <!-- GROUP 2 — being watched -->
+    <div class="g-head" data-group>
+      <span class="tick purple"><svg aria-hidden="true"><use href="#i-eye"/></svg></span>
+      <h2>Being watched</h2><span class="cnt">2</span>
+      <span class="exp">Nothing to do yet — screem is keeping an eye on these for you.</span>
+    </div>
+
+    <div class="lrow watch" data-row data-name="Kavya Patel" data-role="Student Carer part-time" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">KP</span>
+      <span class="who"><b>Kavya Patel</b><span>Student Carer (part-time) · Riverside Court</span></span>
+      <span class="col-meta">Term-time hours at 19.5 of 20 allowed<span class="sub">Student visa · exp 30 Sep 2027</span></span>
+      <span class="col-date"><span class="st prog"><i></i>Watching</span></span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:94%"></i></span><b>94%</b></span></span>
+    </div>
+
+    <div class="lrow watch" data-row data-name="Nadia Aziz" data-role="Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar l av">NA</span>
+      <span class="who"><b>Nadia Aziz</b><span>Care Assistant · Oakview House</span></span>
+      <span class="col-meta">Visa renewal window opens 28 Jul — handled for you<span class="sub">Skilled Worker · exp 28 Sep 2026</span></span>
+      <span class="col-date"><span class="st prog"><i></i>Being handled</span></span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:97%"></i></span><b>97%</b></span></span>
+    </div>
+
+    <!-- GROUP 3 — in order -->
+    <div class="g-head" data-group>
+      <span class="tick lime"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+      <h2>In order</h2><span class="cnt">7 shown of 56</span>
+      <span class="exp">All clear at the 6:00 am sweep — nothing needs a decision.</span>
+    </div>
+
+    <div class="lrow" data-row data-name="Amara Haddad" data-role="Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar l av">AH</span>
+      <span class="who"><b>Amara Haddad</b><span>Care Assistant · Oakview House</span></span>
+      <span class="col-meta">Skilled Worker</span>
+      <span class="col-date"><b>visa 22 Jan 27</b>in good time</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Lena Sokolova" data-role="Senior Carer" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">LS</span>
+      <span class="who"><b>Lena Sokolova</b><span>Senior Carer · Riverside Court</span></span>
+      <span class="col-meta">Health &amp; Care visa</span>
+      <span class="col-date"><b>visa 30 Nov 27</b>in good time</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Rosa Barbosa" data-role="Team Leader" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">RB</span>
+      <span class="who"><b>Rosa Barbosa</b><span>Team Leader · Hazel Lodge</span></span>
+      <span class="col-meta">Skilled Worker</span>
+      <span class="col-date"><b>visa 17 Mar 28</b>in good time</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Tunde Osei" data-role="Kitchen Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar l av">TO</span>
+      <span class="who"><b>Tunde Osei</b><span>Kitchen Assistant · Oakview House</span></span>
+      <span class="col-meta">Settled status</span>
+      <span class="col-date"><b>no visa</b>settled</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Ibrahim Kaya" data-role="Maintenance" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar k av">IK</span>
+      <span class="who"><b>Ibrahim Kaya</b><span>Maintenance · Hazel Lodge</span></span>
+      <span class="col-meta">Settled status</span>
+      <span class="col-date"><b>no visa</b>settled</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Elif Demir" data-role="Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">ED</span>
+      <span class="who"><b>Elif Demir</b><span>Care Assistant · Riverside Court</span></span>
+      <span class="col-meta">Skilled Worker</span>
+      <span class="col-date"><b>visa 09 Feb 28</b>in good time</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+    <div class="lrow" data-row data-name="Joy Adeyemi" data-role="Night Carer" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">JA</span>
+      <span class="who"><b>Joy Adeyemi</b><span>Night Carer · Oakview House</span></span>
+      <span class="col-meta">Health &amp; Care visa</span>
+      <span class="col-date"><b>visa 15 May 27</b>in good time</span>
+      <span class="col-right"><span class="tmeter"><span class="track"><i style="width:100%"></i></span><b>100%</b></span></span>
+    </div>
+
+    <div class="more-line" data-more>
+      <span class="dots"><i></i><i></i><i></i></span>
+      +49 more, all in order — 26 Oakview · 21 Riverside · 14 Hazel · <a class="mlink" href="../employee-detail/index.html" onclick="event.stopPropagation()">show all 56</a>
+    </div>
+
+    <!-- GROUP 4 — candidates -->
+    <div class="g-head" data-group>
+      <span class="tick ink"><svg aria-hidden="true"><use href="#i-clock"/></svg></span>
+      <h2>Candidates</h2><span class="cnt">6</span>
+      <span class="exp">Joining soon — this is onboarding readiness, not a check score.</span>
+    </div>
+
+    <div class="lrow cand" data-row data-name="Hana Kim" data-role="Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar l av">HK</span>
+      <span class="who"><b>Hana Kim</b><span class="cand-role">Care Assistant · Oakview House</span></span>
+      <span class="col-meta">Ready to start — right-to-work verified, contract out<span class="sub">Settled status</span></span>
+      <span class="col-date"><b>starts 28 Jul</b>soonest</span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:90%"></i></span><b>90%</b></span></span>
+    </div>
+    <div class="lrow cand" data-row data-name="Daniel Nwosu" data-role="Care Assistant" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar k av">DN</span>
+      <span class="who"><b>Daniel Nwosu</b><span class="cand-role">Care Assistant · Hazel Lodge</span></span>
+      <span class="col-meta">Checks running — visa filed, decision awaited<span class="sub">Health &amp; Care visa</span></span>
+      <span class="col-date"><b>starts 1 Sep</b></span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:80%"></i></span><b>80%</b></span></span>
+    </div>
+    <div class="lrow cand" data-row data-name="Grace Mensah" data-role="Registered Nurse" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">GM</span>
+      <span class="who"><b>Grace Mensah</b><span class="cand-role">Registered Nurse · Riverside Court</span></span>
+      <span class="col-meta">Checks running — CoS assigned, visa pack drafted<span class="sub">Skilled Worker</span></span>
+      <span class="col-date"><b>starts 15 Sep</b></span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:70%"></i></span><b>70%</b></span></span>
+    </div>
+    <div class="lrow cand" data-row data-name="Ionela Vasile" data-role="Senior Carer" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">IV</span>
+      <span class="who"><b>Ionela Vasile</b><span class="cand-role">Senior Carer · Oakview House</span></span>
+      <span class="col-meta">Documents — sponsorship request in review<span class="sub">Skilled Worker</span></span>
+      <span class="col-date"><b>starts 1 Oct</b></span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:55%"></i></span><b>55%</b></span></span>
+    </div>
+    <div class="lrow cand" data-row data-name="Peter Brennan" data-role="Maintenance Lead" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar o av">PB</span>
+      <span class="who"><b>Peter Brennan</b><span class="cand-role">Maintenance Lead · Hazel Lodge</span></span>
+      <span class="col-meta">Details submitted — share code requested<span class="sub">British citizen</span></span>
+      <span class="col-date"><b>starts 4 Aug</b></span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:35%"></i></span><b>35%</b></span></span>
+    </div>
+    <div class="lrow cand" data-row data-name="Amina Diallo" data-role="Care Assistant nights" onclick="location.href='../employee-detail/index.html'">
+      <span class="avatar p av">AD</span>
+      <span class="who"><b>Amina Diallo</b><span class="cand-role">Care Assistant (nights) · Riverside Court</span></span>
+      <span class="col-meta">Invited — details pending<span class="sub">Skilled Worker</span></span>
+      <span class="col-date"><b>starts 19 Oct</b></span>
+      <span class="col-right"><span class="tmeter prog"><span class="track"><i style="width:15%"></i></span><b>15%</b></span></span>
+    </div>
+
+    <div class="no-hits" id="noHits">No one matches <b id="noHitsQ"></b>. Try a first name, surname, or role.</div>
+
+  </div>
+
+</main>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('[data-row]'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('[data-group]'));
+  var more = document.querySelector('[data-more]');
+  var noHits = document.getElementById('noHits');
+  var noHitsQ = document.getElementById('noHitsQ');
+
+  function haystack(r) {
+    return ((r.getAttribute('data-name') || '') + ' ' + (r.getAttribute('data-role') || '') + ' ' + r.textContent).toLowerCase();
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var any = false;
+    rows.forEach(function (r) {
+      var hit = term === '' || haystack(r).indexOf(term) !== -1;
+      r.style.display = hit ? '' : 'none';
+      if (hit) any = true;
+    });
+    // hide a group header when none of its following rows (until next header) are visible
+    groups.forEach(function (g) {
+      var visible = false;
+      var n = g.nextElementSibling;
+      while (n && !n.hasAttribute('data-group')) {
+        if (n.hasAttribute('data-row') && n.style.display !== 'none') visible = true;
+        n = n.nextElementSibling;
+      }
+      g.style.display = visible ? '' : 'none';
+    });
+    if (more) more.style.display = term === '' ? '' : 'none';
+    noHits.style.display = any ? 'none' : 'block';
+    if (!any) noHitsQ.textContent = '“' + q.value.trim() + '”';
+  }
+
+  q.addEventListener('input', apply);
+})();
+</script>
+
+</body>
+</html>

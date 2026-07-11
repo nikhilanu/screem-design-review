@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem home · 10 — Traffic board</title>
+<meta name="description" content="screem home variation 10 — the UK red-amber-green idiom as a warm triage board." />
+<style>
+/* ============================================================
+   SCREEM home variation 10 · "Traffic board"
+   UK RAG idiom as a kanban-ish status board — triage story:
+   columns get progressively calmer left → right.
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1;
+  --raised: #fffefa;
+  --sunken: #f1eee1;
+  --ink: #000000;
+  --ink-body: #211e15;
+  --ink-soft: #4c473a;
+  --muted: #6f6a5a;
+  --faint: #a19a86;
+  --line-subtle: #ece8d9;
+  --line-weak: #e1dcc9;
+  --line-mid: #cec7af;
+  --purple: #7d39eb;
+  --purple-deep: #5a1fbc;
+  --purple-soft: #f0e9fd;
+  --purple-tint: #c9a6f7;
+  --lime: #bfff1f;
+  --lime-deep: #44610a;
+  --lime-soft: #f1fbd2;
+  --lime-tint: #dcf584;
+  --orange: #ed621d;
+  --orange-deep: #b8480e;
+  --orange-soft: #fcead9;
+  --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink-body);
+  font-size: 15.5px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.icon { width: 17px; height: 17px; flex: none; }
+.mono { font-family: var(--font-mono); }
+
+.live-dot { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 100%; background: var(--lime); flex: none; }
+.live-dot::before { content: ""; position: absolute; inset: -1px; border-radius: 100%; border: 1px solid var(--lime-deep); opacity: .55; }
+.live-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 100%; border: 1.5px solid var(--lime); opacity: 0; animation: halo 2.6s var(--ease-out-cubic) infinite; }
+@keyframes halo { 0% { transform: scale(.7); opacity: .8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
+
+.avatar { width: 40px; height: 40px; border-radius: 100%; flex: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.l { background: var(--lime-soft); color: var(--lime-deep); }
+.avatar.k { background: var(--ink); color: var(--lime); }
+.avatar.sm { width: 30px; height: 30px; font-size: 11px; }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 7px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.badge.lime { background: var(--lime-soft); color: var(--lime-deep); }
+.badge.orange { background: var(--orange-soft); color: var(--orange-deep); }
+.badge.purple { background: var(--purple-soft); color: var(--purple-deep); }
+.badge.gray { background: var(--sunken); color: var(--muted); }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise .7s var(--ease-out-cubic) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.rise.d1 { animation-delay: .07s; } .rise.d2 { animation-delay: .14s; } .rise.d3 { animation-delay: .21s; } .rise.d4 { animation-delay: .28s; }
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .rise { opacity: 1; transform: none; }
+}
+
+/* ── chrome ────────────────────────────────────────────── */
+.bar {
+  display: flex; align-items: center; gap: 16px; height: 64px; padding: 0 44px;
+  border-bottom: 1px solid var(--line-subtle);
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px);
+}
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.org { font-size: 14.5px; font-weight: 600; color: var(--ink); padding-left: 16px; border-left: 1px solid var(--line-weak); line-height: 1.3; }
+.org small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.bar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--muted); white-space: nowrap; }
+.bar-right .user { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14.5px; color: var(--ink); }
+@media (max-width: 800px) { .bar { padding: 0 18px; } .bar-right .when { display: none; } }
+
+.wrap { max-width: 1168px; margin: 0 auto; padding: 0 44px 80px; }
+@media (max-width: 800px) { .wrap { padding: 0 18px 60px; } }
+
+.var-chip {
+  position: fixed; right: 18px; bottom: 18px; z-index: 999;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--ink); color: var(--lime); font-size: 12px; font-weight: 600;
+  padding: 8px 15px; border-radius: 100px; box-shadow: 0 4px 16px #00000038;
+}
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+/* ── slim black verdict strip ──────────────────────────── */
+.verdict { display: flex; align-items: center; gap: 20px; background: var(--ink); border-radius: 20px; padding: 18px 26px; margin: 30px 0 28px; }
+.verdict .ring { position: relative; width: 54px; height: 54px; flex: none; }
+.verdict .ring svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+.verdict .ring b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 320; font-size: 15px; color: var(--lime); }
+.verdict h1 { font-family: var(--font-sub); font-weight: 360; font-size: 23px; letter-spacing: -.01em; color: #fffefa; line-height: 1.25; }
+.verdict h1 em { font-style: normal; color: var(--lime); }
+.verdict .v-sub { color: #fffefaa6; font-size: 14px; margin-top: 2px; }
+.verdict .v-meta { margin-left: auto; flex: none; text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: #fffefa8c; line-height: 2; }
+.verdict .v-meta b { color: var(--lime); font-weight: 500; }
+@media (max-width: 860px) { .verdict { flex-wrap: wrap; } .verdict .v-meta { margin-left: 74px; text-align: left; flex-basis: calc(100% - 74px); } }
+
+/* ── the board ─────────────────────────────────────────── */
+.board { display: grid; grid-template-columns: 1.25fr 1.1fr 1fr; gap: 20px; align-items: start; }
+@media (max-width: 940px) { .board { grid-template-columns: 1fr; } }
+.col-h { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 600; color: var(--ink); padding: 2px 6px 12px; white-space: nowrap; }
+.col-h .dot { width: 10px; height: 10px; border-radius: 100%; flex: none; }
+.col-h .dot.o { background: var(--orange); }
+.col-h .dot.p { background: var(--purple-tint); box-shadow: inset 0 0 0 1.5px var(--purple-deep); }
+.col-h .dot.l { background: var(--lime); box-shadow: inset 0 0 0 1.5px var(--lime-deep); }
+.col-h .n { font-family: var(--font-display); font-weight: 320; font-size: 20px; color: var(--ink); }
+.col-h .hint { margin-left: auto; font-size: 12.5px; font-weight: 400; color: var(--faint); }
+
+/* column 1 — needs you: loudest */
+.need-card { background: var(--raised); border-radius: 22px; padding: 20px; box-shadow: 0 1px 2px #1c140012, 0 6px 20px #1c140012; margin-bottom: 14px; border-top: 3px solid var(--orange-tint); transition: box-shadow .3s var(--ease-emphasized), transform .3s var(--ease-emphasized); }
+.need-card:hover { box-shadow: 0 2px 4px #1c140016, 0 10px 28px #1c14001c; transform: translateY(-1px); }
+.need-card .who { display: flex; align-items: center; gap: 12px; }
+.need-card .who b { font-size: 15.5px; font-weight: 600; color: var(--ink); display: block; line-height: 1.3; }
+.need-card .who small { display: block; font-size: 12.5px; color: var(--muted); }
+.need-card .who .mins { margin-left: auto; font-family: var(--font-mono); font-size: 11.5px; color: var(--orange-deep); background: var(--orange-soft); border-radius: 100px; padding: 3px 10px; flex: none; }
+.need-card p { font-size: 14px; color: var(--ink-soft); margin: 11px 0 14px; line-height: 1.55; }
+.need-card p b { color: var(--ink); font-weight: 600; }
+.need-card .act { border: none; border-radius: 100px; height: 38px; padding: 0 19px; font-size: 14px; font-weight: 600; background: var(--lime); color: var(--ink); cursor: pointer; }
+.need-card .act:hover { background: var(--lime-tint); }
+
+/* column 2 — being handled: compact, calmer */
+.hand-card { background: var(--raised); border-radius: 18px; padding: 15px 17px; box-shadow: var(--card-shadow); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px; transition: box-shadow .3s var(--ease-emphasized); }
+.hand-card:hover { box-shadow: 0 2px 4px #1c140014, 0 6px 18px #1c140012; }
+.hand-card .grow { flex: 1; min-width: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+.hand-card .grow b { color: var(--ink); font-weight: 600; }
+.hand-card .grow small { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.hand-card .badge { flex: none; margin-top: 2px; }
+.more-chip { display: inline-flex; align-items: center; gap: 8px; border: none; background: var(--sunken); color: var(--muted); font-size: 13px; font-weight: 500; border-radius: 100px; padding: 8px 16px; cursor: pointer; font-family: inherit; }
+.more-chip:hover { background: var(--line-subtle); color: var(--ink); }
+
+/* column 3 — all clear: calmest, one celebratory card */
+.clear-card { background: var(--lime-soft); border-radius: 22px; padding: 26px 24px; text-align: center; }
+.clear-card .cluster { display: flex; justify-content: center; margin-bottom: 16px; }
+.clear-card .cluster .avatar { width: 42px; height: 42px; margin-left: -10px; border: 2.5px solid var(--lime-soft); font-size: 12.5px; }
+.clear-card .cluster .avatar:first-child { margin-left: 0; }
+.clear-card .cluster .plus { background: var(--raised); color: var(--muted); }
+.clear-card h3 { font-family: var(--font-sub); font-weight: 360; font-size: 22px; color: var(--ink); line-height: 1.25; }
+.clear-card p { font-size: 13.5px; color: var(--lime-deep); margin-top: 6px; font-weight: 500; }
+.clear-card .docs { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; background: var(--raised); border-radius: 100px; padding: 7px 15px; font-size: 13px; font-weight: 600; color: var(--lime-deep); box-shadow: var(--card-shadow); }
+.clear-card .docs .icon { width: 14px; height: 14px; }
+.clear-card .sites { margin-top: 15px; font-size: 12.5px; color: var(--muted); line-height: 1.7; border-top: 1px solid var(--lime-tint); padding-top: 13px; }
+.clear-card .sites b { color: var(--ink-soft); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <a class="brand" href="index.html"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</a>
+  <span class="org">Fernbank Care Group<small>Sponsor licence EMP 4482913 · rating A</small></span>
+  <span class="bar-right">
+    <span class="when"><span class="live-dot"></span>&nbsp; checked 6:00 am · Friday 10 July 2026</span>
+    <span class="user"><span class="avatar sm k">PS</span>Priya</span>
+  </span>
+</header>
+
+<main class="wrap">
+  <!-- the one black element -->
+  <section class="verdict rise" aria-label="Today's verdict">
+    <span class="ring">
+      <svg viewBox="0 0 54 54" role="img" aria-label="85 percent in order">
+        <circle cx="27" cy="27" r="22" fill="none" stroke="#fffefa26" stroke-width="5.5"/>
+        <circle cx="27" cy="27" r="22" fill="none" stroke="var(--lime)" stroke-width="5.5" stroke-dasharray="117.5 138.2" stroke-linecap="round"/>
+      </svg>
+      <b>85%</b>
+    </span>
+    <div>
+      <h1>Good morning, Priya — your licence is <em>quiet</em>.</h1>
+      <div class="v-sub">Three things need you, about 15 minutes. Everything else on this board is handled.</div>
+    </div>
+    <span class="v-meta">412 checks · 6:00 am<br><b>403 passing</b> · 9 raised</span>
+  </section>
+
+  <!-- triage board -->
+  <section class="board" aria-label="Status board">
+
+    <div class="rise d1">
+      <div class="col-h"><span class="dot o"></span>Needs you<span class="n">3</span><span class="hint">start at the top</span></div>
+
+      <article class="need-card">
+        <div class="who">
+          <span class="avatar o">MO</span>
+          <span><b>Maria Okafor</b><small>Certificate of Sponsorship (CoS)</small></span>
+          <span class="mins">~6 min</span>
+        </div>
+        <p>Her CoS renewal is <b>drafted and ready to sign</b> — it expires on 12 August. screem has drafted her salary-change report too.</p>
+        <button class="act">Review and sign</button>
+      </article>
+
+      <article class="need-card">
+        <div class="who">
+          <span class="avatar p">JT</span>
+          <span><b>Jakub Tan</b><small>right-to-work check</small></span>
+          <span class="mins">~3 min</span>
+        </div>
+        <p>His repeat right-to-work check is <b>due by 15 July</b>. Everything is prepared — it takes about 3 minutes.</p>
+        <button class="act">Start check</button>
+      </article>
+
+      <article class="need-card">
+        <div class="who">
+          <span class="avatar p">SD</span>
+          <span><b>Sam Devi</b><small>payslips &amp; salary</small></span>
+          <span class="mins">~4 min</span>
+        </div>
+        <p>June pay came in <b>£133 under contract</b> — £1,712 paid against £1,845 contracted. Payroll has been asked to explain.</p>
+        <button class="act">Take a look</button>
+      </article>
+    </div>
+
+    <div class="rise d2">
+      <div class="col-h"><span class="dot p"></span>Being handled<span class="n">6</span><span class="hint">nothing needed</span></div>
+
+      <article class="hand-card">
+        <span class="avatar sm o">KP</span>
+        <span class="grow"><b>Kavya Patel</b> — student hours at 19.5 of 20 this week.<small>screem is watching her rota so she stays inside the limit.</small></span>
+        <span class="badge purple">watching</span>
+      </article>
+
+      <article class="hand-card">
+        <span class="avatar sm l">NA</span>
+        <span class="grow"><b>Nadia Aziz</b> — visa renewal window opens 28 July.<small>screem is drafting the paperwork before then.</small></span>
+        <span class="badge purple">drafting</span>
+      </article>
+
+      <article class="hand-card">
+        <span class="avatar sm k">DN</span>
+        <span class="grow"><b>Daniel Nwosu</b> — visa application filed.<small>screem is tracking it with the Home Office for you.</small></span>
+        <span class="badge purple">tracking</span>
+      </article>
+
+      <button class="more-chip" id="more-handled" aria-expanded="false">+ 3 more being handled</button>
+      <div id="more-list" hidden>
+        <article class="hand-card" style="margin-top:12px">
+          <span class="avatar sm k">FB</span>
+          <span class="grow"><b>Two July payslips</b> still to come in.<small>Payroll has been asked — nothing for you to do.</small></span>
+          <span class="badge purple">chasing</span>
+        </article>
+        <article class="hand-card">
+          <span class="avatar sm p">AB</span>
+          <span class="grow"><b>Amara Bello</b> — new address reported to the Home Office.<small>Confirmation usually arrives within a week.</small></span>
+          <span class="badge purple">reported</span>
+        </article>
+        <article class="hand-card">
+          <span class="avatar sm k">FB</span>
+          <span class="grow"><b>Autumn attendance upload</b> — template being prepared.<small>You will get a reminder in September.</small></span>
+          <span class="badge purple">scheduled</span>
+        </article>
+      </div>
+    </div>
+
+    <div class="rise d3">
+      <div class="col-h"><span class="dot l"></span>All clear<span class="n">52</span><span class="hint">rest easy</span></div>
+
+      <article class="clear-card">
+        <div class="cluster" aria-hidden="true">
+          <span class="avatar o">EW</span>
+          <span class="avatar p">RM</span>
+          <span class="avatar o">GH</span>
+          <span class="avatar k">TV</span>
+          <span class="avatar p">CO</span>
+          <span class="avatar plus">+47</span>
+        </div>
+        <h3>52 people, nothing needed.</h3>
+        <p>Every check passed for them this morning.</p>
+        <span class="docs"><svg class="icon"><use href="#i-check"/></svg>163 documents current</span>
+        <div class="sites">
+          Across all three homes —<br>
+          <b>Oakview House</b> 26 · <b>Riverside Court</b> 21 · <b>Hazel Lodge</b> 14
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+(function () {
+  var b = document.getElementById('more-handled');
+  var l = document.getElementById('more-list');
+  b.addEventListener('click', function () {
+    var open = l.hidden;
+    l.hidden = !open;
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    b.textContent = open ? '– show fewer' : '+ 3 more being handled';
+  });
+})();
+</script>
+</body>
+</html>

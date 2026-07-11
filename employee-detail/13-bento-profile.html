@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem person · 13 — Maria Okafor</title>
+<style>
+/* ============================================================
+   screem person page · 13 · "Bento profile"
+   Her whole file as one composed bento grid.
+   Same tokens as dashboard-v1.1-employer-b-clear.html
+   ============================================================ */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1; --ink: #000000; --ink-body: #211e15;
+  --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86; --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-emphasized: cubic-bezier(.2,0,0,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-sans); background:var(--paper); color:var(--ink-body); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; padding:0 24px 120px; }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:var(--lime); color:var(--ink); }
+a:focus-visible, button:focus-visible { outline:1.5px solid var(--purple); outline-offset:2px; border-radius:6px; }
+.icon { width:17px; height:17px; flex:none; }
+.mono { font-family:var(--font-mono); }
+
+/* ── chrome ────────────────────────────────────────────── */
+.back { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:13.5px; font-weight:500; padding:22px 0 4px; }
+.back:hover { color:var(--purple-deep); }
+.var-chip { position:fixed; bottom:22px; right:22px; background:var(--ink); color:var(--lime); border-radius:100px; padding:9px 16px; font-size:12px; font-weight:500; z-index:200; box-shadow:0 6px 20px #00000030; }
+.var-chip:hover { background:var(--purple); }
+
+.wrap { max-width:1080px; margin:0 auto; }
+.intro { margin:6px 0 20px; }
+.intro h1 { font-family:var(--font-sub); font-weight:360; font-size:27px; letter-spacing:-.01em; color:var(--ink); }
+.intro p { color:var(--muted); font-size:15px; margin-top:5px; }
+
+/* ── bento grid ────────────────────────────────────────── */
+.bento { display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:minmax(148px, auto); gap:16px; }
+.tile { background:var(--raised); border:none; border-radius:22px; padding:22px; box-shadow:var(--card-shadow); display:flex; flex-direction:column; min-width:0; }
+.tile .t-lab { display:flex; align-items:center; gap:9px; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-bottom:2px; }
+.tile .t-lab .icon { width:14px; height:14px; color:var(--faint); }
+.tile .t-lab .own { margin-left:auto; letter-spacing:0; text-transform:none; font-weight:500; font-size:11.5px; color:var(--faint); }
+
+.t-identity { grid-column:1/3; grid-row:1/3; background:var(--ink); color:#fffefa; justify-content:space-between; }
+.t-visa     { grid-column:3/4; grid-row:1/2; }
+.t-cert     { grid-column:4/5; grid-row:1/2; }
+.t-salary   { grid-column:3/5; grid-row:2/3; }
+.t-checks   { grid-column:1/3; grid-row:3/4; }
+.t-docs     { grid-column:3/4; grid-row:3/4; }
+.t-records  { grid-column:4/5; grid-row:3/4; }
+.t-personal { grid-column:1/3; grid-row:4/5; }
+.t-timeline { grid-column:3/5; grid-row:4/5; }
+
+@media (max-width:900px) {
+  .bento { grid-template-columns:1fr 1fr; }
+  .t-identity { grid-column:1/3; grid-row:auto; }
+  .t-visa, .t-cert, .t-docs, .t-records { grid-column:auto; grid-row:auto; }
+  .t-salary, .t-checks, .t-personal, .t-timeline { grid-column:1/3; grid-row:auto; }
+}
+@media (max-width:560px) {
+  .bento { grid-template-columns:1fr; }
+  .bento > * { grid-column:1/2 !important; grid-row:auto !important; }
+}
+
+/* identity tile */
+.id-top { display:flex; align-items:center; gap:16px; }
+.id-ring { position:relative; width:70px; height:70px; flex:none; }
+.id-ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.id-ring .ava { position:absolute; inset:7px; border-radius:100%; background:var(--orange-soft); color:var(--orange-deep); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; }
+.id-name { font-family:var(--font-sub); font-weight:360; font-size:26px; letter-spacing:-.01em; color:#fffefa; line-height:1.1; }
+.id-role { color:#fffefab3; font-size:13.5px; margin-top:4px; }
+.id-mid { display:flex; align-items:center; gap:14px; margin:20px 0 4px; }
+.id-score { font-family:var(--font-display); font-weight:320; font-size:44px; color:var(--lime); line-height:1; }
+.id-score small { font-size:17px; color:#fffefa80; font-family:var(--font-sub); }
+.id-scoretxt { font-size:13px; color:#fffefacc; line-height:1.45; }
+.id-scoretxt b { color:#fffefa; font-weight:600; }
+.id-verdict { margin-top:auto; padding-top:16px; }
+.id-verdict .lead { font-size:13px; color:#fffefacc; margin-bottom:11px; display:flex; align-items:center; gap:8px; }
+.id-verdict .lead .dot { width:8px; height:8px; border-radius:100%; background:var(--orange); flex:none; }
+.id-pills { display:flex; gap:9px; flex-wrap:wrap; }
+.bpill { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 17px; border-radius:100px; border:none; font-size:13.5px; font-weight:600; cursor:pointer; font-family:var(--font-sans); }
+.bpill .icon { width:14px; height:14px; }
+.bpill.lime { background:var(--lime); color:var(--ink); }
+.bpill.lime:hover { background:var(--lime-tint); }
+.bpill.ghost { background:#ffffff1c; color:#fffefa; }
+.bpill.ghost:hover { background:#ffffff30; }
+.bpill.done { background:#ffffff14; color:#fffefa80; pointer-events:none; }
+.bpill.done .icon { color:var(--lime); }
+
+/* big number / stat within light tiles */
+.t-num { font-family:var(--font-display); font-weight:320; font-size:38px; color:var(--ink); line-height:1.02; letter-spacing:-.01em; margin-top:auto; }
+.t-num small { font-size:15px; color:var(--muted); font-family:var(--font-sub); }
+.t-note { font-size:13px; color:var(--muted); margin-top:6px; }
+.t-note b { color:var(--ink); font-weight:600; }
+
+.chip { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:100px; font-size:12px; font-weight:600; white-space:nowrap; margin-top:10px; align-self:flex-start; }
+.chip.orange { background:var(--orange-soft); color:var(--orange-deep); }
+.chip.lime { background:var(--lime-soft); color:var(--lime-deep); }
+.chip .icon { width:12px; height:12px; }
+
+/* certificate */
+.cert-ref { font-family:var(--font-mono); font-size:14.5px; font-weight:500; color:var(--ink); margin-top:auto; word-break:break-all; }
+
+/* salary mini bars */
+.sal-body { display:flex; align-items:flex-end; gap:22px; margin-top:12px; }
+.sal-bars { display:flex; align-items:flex-end; gap:14px; flex:1; height:74px; }
+.sal-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end; position:relative; }
+.sal-col .bar { width:100%; max-width:34px; border-radius:7px 7px 3px 3px; background:var(--lime); }
+.sal-col.pay .bar { background:var(--ink); }
+.sal-col .cap { font-size:10.5px; color:var(--muted); }
+.sal-col .val { font-size:10.5px; font-weight:600; color:var(--ink); }
+.sal-side { flex:none; }
+.sal-side .big { font-family:var(--font-display); font-weight:320; font-size:30px; color:var(--ink); line-height:1; }
+.sal-side .sml { font-size:12px; color:var(--muted); margin-top:4px; max-width:130px; }
+.gr-line { position:relative; }
+
+/* checks meter + fails */
+.checks-top { display:flex; align-items:center; gap:14px; margin-top:8px; }
+.checks-big { font-family:var(--font-display); font-weight:320; font-size:34px; color:var(--ink); line-height:1; flex:none; }
+.checks-big small { font-size:15px; color:var(--muted); font-family:var(--font-sub); }
+.meter { height:8px; border-radius:5px; background:var(--line-subtle); overflow:hidden; flex:1; }
+.meter > i { display:block; height:100%; border-radius:5px; background:var(--lime); }
+.fail-row { display:flex; align-items:center; gap:11px; padding:11px 0; border-top:1px solid var(--line-subtle); font-size:13.5px; }
+.fail-row:first-of-type { margin-top:6px; }
+.fail-row .fx { width:30px; height:30px; border-radius:9px; background:var(--orange-soft); color:var(--orange-deep); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.fail-row .fx .icon { width:15px; height:15px; }
+.fail-row .grow { flex:1; min-width:0; }
+.fail-row .grow b { color:var(--ink); font-weight:600; }
+.fail-row .grow .code { font-family:var(--font-mono); font-size:11px; color:var(--faint); }
+.fail-row .grow small { display:block; color:var(--muted); font-size:12.5px; }
+.fail-row .go { font-size:12.5px; font-weight:600; color:var(--purple-deep); white-space:nowrap; }
+
+/* condensed rows */
+.mini { display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--line-subtle); font-size:13px; }
+.mini:first-of-type { margin-top:6px; }
+.mini .grow { flex:1; min-width:0; color:var(--ink); font-weight:500; }
+.mini .st { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ink-soft); white-space:nowrap; }
+.mini .st i { width:7px; height:7px; border-radius:100%; flex:none; }
+.mini .st.good i { background:var(--lime); box-shadow:inset 0 0 0 1px var(--lime-deep); }
+.mini .st.good { color:var(--lime-deep); }
+.mini .st.warn i { background:var(--orange-tint); box-shadow:inset 0 0 0 1px var(--orange-deep); }
+.mini .st.warn { color:var(--orange-deep); }
+
+.rec-big { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+.rec-item { display:flex; align-items:center; gap:11px; font-size:13.5px; }
+.rec-item .tick { width:26px; height:26px; border-radius:8px; background:var(--lime-soft); color:var(--lime-deep); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+.rec-item .tick .icon { width:14px; height:14px; }
+.rec-item b { color:var(--ink); font-weight:600; }
+.rec-item small { display:block; color:var(--muted); font-size:12px; }
+
+/* personal facts grid */
+.pf-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px 20px; margin-top:12px; }
+.pf { min-width:0; }
+.pf .k { font-size:11.5px; color:var(--muted); }
+.pf .v { font-size:13.5px; font-weight:500; color:var(--ink); margin-top:1px; }
+.pf .v.mono { font-family:var(--font-mono); font-size:12px; font-weight:400; }
+@media (max-width:560px) { .pf-grid { grid-template-columns:1fr 1fr; } }
+
+/* timeline */
+.tl { margin-top:10px; }
+.tl-row { display:flex; gap:12px; padding:9px 0; border-top:1px solid var(--line-subtle); font-size:13px; }
+.tl-row:first-child { border-top:none; }
+.tl-row .when { font-family:var(--font-mono); font-size:11px; color:var(--faint); width:74px; flex:none; padding-top:1px; }
+.tl-row .what { color:var(--ink-soft); }
+.tl-row .what b { color:var(--ink); font-weight:600; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 17.2c.8-3.4 3-5.1 6-5.1s5.2 1.7 6 5.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 20 20"><rect x="3" y="6.2" width="14" height="10.3" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6V4.6A1.6 1.6 0 0 1 9 3h2a1.6 1.6 0 0 1 1.6 1.6V6M3 10.4h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.5 16.5 5v4.4c0 3.8-2.7 6.4-6.5 8.1-3.8-1.7-6.5-4.3-6.5-8.1V5L10 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.9 2 2 3.5-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cert" viewBox="0 0 20 20"><circle cx="10" cy="7.8" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m7.6 11.4-1.2 6 3.6-1.9 3.6 1.9-1.2-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 20 20"><path d="M5.5 2.5h6L15.5 6.5V17.5h-10V2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.8 11h4.4M7.8 14h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4l2.6 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3.2" y="4.4" width="13.6" height="12.4" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.2 8.4h13.6M7 2.8v3M13 2.8v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pay" viewBox="0 0 20 20"><rect x="2.6" y="5.2" width="14.8" height="9.6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.2 7.6h.01M14.8 12.4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 20 20"><path d="M10 3.2 17.5 16H2.5L10 3.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8.4v3.1M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <a class="back" href="../employee-listing/index.html">← All people</a>
+
+  <div class="intro">
+    <h1>Maria Okafor</h1>
+    <p>Her whole file at a glance — who she is, what needs you, and every fact the checks read.</p>
+  </div>
+
+  <div class="bento">
+    <!-- IDENTITY (black, 2×2) -->
+    <div class="tile t-identity">
+      <div>
+        <div class="id-top">
+          <span class="id-ring">
+            <svg viewBox="0 0 70 70" role="img" aria-label="88 percent of checks passing">
+              <circle cx="35" cy="35" r="29" fill="none" stroke="#ffffff26" stroke-width="6"/>
+              <circle cx="35" cy="35" r="29" fill="none" stroke="var(--lime)" stroke-width="6" stroke-dasharray="160.4 182.2" stroke-linecap="round"/>
+            </svg>
+            <span class="ava">MO</span>
+          </span>
+          <div>
+            <div class="id-name">Maria Okafor</div>
+            <div class="id-role">Senior Care Assistant · Oakview House<br>Skilled Worker route · since 12 Aug 2023</div>
+          </div>
+        </div>
+        <div class="id-mid">
+          <span class="id-score">88<small>%</small></span>
+          <span class="id-scoretxt"><b>28 of 32</b> checks passing<br>profile 96% complete</span>
+        </div>
+      </div>
+      <div class="id-verdict">
+        <div class="lead"><span class="dot"></span>Two things need you this week</div>
+        <div class="id-pills">
+          <button class="bpill lime" data-act="cos"><svg class="icon"><use href="#i-check"/></svg>Review &amp; sign renewal</button>
+          <button class="bpill ghost" data-act="salary"><svg class="icon"><use href="#i-arrow"/></svg>Review pay report</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISA (1×1) -->
+    <div class="tile t-visa">
+      <div class="t-lab"><svg class="icon"><use href="#i-shield"/></svg>Visa left</div>
+      <div class="t-num">33 <small>days</small></div>
+      <div class="t-note">Skilled Worker visa expires <b>12 Aug 2026</b></div>
+      <span class="chip orange"><svg class="icon"><use href="#i-clock"/></svg>Repeat check due</span>
+    </div>
+
+    <!-- CERTIFICATE (1×1) -->
+    <div class="tile t-cert">
+      <div class="t-lab"><svg class="icon"><use href="#i-cert"/></svg>Certificate</div>
+      <div class="cert-ref">C2G7X44210091</div>
+      <div class="t-note">Certificate of Sponsorship (CoS)</div>
+      <span class="chip lime"><svg class="icon"><use href="#i-check"/></svg>Renewal drafted</span>
+    </div>
+
+    <!-- SALARY (2×1) -->
+    <div class="tile t-salary">
+      <div class="t-lab"><svg class="icon"><use href="#i-pay"/></svg>Salary vs the going rate</div>
+      <div class="sal-body">
+        <div class="sal-bars" role="img" aria-label="Salary rising from 2023 to 2026, always above the going rate">
+          <div class="sal-col"><span class="val">£24.1k</span><span class="bar" style="height:54%"></span><span class="cap">2023</span></div>
+          <div class="sal-col"><span class="val">£24.8k</span><span class="bar" style="height:64%"></span><span class="cap">2024</span></div>
+          <div class="sal-col"><span class="val">£25.6k</span><span class="bar" style="height:74%"></span><span class="cap">2025</span></div>
+          <div class="sal-col pay"><span class="val">£26.7k</span><span class="bar" style="height:90%"></span><span class="cap">Jun 26</span></div>
+        </div>
+        <div class="sal-side">
+          <div class="big">+£1,200</div>
+          <div class="sml">above the £25,500 going rate. June's +£1,900 rise isn't reported yet.</div>
+        </div>
+      </div>
+      <span class="chip orange"><svg class="icon"><use href="#i-warn"/></svg>Pay change not yet reported</span>
+    </div>
+
+    <!-- CHECKS (2×1) -->
+    <div class="tile t-checks">
+      <div class="t-lab"><svg class="icon"><use href="#i-check"/></svg>Rule checks</div>
+      <div class="checks-top">
+        <span class="checks-big">28<small>/32</small></span>
+        <span class="meter"><i style="width:88%"></i></span>
+      </div>
+      <div class="fail-row">
+        <span class="fx"><svg class="icon"><use href="#i-shield"/></svg></span>
+        <span class="grow"><b>Certificate expires within 60 days</b> <span class="code">SW-04</span><small>Review &amp; sign the drafted renewal · ~6 min</small></span>
+        <span class="go">Fix →</span>
+      </div>
+      <div class="fail-row">
+        <span class="fx"><svg class="icon"><use href="#i-pay"/></svg></span>
+        <span class="grow"><b>Salary change not yet reported</b> <span class="code">SW-11</span><small>Review the drafted report · ~3 min</small></span>
+        <span class="go">Fix →</span>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS (1×1) -->
+    <div class="tile t-docs">
+      <div class="t-lab"><svg class="icon"><use href="#i-doc"/></svg>Documents</div>
+      <div class="mini"><span class="grow">Passport</span><span class="st good"><i></i>Verified</span></div>
+      <div class="mini"><span class="grow">eVisa share code</span><span class="st good"><i></i>Verified</span></div>
+      <div class="mini"><span class="grow">Certificate</span><span class="st warn"><i></i>Renewal</span></div>
+      <div class="mini"><span class="grow">Contract</span><span class="st good"><i></i>Verified</span></div>
+      <div class="mini"><span class="grow">June payslip</span><span class="st good"><i></i>Verified</span></div>
+    </div>
+
+    <!-- RECORDS (1×1) -->
+    <div class="tile t-records">
+      <div class="t-lab"><svg class="icon"><use href="#i-cal"/></svg>June records</div>
+      <div class="rec-big">
+        <div class="rec-item"><span class="tick"><svg class="icon"><use href="#i-check"/></svg></span><span><b>Payslip £2,225</b><small>matches contract</small></span></div>
+        <div class="rec-item"><span class="tick"><svg class="icon"><use href="#i-check"/></svg></span><span><b>Attendance clear</b><small>no unexplained absence</small></span></div>
+      </div>
+    </div>
+
+    <!-- PERSONAL (2×1) -->
+    <div class="tile t-personal">
+      <div class="t-lab"><svg class="icon"><use href="#i-person"/></svg>Personal<span class="own">Maria provides</span></div>
+      <div class="pf-grid">
+        <div class="pf"><div class="k">Date of birth</div><div class="v">14 May 1991</div></div>
+        <div class="pf"><div class="k">Nationality</div><div class="v">Nigerian</div></div>
+        <div class="pf"><div class="k">Phone</div><div class="v mono">07700 900412</div></div>
+        <div class="pf"><div class="k">Address</div><div class="v">22 Elm Grove, Leeds LS8 2AT</div></div>
+        <div class="pf"><div class="k">Passport</div><div class="v mono">6602214187</div></div>
+        <div class="pf"><div class="k">National Insurance</div><div class="v mono">QQ 12 34 56 C</div></div>
+      </div>
+    </div>
+
+    <!-- TIMELINE (2×1) -->
+    <div class="tile t-timeline">
+      <div class="t-lab"><svg class="icon"><use href="#i-clock"/></svg>Recent activity</div>
+      <div class="tl">
+        <div class="tl-row"><span class="when">Today 6:00</span><span class="what">Renewal pack <b>drafted</b> — rule SW-04</span></div>
+        <div class="tl-row"><span class="when">8 Jul</span><span class="what">Salary change <b>detected</b> from payroll</span></div>
+        <div class="tl-row"><span class="when">2 Jul</span><span class="what">June payslip <b>verified</b></span></div>
+        <div class="tl-row"><span class="when">14 Feb</span><span class="what">Right to work <b>verified</b>, evidence stored</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+function markDone(sel, label) {
+  var b = document.querySelector(sel);
+  if (!b) return;
+  b.addEventListener('click', function () {
+    this.classList.add('done');
+    this.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>' + label;
+  });
+}
+markDone('[data-act="cos"]', 'Signed');
+markDone('[data-act="salary"]', 'Reviewed');
+</script>
+</body>
+</html>

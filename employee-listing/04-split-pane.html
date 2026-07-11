@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>screem people · 04 — Split pane</title>
+<meta name="description" content="screem employer portal — split pane: a compact person list on the left, a live profile preview on the right." />
+<style>
+/* SCREEM people listing · variation 04 "split pane" — tokens verbatim from dashboard v1.1 */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Arcadia"; src: url("../fonts/arcadia-360.woff2") format("woff2"); font-weight: 360; font-display: swap; }
+@font-face { font-family: "ArcadiaDisplay"; src: url("../fonts/arcadiaDisplay-320.woff2") format("woff2"); font-weight: 320; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/JetBrainsMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #faf8f1; --raised: #fffefa; --sunken: #f1eee1;
+  --ink: #000000; --ink-body: #211e15; --ink-soft: #4c473a; --muted: #6f6a5a; --faint: #a19a86;
+  --line-subtle: #ece8d9; --line-weak: #e1dcc9; --line-mid: #cec7af;
+  --purple: #7d39eb; --purple-deep: #5a1fbc; --purple-soft: #f0e9fd; --purple-tint: #c9a6f7;
+  --lime: #bfff1f; --lime-deep: #44610a; --lime-soft: #f1fbd2; --lime-tint: #dcf584;
+  --orange: #ed621d; --orange-deep: #b8480e; --orange-soft: #fcead9; --orange-tint: #f6ac7b;
+  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "ArcadiaDisplay", "Arcadia", Georgia, serif;
+  --font-sub: "Arcadia", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --card-shadow: 0 1px 3px #0000000a, 0 0 2px #1c140028;
+  --soft-shadow: 0 1px 2px #1c140010, 0 4px 16px #1c14000d;
+  --soft-shadow-up: 0 2px 4px #1c140014, 0 8px 24px #1c140014;
+  --ease-out-cubic: cubic-bezier(.33, 1, .68, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--paper); color: var(--ink-body); font-size: 15.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+::selection { background: var(--lime); color: var(--ink); }
+a, button { transition: color .3s var(--ease-emphasized), background-color .3s var(--ease-emphasized), border-color .3s var(--ease-emphasized), box-shadow .3s var(--ease-emphasized); }
+a:hover, button:hover { transition-duration: .05s; }
+a:focus-visible, button:focus-visible { outline: 1.5px solid var(--purple); outline-offset: 2px; border-radius: 6px; }
+.icon { width: 17px; height: 17px; flex: none; }
+.mono { font-family: var(--font-mono); }
+
+/* avatars */
+.avatar { border-radius: 100%; flex: none; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.avatar.o { background: var(--orange-soft); color: var(--orange-deep); }
+.avatar.p { background: var(--purple-soft); color: var(--purple-deep); }
+.avatar.l { background: var(--lime-soft); color: var(--lime-deep); }
+.avatar.k { background: var(--ink); color: var(--lime); }
+
+.st { display: inline-flex; align-items: center; gap: 7px; font-weight: 500; font-size: 14.5px; color: var(--ink-soft); white-space: nowrap; }
+.st i { width: 8px; height: 8px; border-radius: 100%; flex: none; }
+.st.good i { background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.st.warn i { background: var(--orange-tint); box-shadow: inset 0 0 0 1px var(--orange-deep); }
+.st.prog i { background: var(--purple-tint); box-shadow: inset 0 0 0 1px var(--purple-deep); }
+
+/* ── chrome ── */
+.bar { display: flex; align-items: center; gap: 13px; height: 62px; padding: 0 30px; border-bottom: 1px solid var(--line-subtle); background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px); flex: none; z-index: 50; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sub); font-weight: 360; font-size: 21px; color: var(--ink); }
+.brand svg { width: 17px; height: 19px; color: var(--ink); }
+.bar .org { font-size: 14.5px; color: var(--muted); white-space: nowrap; }
+.bar .org b { color: var(--ink); font-weight: 600; }
+.bar .right { margin-left: auto; display: inline-flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+.bar .avatar { width: 27px; height: 27px; font-size: 11px; }
+@media (max-width: 800px) { .bar { padding: 0 16px; } .bar .when { display: none; } }
+
+.var-chip { position: fixed; right: 18px; bottom: 18px; z-index: 99; display: inline-flex; align-items: center; gap: 7px; background: var(--ink); color: var(--lime); border-radius: 100px; padding: 9px 15px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; box-shadow: 0 8px 24px #1c140038; }
+.var-chip:hover { background: var(--purple); color: #fff; }
+
+/* ── split shell ── */
+.shell { display: flex; height: calc(100vh - 62px); overflow: hidden; }
+
+/* ── left pane ── */
+.left { width: 380px; flex: none; display: flex; flex-direction: column; border-right: 1px solid var(--line-subtle); background: var(--paper); }
+.left-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--line-subtle); flex: none; }
+.left-head h1 { font-family: var(--font-sub); font-weight: 360; font-size: 22px; letter-spacing: -.01em; color: var(--ink); line-height: 1.15; }
+.left-head p { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+.left-head p b { color: var(--ink); font-weight: 600; }
+
+.search { position: relative; margin-top: 15px; }
+.search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--faint); }
+.search input { width: 100%; height: 40px; border: none; background: var(--sunken); border-radius: 100px; padding: 0 16px 0 38px; font-family: var(--font-sans); font-size: 14.5px; color: var(--ink-body); box-shadow: inset 0 0 0 1px transparent; }
+.search input::placeholder { color: var(--faint); }
+.search input:focus { outline: none; background: var(--raised); box-shadow: inset 0 0 0 1.5px var(--purple-tint); }
+
+.seg { display: flex; gap: 4px; margin-top: 12px; background: var(--sunken); border-radius: 100px; padding: 4px; }
+.seg button { flex: 1; height: 34px; border: none; background: transparent; border-radius: 100px; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.seg button .n { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; opacity: .7; }
+.seg button:hover { color: var(--ink-soft); }
+.seg button.on { background: var(--raised); color: var(--ink); box-shadow: var(--card-shadow); }
+
+.list { flex: 1; overflow-y: auto; padding: 8px; }
+.list::-webkit-scrollbar { width: 9px; }
+.list::-webkit-scrollbar-thumb { background: var(--line-weak); border-radius: 10px; border: 3px solid var(--paper); }
+.empty { display: none; padding: 30px 20px; text-align: center; color: var(--muted); font-size: 14px; }
+
+.prow { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: none; background: transparent; border-radius: 14px; padding: 10px 12px; cursor: pointer; }
+.prow:hover { background: var(--raised); box-shadow: var(--card-shadow); }
+.prow.sel { background: var(--raised); box-shadow: var(--soft-shadow), inset 0 0 0 1.5px var(--purple-tint); }
+.prow .avatar { width: 38px; height: 38px; font-size: 13px; }
+.prow-main { flex: 1; min-width: 0; }
+.prow-main b { display: block; font-size: 14.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow-main span { display: block; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: none; }
+.prow-right .dot { width: 9px; height: 9px; border-radius: 100%; }
+.prow-right .dot.good { background: var(--lime); box-shadow: inset 0 0 0 1px var(--lime-deep); }
+.prow-right .dot.warn { background: var(--orange-tint); box-shadow: inset 0 0 0 1px var(--orange-deep); }
+.prow-right .dot.prog { background: var(--purple-tint); box-shadow: inset 0 0 0 1px var(--purple-deep); }
+.prow-right .pct { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--ink-soft); }
+
+/* ── right pane ── */
+.right { flex: 1; min-width: 0; overflow-y: auto; padding: 34px 44px 60px; }
+.detail { max-width: 720px; }
+.detail-head { display: flex; align-items: center; gap: 18px; }
+.detail-head .avatar { width: 66px; height: 66px; font-size: 22px; }
+.dh-id { min-width: 0; }
+.dh-id h2 { font-family: var(--font-sub); font-weight: 360; font-size: 30px; letter-spacing: -.015em; color: var(--ink); line-height: 1.1; }
+.dh-id .role { font-size: 15.5px; color: var(--ink-soft); margin-top: 2px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 100px; background: var(--sunken); font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+.badge.cand { background: var(--purple-soft); color: var(--purple-deep); }
+
+.kind-line { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.kind-line.emp { color: var(--lime-deep); }
+.kind-line.cand { color: var(--purple-deep); }
+
+/* meter */
+.meter-card { margin-top: 14px; background: var(--raised); border-radius: 22px; padding: 22px 24px; box-shadow: var(--soft-shadow); }
+.meter-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.meter-top .lbl { font-size: 14.5px; color: var(--muted); }
+.meter-top .val { font-family: var(--font-sub); font-weight: 360; font-size: 26px; color: var(--ink); }
+.meter-top .val span { font-family: var(--font-mono); font-size: 14px; color: var(--muted); margin-left: 6px; font-weight: 500; }
+.meter-bar { margin-top: 14px; height: 10px; border-radius: 6px; background: var(--sunken); overflow: hidden; }
+.meter-bar i { display: block; height: 100%; border-radius: 6px; background: var(--lime); transition: width .5s var(--ease-out-cubic); }
+.meter-bar.prog i { background: linear-gradient(90deg, var(--purple-tint), var(--purple)); }
+
+/* facts */
+.d-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.d-fact { background: var(--raised); border-radius: 16px; padding: 15px 18px; box-shadow: var(--card-shadow); }
+.d-fact .k { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
+.d-fact .v { font-size: 15.5px; color: var(--ink); font-weight: 600; margin-top: 4px; }
+.d-fact .v.mono { font-family: var(--font-mono); font-weight: 500; font-size: 14.5px; }
+
+/* open item */
+.open-card { margin-top: 18px; background: var(--raised); border-radius: 22px; padding: 22px 24px; box-shadow: var(--soft-shadow); }
+.open-card.act { box-shadow: var(--soft-shadow), 0 0 0 1.5px var(--orange-tint); }
+.open-card .oc-h { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.open-card.act .oc-h { color: var(--orange-deep); }
+.open-card .oc-h svg { width: 15px; height: 15px; }
+.open-card p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.55; margin-top: 10px; }
+.open-card p b { color: var(--ink); font-weight: 600; }
+.oc-foot { display: flex; align-items: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+.pill-lime { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 20px; border-radius: 100px; background: var(--lime); color: var(--ink); font-size: 14.5px; font-weight: 600; }
+.pill-lime .icon { width: 15px; height: 15px; }
+.pill-lime:hover { background: var(--lime-tint); }
+.profile-link { display: inline-flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 600; color: var(--purple-deep); }
+.profile-link .icon { width: 15px; height: 15px; }
+.profile-link:hover { color: var(--purple); }
+
+.detail-foot { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line-subtle); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* ── stack ── */
+@media (max-width: 800px) {
+  .shell { flex-direction: column; height: auto; overflow: visible; }
+  .left { width: 100%; border-right: none; border-bottom: 1px solid var(--line-subtle); }
+  .list { max-height: 300px; }
+  .right { padding: 26px 18px 80px; }
+  .dh-id h2 { font-size: 25px; }
+  .d-facts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3.5 10h13M11.5 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4.2l3 1.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.2 10.6 3.8 3.9 7.8-9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.5 13.5 3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="s-mark" viewBox="0 0 512 568">
+      <path fill="currentColor" d="M384.0 563.7C382.2 562.8 381.6 561.7 381.7 559.9C381.8 558.6 381.5 551.9 380.9 545.0C379.0 521.8 371.5 504.3 356.4 488.0C350.2 481.4 337.4 470.2 327.5 462.9C324.2 460.5 321.1 457.9 320.7 457.3C320.3 456.6 319.4 456.0 318.7 456.0C318.0 456.0 315.2 454.3 312.5 452.3C309.8 450.3 305.0 447.3 302.0 445.7C299.0 444.1 296.0 442.4 295.4 441.9C294.8 441.4 291.7 439.6 288.4 437.9C285.2 436.2 281.8 434.1 280.9 433.4C280.1 432.6 278.7 432.0 277.9 432.0C277.1 432.0 275.4 431.2 274.0 430.3C270.9 428.1 252.5 419.0 251.2 419.0C250.7 419.0 249.7 418.3 249.0 417.5C248.3 416.7 247.0 416.0 246.0 416.0C245.1 416.0 243.1 415.1 241.7 414.0C240.3 412.9 238.5 412.0 237.7 412.0C236.9 412.0 235.1 411.1 233.7 410.0C232.3 408.9 230.5 408.0 229.6 408.0C228.8 408.0 226.4 407.1 224.3 406.1C222.2 405.0 217.8 403.0 214.5 401.5C211.2 400.1 207.3 398.2 205.8 397.4C204.4 396.6 202.5 396.0 201.7 396.0C200.9 396.0 199.1 395.1 197.7 394.0C196.3 392.9 194.5 392.0 193.7 392.0C192.2 392.0 184.8 388.8 168.5 381.1C163.0 378.5 157.4 375.8 156.0 375.2C153.6 374.0 149.3 371.7 128.5 360.6C123.5 358.0 118.8 355.2 118.0 354.4C117.1 353.7 114.3 351.9 111.8 350.6C99.6 344.1 77.3 328.0 64.5 316.5C48.0 301.6 31.5 282.9 25.2 272.0C23.8 269.5 22.3 267.3 21.9 267.0C20.8 266.2 12.0 247.7 12.0 246.2C12.0 245.4 11.3 243.6 10.5 242.2C8.3 238.0 6.1 228.8 4.0 214.0C3.0 206.6 1.6 196.8 0.9 192.3C-0.2 185.2 -0.2 183.1 1.2 176.8C2.1 172.8 3.4 165.2 4.0 160.0C5.2 150.0 6.0 146.9 10.6 133.0C13.9 122.9 22.1 106.5 28.7 96.6C31.3 92.7 33.7 89.3 34.0 89.0C34.3 88.7 36.1 86.4 38.0 83.8C41.7 78.8 58.7 61.8 65.7 56.0C70.3 52.2 79.3 45.6 82.6 43.7C83.8 43.0 86.7 41.2 89.1 39.6C93.9 36.4 117.9 24.0 119.3 24.0C119.8 24.0 121.6 23.3 123.3 22.5C134.7 17.3 159.5 10.4 178.7 7.1C208.2 2.1 264.4 2.0 287.0 6.9C289.5 7.5 294.2 8.4 297.5 8.9C310.0 11.1 338.1 19.7 342.5 22.6C343.6 23.4 345.0 24.0 345.7 24.0C347.3 24.0 363.9 31.9 366.0 33.6C366.9 34.3 370.2 36.3 373.4 38.0C390.7 47.3 419.6 72.5 429.5 87.1C431.1 89.5 434.2 93.7 436.2 96.5C438.3 99.2 440.0 102.0 440.0 102.6C440.0 103.2 440.7 104.3 441.5 105.0C443.1 106.3 444.0 107.9 451.1 122.2C453.8 127.5 456.0 132.7 456.0 133.6C456.0 134.6 456.6 136.1 457.3 136.9C460.7 141.0 467.2 167.7 469.5 187.0C471.3 202.1 471.4 208.2 469.8 209.8C468.9 210.7 454.0 211.0 408.9 211.0C358.5 211.0 349.1 210.8 348.1 209.6C347.4 208.8 346.3 203.7 345.5 198.3C344.2 188.9 341.3 179.6 337.3 171.9C332.9 163.6 319.7 149.0 312.1 144.2C310.6 143.3 309.2 142.2 308.9 141.8C308.6 141.3 304.6 139.0 299.9 136.7C278.9 125.9 255.9 121.0 227.3 121.0C187.5 121.0 154.6 133.3 137.1 154.7C131.4 161.6 129.1 166.2 127.4 173.5C121.6 199.1 132.7 221.4 160.2 239.8C171.4 247.3 175.8 250.1 179.0 252.0C192.5 259.9 199.6 263.6 224.0 275.7C247.9 287.4 255.1 290.9 268.0 296.8C269.4 297.5 271.2 298.4 272.0 298.9C272.8 299.4 276.4 301.0 280.0 302.6C283.6 304.1 291.7 307.7 298.0 310.7C304.3 313.7 312.0 317.3 315.0 318.7C318.0 320.0 321.2 321.6 322.0 322.1C322.8 322.6 324.2 323.3 325.0 323.6C327.2 324.4 330.3 325.9 332.0 326.8C334.2 328.0 338.5 330.3 346.5 334.5C350.4 336.4 355.3 339.2 357.5 340.6C359.7 341.9 362.5 343.4 363.7 344.0C364.8 344.5 366.1 345.4 366.5 346.0C366.8 346.5 368.6 347.7 370.3 348.5C375.2 350.9 386.1 358.0 397.0 366.0C400.0 368.2 403.6 370.8 405.0 371.7C420.0 381.9 447.0 407.6 459.6 423.7C469.0 435.8 473.3 441.6 475.1 445.0C475.9 446.4 477.1 448.3 477.9 449.3C481.4 453.5 492.0 475.1 492.0 477.8C492.0 479.0 492.4 480.1 492.9 480.5C494.1 481.2 498.0 494.0 501.0 506.5C503.0 515.0 505.9 544.9 506.0 557.1C506.0 562.1 505.7 562.8 503.5 563.8C499.6 565.6 387.4 565.5 384.0 563.7Z"/>
+      <path fill="var(--sTail, #7d39eb)" d="M4.5 564.0C4.2 563.5 3.0 563.0 1.9 563.0C0.0 563.0 0.0 561.6 0.0 486.6L0.0 410.2L3.0 409.1C6.3 408.0 24.6 409.2 29.0 410.8C30.4 411.3 33.8 412.0 36.6 412.4C39.4 412.7 45.5 414.4 50.1 416.1C54.7 417.7 60.1 419.6 62.0 420.2C63.9 420.7 66.2 421.8 67.1 422.6C67.9 423.4 69.3 424.0 70.1 424.0C70.9 424.0 72.6 424.7 73.9 425.6C75.2 426.5 78.8 428.6 81.9 430.3C94.5 437.0 116.4 456.3 125.8 468.8C138.0 485.2 146.5 501.4 151.6 518.0C154.6 528.0 156.0 533.6 156.0 536.3C156.0 537.9 156.6 541.8 157.4 544.9C159.6 553.2 159.8 562.9 158.0 564.0C155.9 565.3 5.3 565.3 4.5 564.0Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <a class="brand" href="../dashboard-v1.1-employer-b-clear.html"><svg viewBox="0 0 512 568" aria-hidden="true"><use href="#s-mark"/></svg>screem</a>
+  <span class="org">· <b>Fernbank Care Group</b> · People</span>
+  <span class="right"><span class="when">Friday 10 July 2026</span><span class="avatar k">PS</span></span>
+</header>
+
+<div class="shell">
+
+  <aside class="left">
+    <div class="left-head">
+      <h1>People</h1>
+      <p><b>61 employees</b> · <b>6 joining soon</b> — 52 in order, 3 need you.</p>
+      <div class="search">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="q" type="text" placeholder="Search by name or role…" autocomplete="off" />
+      </div>
+      <div class="seg" role="tablist">
+        <button id="tab-emp" class="on" onclick="setKind('emp')">Employees <span class="n">12</span></button>
+        <button id="tab-cand" onclick="setKind('cand')">Candidates <span class="n">6</span></button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+    <div class="empty" id="empty">No one matches that search.</div>
+  </aside>
+
+  <main class="right">
+    <article class="detail" id="detail"></article>
+  </main>
+
+</div>
+
+<a class="var-chip" href="index.html">◱ all 20 variations</a>
+
+<script>
+const PEOPLE = {
+  maria:{kind:'emp',hue:'o',ini:'MO',name:'Maria Okafor',role:'Senior Care Assistant',site:'Oakview House',route:'Skilled Worker',dot:'warn',status:'Needs action',pct:88,meterVal:'88%',meterSub:'(28 of 32)',cap:'Checks passing',visa:'12 Aug 2026',next:'12 Aug — visa & CoS',
+    act:true, oh:'Needs you today', oc:'<b>Two things.</b> Her Certificate of Sponsorship (CoS) renewal is drafted and ready, and a recent salary change still needs reporting. Her visa runs out on 12 Aug 2026, so the CoS has to be renewed first.', btn:'Review and sign'},
+  jakub:{kind:'emp',hue:'p',ini:'JT',name:'Jakub Tan',role:'Registered Nurse',site:'Riverside Court',route:'Skilled Worker',dot:'warn',status:'Needs action',pct:91,meterVal:'91%',meterSub:'',cap:'Checks passing',visa:'05 Sep 2026',next:'15 Jul — right-to-work',
+    act:true, oh:'Needs you today', oc:'<b>By Tuesday 15 July.</b> Jakub is due a repeat right-to-work check — it&rsquo;s a routine recheck, nothing is wrong. It takes about five minutes.', btn:'Start check'},
+  sam:{kind:'emp',hue:'p',ini:'SD',name:'Sam Devi',role:'Activities Coordinator',site:'Hazel Lodge',route:'Settled status',dot:'warn',status:'Needs action',pct:94,meterVal:'94%',meterSub:'',cap:'Checks passing',visa:'Not needed — settled',next:'Payslip query open',
+    act:true, oh:'Needs you today', oc:'<b>One question.</b> Sam&rsquo;s June payslip shows £1,712 against £1,845 contracted. Worth confirming with payroll before anything is reported.', btn:'Take a look'},
+  kavya:{kind:'emp',hue:'o',ini:'KP',name:'Kavya Patel',role:'Student Carer (part-time)',site:'Riverside Court',route:'Student visa',dot:'prog',status:'Watching',pct:94,meterVal:'94%',meterSub:'',cap:'Checks passing',visa:'30 Sep 2027',next:'Termly hours review',
+    act:false, oh:'What we&rsquo;re watching', oc:'Term-time working hours are at <b>19.5 of the 20-hour weekly limit</b>. Nothing wrong — just close enough that we keep an eye on it each week.'},
+  nadia:{kind:'emp',hue:'l',ini:'NA',name:'Nadia Aziz',role:'Care Assistant',site:'Oakview House',route:'Skilled Worker',dot:'prog',status:'Being handled',pct:97,meterVal:'97%',meterSub:'',cap:'Checks passing',visa:'28 Sep 2026',next:'28 Jul — renewal window',
+    act:false, oh:'Being handled for you', oc:'Her visa renewal window opens on <b>28 July</b>. We&rsquo;ll prepare the paperwork and let you know when there&rsquo;s anything to sign.'},
+  amara:{kind:'emp',hue:'l',ini:'AH',name:'Amara Haddad',role:'Care Assistant',site:'Oakview House',route:'Skilled Worker',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'22 Jan 2027',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Every check is passing and nothing is due. Amara&rsquo;s next milestone is her visa expiry on <b>22 Jan 2027</b> — plenty of time.'},
+  lena:{kind:'emp',hue:'o',ini:'LS',name:'Lena Sokolova',role:'Senior Carer',site:'Riverside Court',route:'Health & Care',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'30 Nov 2027',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Every check is passing and nothing is due. Next milestone is her visa expiry on <b>30 Nov 2027</b>.'},
+  rosa:{kind:'emp',hue:'p',ini:'RB',name:'Rosa Barbosa',role:'Team Leader',site:'Hazel Lodge',route:'Skilled Worker',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'17 Mar 2028',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Every check is passing and nothing is due. Next milestone is her visa expiry on <b>17 Mar 2028</b>.'},
+  tunde:{kind:'emp',hue:'l',ini:'TO',name:'Tunde Osei',role:'Kitchen Assistant',site:'Oakview House',route:'Settled status',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'Not needed — settled',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Tunde has settled status, so there&rsquo;s no visa to track. Every check is passing and nothing is due.'},
+  ibrahim:{kind:'emp',hue:'k',ini:'IK',name:'Ibrahim Kaya',role:'Maintenance',site:'Hazel Lodge',route:'Settled status',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'Not needed — settled',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Ibrahim has settled status, so there&rsquo;s no visa to track. Every check is passing and nothing is due.'},
+  elif:{kind:'emp',hue:'p',ini:'ED',name:'Elif Demir',role:'Care Assistant',site:'Riverside Court',route:'Skilled Worker',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'09 Feb 2028',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Every check is passing and nothing is due. Next milestone is her visa expiry on <b>09 Feb 2028</b>.'},
+  joy:{kind:'emp',hue:'o',ini:'JA',name:'Joy Adeyemi',role:'Night Carer',site:'Oakview House',route:'Health & Care',dot:'good',status:'In order',pct:100,meterVal:'100%',meterSub:'',cap:'Checks passing',visa:'15 May 2027',next:'Nothing scheduled',
+    act:false, oh:'All in order', oc:'Every check is passing and nothing is due. Next milestone is her visa expiry on <b>15 May 2027</b>.'},
+
+  amina:{kind:'cand',hue:'p',ini:'AD',name:'Amina Diallo',role:'Care Assistant (nights)',site:'Riverside Court',route:'Skilled Worker',dot:'prog',status:'Invited',pct:15,meterVal:'15%',meterSub:'',cap:'Onboarding readiness',visa:'Skilled Worker (to apply)',next:'Starts 19 Oct',
+    act:false, oh:'Where she&rsquo;s up to', oc:'<b>Invited.</b> Amina has been invited to start onboarding — we&rsquo;re waiting for her details to come back before anything else can begin.'},
+  peter:{kind:'cand',hue:'o',ini:'PB',name:'Peter Brennan',role:'Maintenance Lead',site:'Hazel Lodge',route:'British citizen',dot:'prog',status:'Details submitted',pct:35,meterVal:'35%',meterSub:'',cap:'Onboarding readiness',visa:'None — British citizen',next:'Starts 4 Aug',
+    act:false, oh:'Where he&rsquo;s up to', oc:'<b>Details submitted.</b> Peter&rsquo;s details are in and we&rsquo;ve requested his right-to-work share code — expected back around <b>4 Aug</b>.'},
+  ionela:{kind:'cand',hue:'p',ini:'IV',name:'Ionela Vasile',role:'Senior Carer',site:'Oakview House',route:'Skilled Worker',dot:'prog',status:'Documents',pct:55,meterVal:'55%',meterSub:'',cap:'Onboarding readiness',visa:'Skilled Worker (in review)',next:'Starts 1 Oct',
+    act:false, oh:'Where she&rsquo;s up to', oc:'<b>Documents.</b> Her documents are in and the sponsorship request is with us for review. On track to start <b>1 Oct</b>.'},
+  grace:{kind:'cand',hue:'o',ini:'GM',name:'Grace Mensah',role:'Registered Nurse',site:'Riverside Court',route:'Skilled Worker',dot:'prog',status:'Checks running',pct:70,meterVal:'70%',meterSub:'',cap:'Onboarding readiness',visa:'Skilled Worker (CoS assigned)',next:'Starts 15 Sep',
+    act:false, oh:'Where she&rsquo;s up to', oc:'<b>Checks running.</b> Her Certificate of Sponsorship (CoS) is assigned and the visa pack is drafted. On track to start <b>15 Sep</b>.'},
+  daniel:{kind:'cand',hue:'k',ini:'DN',name:'Daniel Nwosu',role:'Care Assistant',site:'Hazel Lodge',route:'Health & Care',dot:'prog',status:'Checks running',pct:80,meterVal:'80%',meterSub:'',cap:'Onboarding readiness',visa:'Health & Care (filed)',next:'Starts 1 Sep',
+    act:false, oh:'Where he&rsquo;s up to', oc:'<b>Checks running.</b> Daniel&rsquo;s visa has been filed and we&rsquo;re awaiting the decision. Everything is in — nothing needed from you yet. Starts <b>1 Sep</b>.'},
+  hana:{kind:'cand',hue:'l',ini:'HK',name:'Hana Kim',role:'Care Assistant',site:'Oakview House',route:'Settled status',dot:'prog',status:'Ready to start',pct:90,meterVal:'90%',meterSub:'',cap:'Onboarding readiness',visa:'None — settled status',next:'Starts 28 Jul',
+    act:false, oh:'Where she&rsquo;s up to', oc:'<b>Ready to start.</b> Right-to-work is verified and her contract is out for signature. Hana starts on <b>28 Jul</b>.'}
+};
+const ORDER = {
+  emp:['maria','jakub','sam','kavya','nadia','amara','lena','rosa','tunde','ibrahim','elif','joy'],
+  cand:['hana','daniel','grace','ionela','peter','amina']
+};
+
+let kind = 'emp';
+let selected = 'maria';
+const listEl = document.getElementById('list');
+const emptyEl = document.getElementById('empty');
+const detailEl = document.getElementById('detail');
+const qEl = document.getElementById('q');
+
+function renderList(){
+  const q = qEl.value.trim().toLowerCase();
+  let html = '';
+  let shown = 0;
+  ORDER[kind].forEach(id => {
+    const p = PEOPLE[id];
+    if (q && !(p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q))) return;
+    shown++;
+    html += `<button class="prow${id===selected?' sel':''}" data-id="${id}" onclick="select('${id}')">
+      <span class="avatar ${p.hue}">${p.ini}</span>
+      <span class="prow-main"><b>${p.name}</b><span>${p.role}</span></span>
+      <span class="prow-right"><span class="dot ${p.dot}"></span><span class="pct">${p.meterVal}</span></span>
+    </button>`;
+  });
+  listEl.innerHTML = html;
+  emptyEl.style.display = shown ? 'none' : 'block';
+}
+
+function renderDetail(){
+  const p = PEOPLE[selected];
+  const isCand = p.kind === 'cand';
+  const routeLabel = isCand ? 'Route' : 'Route';
+  const facts = isCand
+    ? [['Route',p.route],['Site',p.site],['Stage',p.status],['Start date',p.next]]
+    : [['Route',p.route],['Site',p.site],['Visa expiry',p.visa],['Next date',p.next]];
+  const btn = p.btn
+    ? `<a class="pill-lime" href="../employee-detail/index.html">${p.btn}<svg class="icon"><use href="#i-arrow"/></svg></a>`
+    : '';
+  detailEl.innerHTML = `
+    <div class="detail-head">
+      <span class="avatar ${p.hue}">${p.ini}</span>
+      <span class="dh-id">
+        <h2>${p.name}</h2>
+        <div class="role">${p.role}</div>
+        <div class="badges">
+          <span class="badge">${p.site}</span>
+          <span class="badge ${isCand?'cand':''}">${p.route}</span>
+          <span class="badge"><span class="st ${p.dot}" style="font-size:13px"><i></i>${p.status}</span></span>
+        </div>
+      </span>
+    </div>
+
+    <div class="kind-line ${isCand?'cand':'emp'}">${isCand?'Candidate · joining soon':'Employee'}</div>
+
+    <div class="meter-card">
+      <div class="meter-top">
+        <span class="lbl">${p.cap}</span>
+        <span class="val">${p.meterVal}${p.meterSub?`<span>${p.meterSub}</span>`:''}</span>
+      </div>
+      <div class="meter-bar ${isCand?'prog':''}"><i style="width:${p.pct}%"></i></div>
+    </div>
+
+    <div class="d-facts">
+      ${facts.map(f => `<div class="d-fact"><div class="k">${f[0]}</div><div class="v${/\d{4}|Jul|Aug|Sep|Oct|Nov|Jan|Feb|Mar|May/.test(f[1])&&f[0]!=='Route'?' mono':''}">${f[1]}</div></div>`).join('')}
+    </div>
+
+    <div class="open-card ${p.act?'act':''}">
+      <div class="oc-h"><svg><use href="#${p.act?'i-clock':'i-check'}"/></svg>${p.oh}</div>
+      <p>${p.oc}</p>
+      <div class="oc-foot">
+        ${btn}
+        <a class="profile-link" href="../employee-detail/index.html">Open full profile<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+
+    <div class="detail-foot">
+      <a class="profile-link" href="../employee-detail/index.html">Open full profile<svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>`;
+}
+
+function select(id){
+  selected = id;
+  renderList();
+  renderDetail();
+  document.querySelector('.right').scrollTop = 0;
+}
+
+function setKind(k){
+  if (kind === k) return;
+  kind = k;
+  document.getElementById('tab-emp').classList.toggle('on', k==='emp');
+  document.getElementById('tab-cand').classList.toggle('on', k==='cand');
+  selected = ORDER[k][0];
+  renderList();
+  renderDetail();
+}
+
+qEl.addEventListener('input', renderList);
+renderList();
+renderDetail();
+</script>
+
+</body>
+</html>
